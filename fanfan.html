@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fff9ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="饭饭成长手账">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23ff9f43'/%3E%3Ccircle cx='16' cy='13' r='6' fill='%23fff9ec'/%3E%3Cpath d='M16 19l-2 5h4z' fill='%23fff9ec'/%3E%3C/svg%3E">
+<title>饭饭成长手账 · 林溪晚意的小本本</title>
+<style>
+/* ========== 基础 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #fff9ec;
+  --bg2: #fdf3d8;
+  --card: #fffdf7;
+  --ink: #5a4632;
+  --ink2: #93805f;
+  --ink3: #b3a482;
+  --line: #f0e4c8;
+  --line2: #e3d3ab;
+  --orange: #ff9f43;
+  --orange-d: #e8842a;
+  --orange-bg: #fff1dc;
+  --blue: #45b8e0;
+  --blue-d: #2e9cc6;
+  --blue-bg: #e3f5fc;
+  --green: #7bc950;
+  --green-d: #5da839;
+  --green-bg: #ecf7e2;
+  --yellow: #f7c948;
+  --yellow-d: #d9a816;
+  --red: #ee7d7d;
+  --shadow: 0 2px 10px rgba(150, 110, 40, .10);
+  --shadow-lg: 0 12px 44px rgba(150, 110, 40, .18);
+  --font: "Yuanti SC", "YouYuan", "幼圆", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  font-size: 15px; line-height: 1.7;
+  background: linear-gradient(165deg, #fff9ec 0%, #fdf3d8 60%, #fce9c3 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; font-size: inherit; }
+input, textarea, select { font-family: inherit; outline: none; color: var(--ink); font-size: inherit; }
+img { display: block; }
+::selection { background: rgba(255, 159, 67, .25); }
+
+/* ========== 动态背景装饰（漂浮小可爱） ========== */
+.sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.sky span { position: absolute; opacity: .5; filter: saturate(.85); user-select: none; }
+.sky .s1 { font-size: 46px; top: 8%; left: 4%; animation: driftX 26s ease-in-out infinite; }
+.sky .s2 { font-size: 30px; top: 22%; right: 6%; animation: driftX 20s ease-in-out 2s infinite reverse; }
+.sky .s3 { font-size: 24px; top: 46%; left: 8%; animation: driftX 30s ease-in-out 4s infinite; }
+.sky .s4 { font-size: 34px; top: 63%; right: 10%; animation: driftX 24s ease-in-out 1s infinite reverse; }
+.sky .s5 { font-size: 26px; top: 80%; left: 6%; animation: driftX 28s ease-in-out 6s infinite; }
+.sky .s6 { font-size: 38px; top: 12%; right: 22%; animation: driftX 34s ease-in-out 3s infinite reverse; }
+.sky .s7 { font-size: 22px; top: 72%; right: 4%; animation: driftX 22s ease-in-out 8s infinite; }
+.sky .s8 { font-size: 28px; top: 36%; left: 16%; animation: driftX 32s ease-in-out 5s infinite reverse; }
+@keyframes driftX { 0%,100% { transform: translate(0,0) rotate(-3deg); } 50% { transform: translate(26px,-18px) rotate(4deg); } }
+
+/* ========== 顶栏 ========== */
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(255, 249, 236, .88);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px dashed var(--line2);
+}
+.topbar-inner { max-width: 960px; margin: 0 auto; padding: 10px 16px 8px; display: flex; align-items: center; gap: 10px; }
+.logo {
+  width: 40px; height: 40px; border-radius: 13px; flex-shrink: 0;
+  background: linear-gradient(135deg, #ff9f43, #f7c948);
+  display: grid; place-items: center; font-size: 22px;
+  box-shadow: 0 3px 10px rgba(255, 159, 67, .35);
+  animation: wiggle 5s ease-in-out infinite;
+}
+@keyframes wiggle { 0%,88%,100% { transform: rotate(0); } 92% { transform: rotate(-8deg); } 96% { transform: rotate(7deg); } }
+.brand-title { font-size: 17px; font-weight: 800; letter-spacing: 1px; white-space: nowrap; }
+.brand-sub { font-size: 11px; color: var(--ink2); letter-spacing: .5px; margin-top: -3px; }
+.topbar .grow { flex: 1; }
+.age-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--orange-bg); border: 1.5px solid #ffd9a3;
+  color: var(--orange-d); font-size: 12.5px; font-weight: 700;
+  padding: 5px 13px; border-radius: 99px; white-space: nowrap;
+}
+.icon-btn {
+  width: 34px; height: 34px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 17px;
+  color: var(--ink2); transition: all .15s;
+}
+.icon-btn:hover { background: var(--orange-bg); color: var(--orange-d); }
+
+/* ========== 翻页导航 ========== */
+.tabs {
+  max-width: 960px; margin: 0 auto; padding: 0 8px;
+  display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 1; min-width: 78px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 0 9px; font-size: 12.5px; font-weight: 700;
+  color: var(--ink3); border-bottom: 3px solid transparent;
+  border-radius: 10px 10px 0 0; transition: all .18s; letter-spacing: 1px;
+}
+.tab .t-emoji { font-size: 20px; transition: transform .2s; }
+.tab:hover { color: var(--ink2); background: rgba(255, 159, 67, .06); }
+.tab.on { color: var(--orange-d); border-bottom-color: var(--orange); }
+.tab.on .t-emoji { transform: scale(1.18) rotate(-6deg); }
+
+/* ========== 翻页舞台 ========== */
+.stage {
+  position: relative; z-index: 1;
+  max-width: 960px; margin: 0 auto;
+  padding: 18px 16px 70px;
+  perspective: 1700px;
+}
+.page {
+  animation: none;
+  transform-origin: center;
+  transition: transform .45s cubic-bezier(.35,1.3,.45,1), opacity .4s, filter .4s;
+}
+.page.hidden-page { display: none; }
+.page.flip-out { transform: rotateY(-55deg) scale(.92) translateX(-40px); opacity: 0; filter: blur(2px); pointer-events: none; }
+.page.flip-in-prep { transition: none; transform: rotateY(55deg) scale(.92) translateX(40px); opacity: 0; filter: blur(2px); }
+.page.flip-settle { transform: none; opacity: 1; filter: none; }
+
+/* ========== 通用卡片 & 按钮 ========== */
+.card {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.card-title { font-size: 15px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 7px; letter-spacing: .5px; }
+.card-title .sub { font-weight: 500; font-size: 12px; color: var(--ink3); margin-left: auto; letter-spacing: 0; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border-radius: 12px; font-weight: 700; font-size: 14px;
+  padding: 10px 20px; transition: all .15s; letter-spacing: .5px;
+}
+.btn:active { transform: scale(.96); }
+.btn-primary { background: linear-gradient(135deg, #ffb265, #ff9f43); color: #fff; box-shadow: 0 4px 12px rgba(255,159,67,.35); }
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-plain { background: var(--card); border: 2px dashed var(--line2); color: var(--ink2); }
+.btn-plain:hover { border-color: var(--orange); color: var(--orange-d); background: var(--orange-bg); }
+.btn-blue { background: linear-gradient(135deg, #67c8ea, #45b8e0); color: #fff; box-shadow: 0 4px 12px rgba(69,184,224,.3); }
+.btn-sm { padding: 6px 13px; font-size: 12.5px; border-radius: 10px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 13px; border-radius: 99px; font-size: 12.5px; font-weight: 700;
+  border: 2px solid var(--line); color: var(--ink2); background: var(--card); transition: all .15s;
+}
+.chip:hover { border-color: var(--line2); }
+.chip.on { background: var(--orange-bg); border-color: var(--orange); color: var(--orange-d); }
+.chip.on.blu { background: var(--blue-bg); border-color: var(--blue); color: var(--blue-d); }
+.empty-tip { text-align: center; color: var(--ink3); padding: 30px 0 24px; font-size: 14px; line-height: 2.2; }
+.empty-tip .big { font-size: 38px; display: block; }
+/* ========== 手账页 ========== */
+.hero-card {
+  background: linear-gradient(135deg, #fff6e3 0%, #ffe9c4 100%);
+  border: 2px solid #ffdca3; border-radius: 20px;
+  padding: 20px 22px; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: var(--shadow);
+}
+.hero-avatar {
+  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #ff9f43, #f7c948);
+  display: grid; place-items: center; font-size: 34px;
+  border: 3px solid #fff; box-shadow: 0 4px 12px rgba(255,159,67,.3);
+}
+.hero-info .hi-name { font-size: 19px; font-weight: 800; letter-spacing: 1px; }
+.hero-info .hi-sub { font-size: 12.5px; color: var(--ink2); margin-top: 2px; }
+.hero-info { min-width: 0; flex: 1; }
+.hero-quick { flex-shrink: 0; margin-left: auto; display: flex; flex-direction: column; gap: 8px; }
+.add-bar { display: flex; gap: 10px; margin-bottom: 16px; }
+.add-bar .btn { flex: 1; }
+
+.record {
+  background: var(--card); border: 2px solid var(--line);
+  border-radius: 18px; box-shadow: var(--shadow);
+  padding: 16px 18px 14px; margin-bottom: 14px;
+  position: relative; transition: transform .15s;
+}
+.record:hover { transform: translateY(-2px); }
+.record-head { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+.record-date {
+  font-size: 12px; font-weight: 800; color: var(--blue-d);
+  background: var(--blue-bg); border: 1.5px solid #bde6f5;
+  padding: 3px 11px; border-radius: 99px; white-space: nowrap;
+}
+.record-age { font-size: 11.5px; color: var(--ink3); }
+.record-del {
+  margin-left: auto; width: 27px; height: 27px; border-radius: 9px;
+  display: grid; place-items: center; color: var(--ink3); font-size: 14px;
+  opacity: 0; transition: all .15s;
+}
+.record:hover .record-del, .record:active .record-del { opacity: 1; }
+.record-del:hover { background: #fdeaea; color: #e06a6a; }
+.record-text { font-size: 15px; line-height: 1.85; white-space: pre-wrap; word-break: break-all; }
+.record-imgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 11px; }
+.record-imgs img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  border-radius: 11px; border: 2px solid var(--line); cursor: zoom-in;
+  transition: transform .15s;
+}
+.record-imgs img:hover { transform: scale(1.02); }
+.record-imgs.few-2 { grid-template-columns: repeat(2, 1fr); }
+.record-imgs.few-1 { grid-template-columns: 88px; }
+
+/* ========== 相册页 ========== */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.g-item {
+  position: relative; border-radius: 13px; overflow: hidden;
+  border: 2px solid var(--line); cursor: zoom-in; aspect-ratio: 1;
+  background: var(--bg2);
+}
+.g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s; }
+.g-item:hover img { transform: scale(1.06); }
+.g-date {
+  position: absolute; left: 6px; bottom: 6px;
+  font-size: 10px; font-weight: 700; color: #fff;
+  background: rgba(90, 70, 50, .55); padding: 2px 8px; border-radius: 99px;
+  backdrop-filter: blur(3px);
+}
+
+/* ========== 成长页 ========== */
+.grow-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+.grow-stat {
+  background: var(--card); border: 2px solid var(--line); border-radius: 16px;
+  padding: 15px 18px; box-shadow: var(--shadow);
+}
+.grow-stat .gs-label { font-size: 12.5px; color: var(--ink2); font-weight: 700; }
+.grow-stat .gs-val { font-size: 26px; font-weight: 800; margin-top: 2px; }
+.grow-stat .gs-val .u { font-size: 13px; color: var(--ink3); font-weight: 500; margin-left: 3px; }
+.grow-stat .gs-date { font-size: 11px; color: var(--ink3); margin-top: 1px; }
+.grow-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.gf-field { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 100px; }
+.gf-field label { font-size: 12px; font-weight: 700; color: var(--ink2); }
+.gf-field input {
+  border: 2px solid var(--line); border-radius: 11px; background: var(--bg);
+  padding: 9px 12px; font-size: 14px; font-weight: 700; width: 100%;
+}
+.gf-field input:focus { border-color: var(--orange); background: #fff; }
+.curve-svg { width: 100%; height: auto; display: block; }
+.curve-svg text { fill: var(--ink2); font-size: 10.5px; font-family: var(--font); }
+.curve-svg .axis { stroke: var(--line2); stroke-width: 1.5; }
+.curve-svg .gridline { stroke: var(--line); stroke-dasharray: 3 5; }
+.curve-svg .h-line { fill: none; stroke: var(--orange); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.curve-svg .w-line { fill: none; stroke: var(--blue); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.curve-svg .h-pt { fill: #fff; stroke: var(--orange); stroke-width: 2.5; }
+.curve-svg .w-pt { fill: #fff; stroke: var(--blue); stroke-width: 2.5; }
+.curve-legend { display: flex; gap: 18px; justify-content: center; margin-top: 9px; font-size: 12px; color: var(--ink2); font-weight: 700; }
+.cl-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.grow-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+.grow-table th { font-size: 12px; color: var(--ink2); font-weight: 700; text-align: left; padding: 7px 10px; border-bottom: 2px dashed var(--line2); }
+.grow-table td { font-size: 13.5px; padding: 8px 10px; border-bottom: 1px dashed var(--line); }
+.grow-table tr:last-child td { border-bottom: none; }
+.grow-table .v { font-weight: 800; }
+.grow-table .del-row { color: var(--ink3); cursor: pointer; font-size: 15px; width: 30px; }
+.grow-table .del-row:hover { color: #e06a6a; }
+
+/* ========== 寄语页 ========== */
+.msg-form textarea {
+  width: 100%; border: 2px solid var(--line); border-radius: 13px;
+  background: var(--bg); padding: 11px 14px; font-size: 14.5px;
+  resize: vertical; min-height: 84px; line-height: 1.75; transition: border-color .15s;
+}
+.msg-form textarea:focus { border-color: var(--orange); background: #fff; }
+.msg-form input {
+  border: 2px solid var(--line); border-radius: 11px; background: var(--bg);
+  padding: 9px 13px; font-size: 14px; font-weight: 700; flex: 1; min-width: 0;
+}
+.msg-form input:focus { border-color: var(--orange); background: #fff; }
+.msg-card {
+  background: var(--card); border: 2px solid var(--line); border-radius: 16px;
+  padding: 15px 18px 13px; margin-bottom: 12px; box-shadow: var(--shadow);
+  position: relative;
+}
+.msg-card::before {
+  content: ''; position: absolute; top: -7px; left: 22px;
+  width: 26px; height: 14px;
+  background: var(--line2); border-radius: 3px;
+  transform: rotate(-3deg);
+}
+.msg-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; flex-wrap: wrap; }
+.msg-from { font-size: 12.5px; font-weight: 800; color: var(--green-d); background: var(--green-bg); padding: 3px 11px; border-radius: 99px; border: 1.5px solid #cbe8b3; }
+.msg-date { font-size: 11.5px; color: var(--ink3); }
+.msg-text { font-size: 14.5px; line-height: 1.8; white-space: pre-wrap; word-break: break-all; }
+.msg-del { margin-left: auto; color: var(--ink3); font-size: 13px; padding: 3px 8px; border-radius: 8px; opacity: 0; transition: all .15s; }
+.msg-card:hover .msg-del { opacity: 1; }
+.msg-del:hover { background: #fdeaea; color: #e06a6a; }
+
+/* ========== 弹窗 & 图片灯箱 ========== */
+.modal-mask {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(80, 60, 30, .4); backdrop-filter: blur(3px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-mask.show { display: flex; }
+.modal {
+  background: var(--card); border: 2px solid var(--line2); border-radius: 20px;
+  box-shadow: var(--shadow-lg); width: 100%; max-width: 460px;
+  padding: 22px 22px 18px; max-height: 88vh; overflow-y: auto;
+  animation: popIn .32s cubic-bezier(.3,1.4,.5,1);
+}
+@keyframes popIn { from { transform: scale(.85) translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+.modal h3 { font-size: 16.5px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 7px; }
+.modal label { display: block; font-size: 12.5px; font-weight: 700; color: var(--ink2); margin: 11px 0 5px; }
+.modal input[type=text], .modal input[type=date], .modal textarea {
+  width: 100%; border: 2px solid var(--line); border-radius: 11px;
+  background: var(--bg); padding: 10px 13px; font-size: 14.5px;
+}
+.modal textarea { resize: vertical; min-height: 90px; line-height: 1.75; }
+.modal input:focus, .modal textarea:focus { border-color: var(--orange); background: #fff; }
+.modal-btns { display: flex; gap: 10px; margin-top: 18px; }
+.modal-btns .btn { flex: 1; }
+.img-pick {
+  border: 2.5px dashed var(--line2); border-radius: 14px;
+  background: var(--bg); padding: 18px; text-align: center;
+  color: var(--ink3); font-size: 13px; font-weight: 700; cursor: pointer; transition: all .15s;
+}
+.img-pick:hover { border-color: var(--orange); color: var(--orange-d); background: var(--orange-bg); }
+.img-pick .big { font-size: 30px; display: block; margin-bottom: 4px; }
+.img-preview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+.img-preview .ip {
+  position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 2px solid var(--line);
+}
+.img-preview .ip img { width: 100%; height: 100%; object-fit: cover; }
+.img-preview .ip .rm {
+  position: absolute; top: 4px; right: 4px; width: 21px; height: 21px;
+  background: rgba(80,60,30,.6); color: #fff; border-radius: 50%;
+  display: grid; place-items: center; font-size: 12px;
+}
+.lightbox {
+  position: fixed; inset: 0; z-index: 80;
+  background: rgba(50, 38, 20, .88);
+  display: none; align-items: center; justify-content: center; flex-direction: column; gap: 14px;
+  padding: 30px 16px;
+}
+.lightbox.show { display: flex; }
+.lightbox img { max-width: 100%; max-height: 78vh; border-radius: 14px; border: 3px solid rgba(255,255,255,.85); }
+.lightbox .lb-cap { color: #ffe9c4; font-size: 13.5px; text-align: center; }
+.lightbox .lb-close {
+  position: absolute; top: 18px; right: 20px;
+  color: #fff; font-size: 26px; width: 42px; height: 42px;
+  background: rgba(255,255,255,.14); border-radius: 50%; display: grid; place-items: center;
+}
+
+/* ========== Toast ========== */
+.toast {
+  position: fixed; top: 18px; left: 50%; transform: translate(-50%, -80px);
+  z-index: 99; background: var(--ink); color: #fff9ec;
+  font-size: 13.5px; font-weight: 700; padding: 10px 20px;
+  border-radius: 99px; box-shadow: var(--shadow-lg);
+  transition: transform .35s cubic-bezier(.25,1.4,.4,1); pointer-events: none; max-width: 88vw; text-align: center;
+}
+.toast.show { transform: translate(-50%, 0); }
+
+/* ========== 响应式 ========== */
+@media (max-width: 640px) {
+  .topbar-inner { padding: 8px 10px 6px; }
+  .brand-title { font-size: 14px; }
+  .brand-sub { font-size: 10px; }
+  .logo { width: 36px; height: 36px; font-size: 19px; border-radius: 11px; }
+  .age-chip { font-size: 11px; padding: 4px 9px; }
+  .age-chip .age-bd { display: none; }
+  .age-chip { font-size: 11px; padding: 4px 10px; }
+  .stage { padding: 12px 10px 84px; }
+  .card { padding: 14px; border-radius: 15px; }
+  .hero-card { padding: 15px 14px; gap: 11px; }
+  .hero-avatar { width: 52px; height: 52px; font-size: 27px; }
+  .hero-info .hi-name { font-size: 16.5px; }
+  .hero-info .hi-sub { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hero-quick { gap: 6px; }
+  .hero-quick .btn { padding: 6px 10px; font-size: 12px; }
+  .record-imgs { gap: 5px; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .grow-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; }
+  .img-preview { grid-template-columns: repeat(3, 1fr); }
+  .record-del { opacity: 1; }
+  .msg-del { opacity: 1; }
+  .sky .s6 { display: none; }
+  .sky .s8 { display: none; }
+}
+
+/* ========== 里程碑 ========== */
+.mile-card { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.mile-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 13px; border-radius: 99px; font-size: 13px; font-weight: 700;
+  border: 2px dashed var(--line2); color: var(--ink2); background: var(--card);
+  transition: all .15s;
+}
+.mile-chip:hover { border-color: var(--green); color: var(--green-d); background: var(--green-bg); }
+.mile-item {
+  background: var(--card); border: 2px solid var(--line); border-radius: 15px;
+  padding: 12px 15px; margin-bottom: 10px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 12px;
+}
+.mile-emoji {
+  width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+  background: var(--green-bg); border: 2px solid #d3eab9;
+  display: grid; place-items: center; font-size: 22px;
+}
+.mile-info { flex: 1; min-width: 0; }
+.mile-info .mi-title { font-size: 14.5px; font-weight: 800; }
+.mile-info .mi-sub { font-size: 11.5px; color: var(--ink3); margin-top: 1px; }
+.mile-del { color: var(--ink3); font-size: 14px; padding: 6px 8px; border-radius: 8px; opacity: 0; transition: all .15s; }
+.mile-item:hover .mile-del { opacity: 1; }
+.mile-del:hover { background: #fdeaea; color: #e06a6a; }
+.mile-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.mile-form input {
+  border: 2px solid var(--line); border-radius: 11px; background: var(--bg);
+  padding: 8px 12px; font-size: 13.5px;
+}
+.mile-form input:focus { border-color: var(--green); background: #fff; }
+.mile-form .mf-name { flex: 1; min-width: 130px; font-weight: 700; }
+.mile-form .mf-date { min-width: 140px; }
+
+/* ========== 照片下载 & 灯箱按钮 ========== */
+.dl-btn {
+  position: absolute; right: 8px; bottom: 8px; z-index: 3;
+  width: 30px; height: 30px; border-radius: 9px;
+  background: rgba(255, 249, 236, .92); color: var(--ink2);
+  display: grid; place-items: center; font-size: 14px;
+  opacity: 0; transition: all .15s; box-shadow: var(--shadow);
+}
+.g-item:hover .dl-btn, .record-imgs img:hover ~ .dl-btn { opacity: 1; }
+@media (max-width: 640px) { .dl-btn { opacity: 1; } }
+.lb-actions { display: flex; gap: 10px; margin-top: 4px; }
+.lb-actions .btn { padding: 8px 16px; font-size: 13px; }
+.lb-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: 20px;
+  display: grid; place-items: center;
+}
+.lb-prev { left: 14px; } .lb-next { right: 14px; }
+.lb-nav:hover { background: rgba(255, 255, 255, .26); }
+
+/* ========== 云同步设置 ========== */
+.cloud-state {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: var(--ink2); margin-bottom: 12px; padding: 9px 13px;
+  border-radius: 11px; background: var(--bg); border: 2px dashed var(--line2);
+}
+.cloud-state.ok { background: var(--green-bg); border-color: #cbe8b3; color: var(--green-d); }
+.cloud-state.err { background: #fdeaea; border-color: #f2c4c4; color: #c05656; }
+.cloud-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 11px; }
+.cloud-field label { font-size: 12px; font-weight: 700; color: var(--ink2); }
+.cloud-field input {
+  border: 2px solid var(--line); border-radius: 11px; background: var(--bg);
+  padding: 9px 12px; font-size: 13.5px; width: 100%;
+}
+.cloud-field input:focus { border-color: var(--orange); background: #fff; }
+.cloud-btns { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 6px; }
+.cloud-btns .btn { flex: 1; min-width: 130px; }
+.cloud-hint { font-size: 11.5px; color: var(--ink3); line-height: 1.8; margin-top: 10px; }
+.cloud-hint b { color: var(--orange-d); }
+.space-line { display: flex; align-items: center; gap: 9px; margin-top: 9px; }
+.space-line .track { flex: 1; height: 9px; border-radius: 5px; background: var(--bg); border: 1.5px solid var(--line); overflow: hidden; }
+.space-line .track i { display: block; height: 100%; background: linear-gradient(90deg, #ffb265, #ff9f43); border-radius: 4px; transition: width .4s; }
+.space-line .txt { font-size: 11.5px; color: var(--ink2); font-weight: 700; white-space: nowrap; }
+/*__C3__*/
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <span class="s1">☁️</span><span class="s2">⭐</span><span class="s3">🌱</span><span class="s4">🦋</span>
+  <span class="s5">🌼</span><span class="s6">🎈</span><span class="s7">🍄</span><span class="s8">🌙</span>
+</div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">🍚</div>
+    <div>
+      <div class="brand-title">饭饭成长手账</div>
+      <div class="brand-sub">林溪晚意的小小世界</div>
+    </div>
+    <div class="grow"></div>
+    <span class="age-chip" id="ageChip">🐣 <span id="ageMain">…</span><span class="age-bd" id="ageBd"></span></span>
+    <button class="icon-btn" id="btnCloud" title="云同步（GitHub 免费备份）">☁️</button>
+    <button class="icon-btn" id="btnBackup" title="备份 / 恢复">💾</button>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab on" data-page="note"><span class="t-emoji">📖</span>手账</button>
+    <button class="tab" data-page="album"><span class="t-emoji">📷</span>相册</button>
+    <button class="tab" data-page="grow"><span class="t-emoji">📏</span>成长</button>
+    <button class="tab" data-page="msg"><span class="t-emoji">💌</span>寄语</button>
+    <button class="tab" data-page="about"><span class="t-emoji">✨</span>关于</button>
+  </nav>
+</header>
+
+<main class="stage" id="stage">
+
+  <!-- ===== 页：手账 ===== -->
+  <section class="page" id="page-note">
+    <div class="hero-card">
+      <div class="hero-avatar">🐣</div>
+      <div class="hero-info">
+        <div class="hi-name">林溪晚意</div>
+        <div class="hi-sub" id="heroSub">小名饭饭 · 记录每一个可爱瞬间</div>
+      </div>
+      <div class="hero-quick">
+        <button class="btn btn-primary btn-sm" id="btnAddRecord">✏️ 记一笔</button>
+        <button class="btn btn-plain btn-sm" id="btnAddPhoto">📷 传照片</button>
+      </div>
+    </div>
+    <div id="noteList"></div>
+  </section>
+
+  <!-- ===== 页：相册 ===== -->
+  <section class="page hidden-page" id="page-album">
+    <div class="card">
+      <div class="card-title">📷 饭饭的照片墙 <span class="sub" id="photoCount"></span></div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+      <div class="empty-tip" id="galleryEmpty" hidden><span class="big">🖼</span>还没有照片哦<br>去「手账」页点「传照片」吧</div>
+    </div>
+  </section>
+
+  <!-- ===== 页：成长 ===== -->
+  <section class="page hidden-page" id="page-grow">
+    <div class="grow-grid" id="growStats"></div>
+    <div class="card">
+      <div class="card-title">🎖 里程碑 <span class="sub" id="mileCount"></span></div>
+      <div class="mile-card" id="milePresets"></div>
+      <div id="mileList"></div>
+      <div class="mile-form" style="margin-top:14px;border-top:2px dashed var(--line);padding-top:13px">
+        <input type="text" class="mf-name" id="mileName" maxlength="20" placeholder="自定义里程碑，如：第一次坐飞机 ✈️">
+        <input type="date" class="mf-date" id="mileDate">
+        <button class="btn btn-plain btn-sm" id="mileAdd" style="flex-shrink:0">➕ 记下</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📏 记一笔身高体重</div>
+      <div class="grow-form">
+        <div class="gf-field"><label>📅 日期</label><input type="date" id="growDate"></div>
+        <div class="gf-field"><label>📐 身高 (cm)</label><input type="number" id="growHeight" step="0.1" placeholder="如 88.5" inputmode="decimal"></div>
+        <div class="gf-field"><label>⚖️ 体重 (kg)</label><input type="number" id="growWeight" step="0.1" placeholder="如 12.3" inputmode="decimal"></div>
+        <button class="btn btn-blue" id="growSave" style="flex-shrink:0">存下</button>
+      </div>
+      <div style="font-size:11.5px;color:var(--ink3);margin-top:9px">💡 身高体重可以只填一个，多次记录会连成成长曲线</div>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 成长曲线 <span class="sub" id="curveSub"></span></div>
+      <div class="chip-row" style="display:flex;gap:8px;margin-bottom:12px">
+        <button class="chip on" data-cm="both">双线</button>
+        <button class="chip" data-cm="h">只看身高</button>
+        <button class="chip" data-cm="w">只看体重</button>
+      </div>
+      <div id="curveBox"></div>
+      <div class="curve-legend" id="curveLegend"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 记录明细 <span class="sub" id="growCount"></span></div>
+      <div style="overflow-x:auto">
+        <table class="grow-table" id="growTable"></table>
+      </div>
+      <div class="empty-tip" id="growEmpty" hidden><span class="big">🌱</span>还没有数据<br>在上面记下第一笔吧</div>
+    </div>
+  </section>
+
+  <!-- ===== 页：寄语 ===== -->
+  <section class="page hidden-page" id="page-msg">
+    <div class="card msg-form">
+      <div class="card-title">💌 给饭饭写句话</div>
+      <textarea id="msgText" maxlength="300" placeholder="写下此刻想对饭饭说的话…也许是她今天好玩的举动，也许是你的期待和祝福 ✨"></textarea>
+      <div style="display:flex;gap:9px;margin-top:10px;align-items:center">
+        <input type="text" id="msgFrom" maxlength="12" placeholder="署名：如 姐姐 / 妈妈">
+        <button class="btn btn-primary" id="msgSend" style="flex-shrink:0">投进手账 ✦</button>
+      </div>
+    </div>
+    <div id="msgList"></div>
+  </section>
+
+  <!-- ===== 页：关于 ===== -->
+  <section class="page hidden-page" id="page-about">
+    <div class="card">
+      <div class="card-title">🍚 关于这本手账</div>
+      <p style="font-size:14px;line-height:2">这是姐姐给<strong>林溪晚意（小名饭饭）</strong>做的成长记录本，生日 <strong>2024 年 7 月 21 日</strong>。</p>
+      <p style="font-size:13px;color:var(--ink2);line-height:2;margin-top:8px">📖 手账可以记好玩的事、传照片<br>📏 成长页可以记身高体重、看曲线<br>💌 寄语写给未来的饭饭<br>📸 所有数据都保存在这台设备的浏览器里</p>
+    </div>
+    <div class="card">
+      <div class="card-title">💾 数据与备份</div>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.9;margin-bottom:12px">照片会压缩后存在浏览器里。建议定期点右上角 💾 备份一个文件，换手机/清缓存前先备份！</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" id="btnExport">📦 导出备份</button>
+        <button class="btn btn-plain" id="btnImport">📥 恢复备份</button>
+        <input type="file" id="fileImport" accept=".json" style="display:none">
+      </div>
+      <div class="space-line" style="margin-top:14px;border-top:2px dashed var(--line);padding-top:12px">
+        <span class="txt" id="spaceTxt">📊 空间使用</span>
+        <div class="track"><i id="spaceBar"></i></div>
+        <span class="txt" id="spacePct">0%</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">☁️ 云同步（GitHub 免费方案） <span class="sub">多设备一致 · 照片不丢</span></div>
+      <div class="cloud-state" id="cloudState">🔌 未连接</div>
+      <div class="cloud-field"><label>GitHub 用户名 / 仓库名（如 yourname/fanfan）</label>
+        <input type="text" id="cloudRepo" placeholder="你的GitHub用户名/仓库名"></div>
+      <div class="cloud-field"><label>Personal Access Token（只给仓库权限即可）</label>
+        <input type="password" id="cloudToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off"></div>
+      <div class="cloud-btns">
+        <button class="btn btn-plain btn-sm" id="cloudTest">🔌 测试连接</button>
+        <button class="btn btn-plain btn-sm" id="cloudSave">💾 保存设置</button>
+        <button class="btn btn-primary btn-sm" id="cloudSync">☁️ 立即同步</button>
+      </div>
+      <div class="cloud-hint">
+        <b>为什么要 GitHub？</b> 完全免费、无限容量，照片会拆成单个文件上传，家里人和你的手机都能看到同一本手账。<br>
+        <b>第一次配置（3 分钟）：</b>① 注册/登录 github.com → ② 新建一个<u>私有</u>仓库（New repository，名字随意如 fanfan）→ ③ 点头像 Settings → Developer settings → Personal access tokens → Tokens(classic) → Generate new token，勾选 <b>repo</b> 权限，生成后复制 → ④ 回到这里填上仓库名和 token，点「测试连接」→ ⑤ 点「立即同步」。<br>
+        <b>之后每天打开点一下 ☁️ 就同步好了</b>；换新手机：装好本页 → 填同样设置 → 先「立即同步」把云端数据拉下来即可。Token 只存在你自己手机的浏览器里，请勿发给任何人。
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 小小统计</div>
+      <div id="aboutStats" style="font-size:14px;line-height:2.3"></div>
+    </div>
+    <div style="text-align:center;color:var(--ink3);font-size:12px;padding:6px 0 10px">由爱发电 · 姐姐出品 🎀</div>
+  </section>
+
+</main>
+
+<!-- 弹窗：记一笔 -->
+<div class="modal-mask" id="recordModal">
+  <div class="modal">
+    <h3>✏️ 记一笔 <button class="icon-btn" style="margin-left:auto" data-close>✕</button></h3>
+    <label>📅 哪一天的事？</label>
+    <input type="date" id="recDate">
+    <label>🎈 发生了什么好玩的事？</label>
+    <textarea id="recText" maxlength="500" placeholder="比如：今天饭饭第一次自己穿上了小鞋子，还穿反了，得意得不得了 😆"></textarea>
+    <label>📷 附上照片（可选，多选）</label>
+    <div class="img-pick" id="recPick"><span class="big">🖼</span>点这里挑选照片</div>
+    <input type="file" id="recFiles" accept="image/*" multiple style="display:none">
+    <div class="img-preview" id="recPreview"></div>
+    <div class="modal-btns">
+      <button class="btn btn-plain" data-close>先不记了</button>
+      <button class="btn btn-primary" id="recSave">写进手账 ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- 灯箱 -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev">‹</button>
+  <button class="lb-nav lb-next" id="lbNext">›</button>
+  <img id="lbImg" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+  <div class="lb-actions">
+    <button class="btn btn-primary btn-sm" id="lbDownload">⬇ 下载这张照片</button>
+    <button class="btn btn-plain btn-sm" id="lbShare">📤 分享</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* ===== 常量与状态 ===== */
+/* 💾 永久数据键：fanfan.notebook.data —— 以后升级版本只读写这一个键，数据不丢 */
+const LS_KEY = 'fanfan.notebook.data';
+const BIRTHDAY = '2024-07-21';
+let DB = { records: [], growth: [], messages: [], milestones: [] };
+let curPage = 'note';
+let recDraftImgs = [];   // 弹窗中待存图片
+let toastTimer = null;
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const pad = n => (n < 10 ? '0' : '') + n;
+const todayKey = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+const uid = () => Date.now() + '' + Math.floor(Math.random() * 1000);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtMD = k => { const p = k.split('-'); return (+p[1]) + '月' + (+p[2]) + '日'; };
+function ageOfMonth(k) {  // 月龄（一位小数）
+  const [y1, m1, d1] = BIRTHDAY.split('-').map(Number);
+  const [y2, m2, d2] = k.split('-').map(Number);
+  let months = (y2 - y1) * 12 + (m2 - m1);
+  if (d2 < d1) months--;
+  return months + (d2 >= d1 ? 0 : 0.97);
+}
+function ageText() {
+  const m = ageOfMonth(todayKey());
+  const y = Math.floor(m / 12), r = Math.round(m % 12);
+  return y > 0 ? (y + '岁' + (r > 0 ? r + '个月' : '')) : (m.toFixed(0) + '个月');
+}
+
+/* ===== 持久化 ===== */
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); }
+  catch (e) { toast('😅 存不下了！照片太多，请先导出备份再删些照片'); }
+}
+function load() {
+  try { const s = localStorage.getItem(LS_KEY); if (!s) return; const o = JSON.parse(s); DB = normalizeDB(o); } catch (e) {}
+}
+function normalizeDB(o) {
+  const out = { records: [], growth: [], messages: [], milestones: [] };
+  if (!o || typeof o !== 'object') return out;
+  if (Array.isArray(o.records)) out.records = o.records.filter(r => r && (r.text || (r.images && r.images.length))).map(r => ({
+    id: String(r.id || uid()), date: /^\d{4}-\d{2}-\d{2}$/.test(r.date) ? r.date : todayKey(),
+    text: String(r.text || '').slice(0, 500),
+    images: Array.isArray(r.images) ? r.images.filter(i => typeof i === 'string' && i.startsWith('data:image')).slice(0, 9) : [],
+    createdAt: r.createdAt || Date.now()
+  }));
+  if (Array.isArray(o.growth)) out.growth = o.growth.filter(g => g && (g.height || g.weight)).map(g => ({
+    id: String(g.id || uid()), date: /^\d{4}-\d{2}-\d{2}$/.test(g.date) ? g.date : todayKey(),
+    height: g.height ? Number(g.height) : null, weight: g.weight ? Number(g.weight) : null
+  }));
+  if (Array.isArray(o.messages)) out.messages = o.messages.filter(m => m && m.text).map(m => ({
+    id: String(m.id || uid()), date: /^\d{4}-\d{2}-\d{2}$/.test(m.date) ? m.date : todayKey(),
+    from: String(m.from || '').slice(0, 12), text: String(m.text).slice(0, 300), createdAt: m.createdAt || Date.now()
+  }));
+  if (Array.isArray(o.milestones)) out.milestones = o.milestones.filter(m => m && m.name).map(m => ({
+    id: String(m.id || uid()), name: String(m.name).slice(0, 20),
+    emoji: String(m.emoji || '🎖').slice(0, 4),
+    date: /^\d{4}-\d{2}-\d{2}$/.test(m.date) ? m.date : todayKey(),
+    createdAt: m.createdAt || Date.now()
+  }));
+  out.records.sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+  out.growth.sort((a, b) => a.date.localeCompare(b.date));
+  out.messages.sort((a, b) => b.createdAt - a.createdAt);
+  out.milestones.sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+  return out;
+}
+
+/* ===== Toast ===== */
+function toast(msg) {
+  const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 1900);
+}
+
+/* ===== 图片压缩（canvas 缩放 + JPEG） ===== */
+function compressImage(file, maxSide) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        const scale = Math.min(1, maxSide / Math.max(w, h));
+        w = Math.round(w * scale); h = Math.round(h * scale);
+        const cv = document.createElement('canvas');
+        cv.width = w; cv.height = h;
+        const ctx = cv.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        resolve(cv.toDataURL('image/jpeg', 0.72));
+      };
+      img.onerror = reject;
+      img.src = fr.result;
+    };
+    fr.onerror = reject;
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ===== 翻页 ===== */
+function flipTo(name) {
+  if (name === curPage) return;
+  const oldEl = $('#page-' + curPage), newEl = $('#page-' + name);
+  $$('.tab').forEach(t => t.classList.toggle('on', t.dataset.page === name));
+  curPage = name;
+  if (!oldEl || !newEl) return;
+  oldEl.classList.remove('hidden-page', 'flip-in-prep', 'flip-settle');
+  oldEl.classList.add('flip-out');
+  setTimeout(() => {
+    oldEl.classList.add('hidden-page'); oldEl.classList.remove('flip-out');
+    newEl.classList.remove('hidden-page');
+    newEl.classList.add('flip-in-prep');
+    void newEl.offsetWidth;   // 强制回流，让初始态先生效
+    newEl.classList.add('flip-settle');
+    setTimeout(() => newEl.classList.remove('flip-in-prep', 'flip-settle'), 480);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 330);
+}
+
+/* ===== 渲染：手账 ===== */
+function renderNotes() {
+  const box = $('#noteList');
+  if (!DB.records.length) {
+    box.innerHTML = `<div class="card"><div class="empty-tip"><span class="big">📖</span>手账还是空白的<br>点右上角「✏️ 记一笔」写下第一件好玩的事吧</div></div>`;
+    return;
+  }
+  box.innerHTML = DB.records.map(r => {
+    const m = Math.round(ageOfMonth(r.date));
+    const ageLabel = m < 1 ? '还没满月' : (m + ' 个月大');
+    const n = r.images.length;
+    const imgsHtml = n ? `<div class="record-imgs ${n === 1 ? 'few-1' : n === 2 ? 'few-2' : ''}">` +
+      r.images.map((src, i) => `<img src="${src}" data-lb="${r.id}" data-lbi="${i}" alt="照片" loading="lazy">`).join('') + '</div>' : '';
+    return `<div class="record">
+      <div class="record-head">
+        <span class="record-date">${fmtMD(r.date)}</span>
+        <span class="record-age">${ageLabel}</span>
+        <button class="record-del" data-delrec="${r.id}" title="删除">🗑</button>
+      </div>
+      ${r.text ? `<div class="record-text">${esc(r.text)}</div>` : ''}
+      ${imgsHtml}
+    </div>`;
+  }).join('');
+}
+
+/* ===== 渲染：相册 ===== */
+/* ===== 渲染：相册 ===== */
+let galleryItems = [];
+function renderGallery() {
+  const grid = $('#galleryGrid');
+  const items = [];
+  DB.records.forEach(r => r.images.forEach(src => items.push({ src, date: r.date, rid: r.id })));
+  galleryItems = items;
+  $('#photoCount').textContent = items.length ? items.length + ' 张' : '';
+  $('#galleryEmpty').hidden = items.length > 0;
+  grid.innerHTML = items.map((it, gi) => `<div class="g-item" data-lbg="${it.rid}" data-src="${it.src}"><img src="${it.src}" loading="lazy" alt="饭饭的照片"><span class="g-date">${fmtMD(it.date)}</span><button class="dl-btn" data-dl="${gi}" title="下载">⬇</button></div>`).join('');
+}
+
+/* ===== 灯箱（全局照片流） ===== */
+let lbList = [], lbIdx = 0;   // 当前浏览的照片序列
+function openLightbox(rid, idx) {
+  const r = DB.records.find(x => x.id === rid);
+  if (!r || !r.images.length) return;
+  lbList = [];
+  DB.records.forEach(x => x.images.forEach(src => lbList.push({ src, date: x.date, text: x.text, rid: x.id })));
+  const base = lbList.findIndex(it => it.rid === rid);
+  lbIdx = Math.max(0, base >= 0 ? base + (idx || 0) : 0);
+  lbShow();
+  $('#lightbox').classList.add('show');
+}
+function lbShow() {
+  if (!lbList.length) return;
+  const it = lbList[lbIdx];
+  $('#lbImg').src = it.src;
+  $('#lbCap').textContent = (it.text ? it.text.slice(0, 40) + (it.text.length > 40 ? '…' : '') : '饭饭的照片') + ' · ' + fmtMD(it.date) + `（${lbIdx + 1}/${lbList.length}）`;
+  $('#lbPrev').style.display = lbList.length > 1 ? 'grid' : 'none';
+  $('#lbNext').style.display = lbList.length > 1 ? 'grid' : 'none';
+}
+function lbClose() { $('#lightbox').classList.remove('show'); lbList = []; }
+function lbStep(d) {
+  if (!lbList.length) return;
+  lbIdx = (lbIdx + d + lbList.length) % lbList.length;
+  lbShow();
+}
+function dataURLtoBlob(d) {
+  const [head, b] = d.split(',');
+  const m = (head.match(/data:(.*?)[;,]/) || [])[1] || 'image/jpeg';
+  const bin = atob(b);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], { type: m });
+}
+function downloadPhoto(src, name) {
+  const a = document.createElement('a');
+  a.href = src;
+  a.download = name || '饭饭的照片-' + Date.now() + '.jpg';
+  document.body.appendChild(a); a.click(); a.remove();
+  toast('⬇ 已开始下载');
+}
+function lbDownloadCur() {
+  const it = lbList[lbIdx];
+  if (!it) return;
+  downloadPhoto(it.src, '饭饭的照片-' + it.date + '-' + (lbIdx + 1) + '.jpg');
+}
+function lbShareCur() {
+  const it = lbList[lbIdx];
+  if (!it) return;
+  try {
+    const blob = dataURLtoBlob(it.src);
+    const file = new File([blob], '饭饭的照片-' + (lbIdx + 1) + '.jpg', { type: 'image/jpeg' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: '饭饭的照片' }).catch(() => {});
+      return;
+    }
+  } catch (e) {}
+  lbDownloadCur();
+}
+/* ===== 渲染：成长 ===== */
+let curveMode = 'both';
+function renderGrowth() {
+  const g = DB.growth;
+  const lastH = [...g].reverse().find(x => x.height);
+  const lastW = [...g].reverse().find(x => x.weight);
+  $('#growStats').innerHTML = `
+    <div class="grow-stat"><div class="gs-label">📐 最新身高</div>
+      <div class="gs-val">${lastH ? lastH.height + '<span class="u">cm</span>' : '—'}</div>
+      <div class="gs-date">${lastH ? '记录于 ' + fmtMD(lastH.date) : '还没有记录'}</div></div>
+    <div class="grow-stat"><div class="gs-label">⚖️ 最新体重</div>
+      <div class="gs-val">${lastW ? lastW.weight + '<span class="u">kg</span>' : '—'}</div>
+      <div class="gs-date">${lastW ? '记录于 ' + fmtMD(lastW.date) : '还没有记录'}</div></div>`;
+  renderCurve();
+  const tb = $('#growTable');
+  $('#growEmpty').hidden = g.length > 0;
+  $('#growCount').textContent = g.length ? g.length + ' 条' : '';
+  tb.innerHTML = g.length ? `<thead><tr><th>📅 日期</th><th>👶 月龄</th><th>📐 身高</th><th>⚖️ 体重</th><th></th></tr></thead><tbody>` +
+    [...g].reverse().map(x => `<tr>
+      <td>${x.date}</td><td>${Math.round(ageOfMonth(x.date))}个月</td>
+      <td class="v">${x.height ? x.height + ' cm' : '—'}</td>
+      <td class="v">${x.weight ? x.weight + ' kg' : '—'}</td>
+      <td class="del-row" data-delgrow="${x.id}">🗑</td></tr>`).join('') + '</tbody>' : '';
+}
+function renderCurve() {
+  const box = $('#curveBox');
+  const g = DB.growth;
+  const pts = g.map(x => ({ m: ageOfMonth(x.date), h: x.height, w: x.weight, date: x.date })).filter(p => p.h || p.w);
+  $('#curveSub').textContent = pts.length ? '横轴：月龄' : '';
+  $('#curveLegend').innerHTML = curveMode === 'w' ? '<span><i class="cl-dot" style="background:var(--blue)"></i>体重 kg</span>' :
+    curveMode === 'h' ? '<span><i class="cl-dot" style="background:var(--orange)"></i>身高 cm</span>' :
+    '<span><i class="cl-dot" style="background:var(--orange)"></i>身高 cm（左）</span><span><i class="cl-dot" style="background:var(--blue)"></i>体重 kg（右）</span>';
+  if (pts.length < 1) {
+    box.innerHTML = '<div class="empty-tip" style="padding:16px 0"><span class="big">📉</span>记录两笔以上，就能看到饭饭的成长曲线啦</div>';
+    return;
+  }
+  const W = 700, H = 240, L = 42, R = curveMode === 'both' || curveMode === 'w' ? 44 : 18, T = 16, B = 30;
+  const iw = W - L - R, ih = H - T - B;
+  const mMax = Math.max(...pts.map(p => p.m), 6) * 1.06;
+  const mx = m => L + (m / mMax) * iw;
+  const hPts = pts.filter(p => p.h), wPts = pts.filter(p => p.w);
+  const hMin = hPts.length ? Math.min(...hPts.map(p => p.h)) * 0.94 : 0;
+  const hMax = hPts.length ? Math.max(...hPts.map(p => p.h)) * 1.04 : 1;
+  const wMin = wPts.length ? Math.min(...wPts.map(p => p.w)) * 0.9 : 0;
+  const wMax = wPts.length ? Math.max(...wPts.map(p => p.w)) * 1.08 : 1;
+  const hy = v => T + ih - ((v - hMin) / (hMax - hMin || 1)) * ih;
+  const wy = v => T + ih - ((v - wMin) / (wMax - wMin || 1)) * ih;
+  let grid = '', labels = '';
+  const steps = 4;
+  for (let i = 0; i <= steps; i++) {
+    const v = hMin + (hMax - hMin) * i / steps;
+    const y = hy(v);
+    if (curveMode !== 'w') { grid += `<line class="gridline" x1="${L}" y1="${y.toFixed(1)}" x2="${W - R}" y2="${y.toFixed(1)}"/>`; labels += `<text x="${L - 6}" y="${(y + 3.5).toFixed(1)}" text-anchor="end">${Math.round(v)}</text>`; }
+  }
+  if (curveMode === 'both' || curveMode === 'w') {
+    for (let i = 0; i <= steps; i++) {
+      const v = wMin + (wMax - wMin) * i / steps;
+      const y = wy(v);
+      if (curveMode === 'w') { grid += `<line class="gridline" x1="${L}" y1="${y.toFixed(1)}" x2="${W - R}" y2="${y.toFixed(1)}"/>`; }
+      labels += `<text x="${W - R + 6}" y="${(wy(v) + 3.5).toFixed(1)}">${v.toFixed(1)}</text>`;
+    }
+  }
+  const tickStep = mMax > 30 ? 6 : mMax > 12 ? 3 : 2;
+  for (let m = 0; m <= mMax; m += tickStep) labels += `<text x="${mx(m).toFixed(1)}" y="${H - 8}" text-anchor="middle">${m}月</text>`;
+  const line = (arr, fy, cls, ptCls) => {
+    if (!arr.length) return '';
+    const d = arr.map((p, i) => (i ? 'L' : 'M') + mx(p.m).toFixed(1) + ',' + fy(p).toFixed(1)).join(' ');
+    const circles = arr.map(p => `<circle class="${ptCls}" cx="${mx(p.m).toFixed(1)}" cy="${fy(p).toFixed(1)}" r="4.5"><title>${fmtMD(p.date)} · ${p.h ? '身高 ' + p.h + 'cm' : '体重 ' + p.w + 'kg'}</title></circle>`).join('');
+    return `<path class="${cls}" d="${d}"/>` + circles;
+  };
+  box.innerHTML = `<svg class="curve-svg" viewBox="0 0 ${W} ${H}">
+    <line class="axis" x1="${L}" y1="${T}" x2="${L}" y2="${H - B}"/>
+    <line class="axis" x1="${L}" y1="${H - B}" x2="${W - R}" y2="${H - B}"/>
+    ${grid}${labels}
+    ${curveMode !== 'w' ? line(hPts, p => hy(p.h), 'h-line', 'h-pt') : ''}
+    ${curveMode !== 'h' ? line(wPts, p => wy(p.w), 'w-line', 'w-pt') : ''}
+  </svg>`;
+}
+
+/* ===== 渲染：寄语 ===== */
+function renderMsgs() {
+  const box = $('#msgList');
+  if (!DB.messages.length) {
+    box.innerHTML = `<div class="card"><div class="empty-tip"><span class="big">💌</span>还没有寄语<br>写下第一句想对饭饭说的话吧</div></div>`;
+    return;
+  }
+  box.innerHTML = DB.messages.map(m => `<div class="msg-card">
+    <div class="msg-meta"><span class="msg-from">${esc(m.from || '爱她的人')}</span><span class="msg-date">${fmtMD(m.date)}</span>
+      <button class="msg-del" data-delmsg="${m.id}">🗑</button></div>
+    <div class="msg-text">${esc(m.text)}</div>
+  </div>`).join('');
+}
+
+/* ===== 渲染：关于页统计 & 顶栏 ===== */
+function renderAbout() {
+  const imgs = DB.records.reduce((s, r) => s + r.images.length, 0);
+  const first = DB.records.length ? DB.records[DB.records.length - 1].date : null;
+  const g = DB.growth;
+  const dh = g.filter(x => x.height);
+  const growTxt = dh.length >= 2 ? '长高了 ' + (dh[dh.length - 1].height - dh[0].height).toFixed(1) + ' cm' : '—';
+  $('#aboutStats').innerHTML = `
+    📖 手账 <strong>${DB.records.length}</strong> 篇 ・ 📷 照片 <strong>${imgs}</strong> 张<br>
+    💌 寄语 <strong>${DB.messages.length}</strong> 条 ・ 📏 生长记录 <strong>${g.length}</strong> 笔<br>
+    🎖 里程碑 <strong>${DB.milestones.length}</strong> 个 ・ 🌱 自 <strong>${first ? fmtMD(first) : '今天'}</strong> 开始记录<br>
+    🎈 饭饭已出生 <strong>${Math.round(ageOfMonth(todayKey()))}</strong> 个月 ・ 💪 和第一次记录相比 ${growTxt}`;
+}
+function renderTop() {
+  const t = todayKey();
+  const nextBd = new Date(new Date().getFullYear(), 6, 21) > new Date() ? new Date(new Date().getFullYear(), 6, 21) : new Date(new Date().getFullYear() + 1, 6, 21);
+  const days = Math.ceil((nextBd - new Date()) / 86400000);
+  $('#ageMain').textContent = ageText();
+  $('#ageBd').textContent = ' · 距生日' + days + '天';
+}
+
+/* ===== 渲染：里程碑 ===== */
+const MILE_PRESETS = [
+  { e: '🔄', name: '第一次翻身' }, { e: '🪑', name: '第一次坐起来' },
+  { e: '🦷', name: '长出第一颗牙' }, { e: '👩', name: '第一次叫妈妈' },
+  { e: '👨', name: '第一次叫爸爸' }, { e: '🐛', name: '第一次爬行' },
+  { e: '🚶', name: '第一次走路' }, { e: '🍚', name: '第一次自己吃饭' },
+  { e: '🏊', name: '第一次游泳' }, { e: '🎂', name: '第一个生日' },
+  { e: '✈️', name: '第一次坐飞机' }, { e: '🧳', name: '第一次去旅行' }
+];
+function renderMilestones() {
+  const list = DB.milestones;
+  $('#mileCount').textContent = list.length ? list.length + ' 个' : '';
+  $('#milePresets').innerHTML = MILE_PRESETS.map(p => {
+    const done = list.some(m => m.name === p.name);
+    return `<button class="mile-chip" data-mileadd="${esc(p.name)}"${done ? ' style="opacity:.5;pointer-events:none;border-style:solid"' : ''}>${done ? '✅' : p.e} ${esc(p.name)}</button>`;
+  }).join('');
+  $('#mileList').innerHTML = list.length ? list.map(m => {
+    const months = Math.round(ageOfMonth(m.date));
+    return `<div class="mile-item">
+      <div class="mile-emoji">${m.emoji}</div>
+      <div class="mile-info">
+        <div class="mi-title">${esc(m.name)}</div>
+        <div class="mi-sub">${fmtMD(m.date)} · ${months < 1 ? '还没满月' : months + ' 个月大'}</div>
+      </div>
+      <button class="mile-del" data-delmile="${m.id}">🗑</button>
+    </div>`;
+  }).join('') : '<div class="empty-tip" style="padding:14px 0"><span class="big">🎖</span>还没有里程碑<br>点上面的小标签，或自己写一个吧</div>';
+}
+function addMilestone(name, date) {
+  name = String(name || '').trim().slice(0, 20);
+  if (!name) { toast('🎖 写个名字吧'); return; }
+  if (DB.milestones.some(m => m.name === name)) { toast('✅ 这个里程碑已经记过啦'); return; }
+  DB.milestones.push({ id: uid(), name, emoji: '🎖', date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : todayKey(), createdAt: Date.now() });
+  DB.milestones.sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+  save(); renderMilestones(); renderAbout();
+  toast('🎖 记下啦：' + name);
+}
+
+/* ===== 本地空间统计 ===== */
+function renderSpace() {
+  const total = 5 * 1024 * 1024;
+  let used = 0;
+  try { used = new Blob([localStorage.getItem(LS_KEY) || '']).size; } catch (e) {}
+  const pct = Math.min(100, Math.round(used / total * 100));
+  $('#spaceBar').style.width = pct + '%';
+  $('#spacePct').textContent = pct + '%';
+  $('#spaceTxt').textContent = '📊 本地空间 ' + (used / 1048576).toFixed(1) + ' MB / 约 5 MB';
+}
+
+/* ===== 云同步（GitHub） ===== */
+const CLOUD_KEY = 'fanfan.cloud.config';
+let cloudCfg = { repo: '', token: '' };
+let cloudBusy = false;
+function loadCloud() {
+  try { cloudCfg = Object.assign({ repo: '', token: '' }, JSON.parse(localStorage.getItem(CLOUD_KEY) || '{}')); } catch (e) {}
+}
+function saveCloud() {
+  try { localStorage.setItem(CLOUD_KEY, JSON.stringify(cloudCfg)); } catch (e) {}
+}
+function encodePath(p) { return p.split('/').map(encodeURIComponent).join('/'); }
+function utf8ToB64(s) { return btoa(String.fromCharCode(...new TextEncoder().encode(s))); }
+function b64ToUtf8(b) { return new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0))); }
+async function ghFetch(path, method) {
+  const r = await fetch('https://api.github.com/repos/' + cloudCfg.repo + '/contents/' + encodePath(path), {
+    method: method || 'GET',
+    headers: { Authorization: 'token ' + cloudCfg.token, Accept: 'application/vnd.github+json' }
+  });
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+async function ghGetFile(path) {   // 文件内容：{ b64, sha } 或 null
+  const j = await ghFetch(path);
+  return j ? { b64: j.content, sha: j.sha } : null;
+}
+async function ghPutFile(path, b64, sha) {
+  const body = { message: 'sync fanfan notebook', content: b64 };
+  if (sha) body.sha = sha;
+  const r = await fetch('https://api.github.com/repos/' + cloudCfg.repo + '/contents/' + encodePath(path), {
+    method: 'PUT',
+    headers: { Authorization: 'token ' + cloudCfg.token, Accept: 'application/vnd.github+json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return (await r.json()).content.sha;
+}
+function setCloudUI(text, cls) {
+  const el = $('#cloudState');
+  el.textContent = text;
+  el.className = 'cloud-state' + (cls ? ' ' + cls : '');
+}
+function renderCloudUI() {
+  $('#cloudRepo').value = cloudCfg.repo;
+  $('#cloudToken').value = cloudCfg.token;
+  const ok = !!(cloudCfg.repo && cloudCfg.token);
+  setCloudUI(ok ? '💾 已保存设置 · 点「测试连接」验证，或直接「立即同步」' : '🔌 未连接（填好下方设置）', ok ? '' : '');
+}
+async function cloudTest() {
+  if (!cloudCfg.repo || !cloudCfg.token) { toast('☁️ 先填仓库名和 Token'); return; }
+  setCloudUI('⏳ 正在连接…');
+  try {
+    const r = await fetch('https://api.github.com/repos/' + cloudCfg.repo, {
+      headers: { Authorization: 'token ' + cloudCfg.token, Accept: 'application/vnd.github+json' }
+    });
+    if (r.ok) {
+      const j = await r.json();
+      setCloudUI('✅ 连接成功！仓库「' + j.name + '」' + (j.private ? '（私有）' : '（公开）'), 'ok');
+      toast('✅ 连接成功！');
+    } else {
+      const msg = r.status === 401 ? 'Token 无效，请重新生成' : r.status === 404 ? '仓库不存在（检查用户名/仓库名）' : 'HTTP ' + r.status;
+      setCloudUI('❌ ' + msg, 'err');
+      toast('❌ ' + msg);
+    }
+  } catch (e) {
+    setCloudUI('❌ 网络异常，请检查网络后重试', 'err');
+    toast('❌ 网络异常');
+  }
+}
+function mergeCloud(cloudData, imgCache) {
+  let added = 0;
+  const haveRec = new Set(DB.records.map(r => r.id));
+  (cloudData.records || []).forEach(cr => {
+    if (haveRec.has(cr.id)) return;
+    const images = (cr.images || []).map(fn => imgCache[fn]).filter(Boolean);
+    if (images.length !== (cr.images || []).length) return;
+    DB.records.push({ id: String(cr.id), date: /^\d{4}-\d{2}-\d{2}$/.test(cr.date) ? cr.date : todayKey(), text: String(cr.text || '').slice(0, 500), images, createdAt: cr.createdAt || Date.now() });
+    added++;
+  });
+  const haveG = new Set(DB.growth.map(g => g.id));
+  (cloudData.growth || []).forEach(cg => { if (!haveG.has(cg.id)) DB.growth.push(cg); });
+  const haveM = new Set(DB.messages.map(m => m.id));
+  (cloudData.messages || []).forEach(cm => { if (!haveM.has(cm.id)) DB.messages.push(cm); });
+  const haveMi = new Set(DB.milestones.map(m => m.id));
+  (cloudData.milestones || []).forEach(cm => { if (!haveMi.has(cm.id)) DB.milestones.push(cm); });
+  DB.records.sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+  DB.growth.sort((a, b) => a.date.localeCompare(b.date));
+  DB.messages.sort((a, b) => b.createdAt - a.createdAt);
+  DB.milestones.sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+  return added;
+}
+async function cloudSync() {
+  if (cloudBusy) return;
+  if (!cloudCfg.repo || !cloudCfg.token) { toast('☁️ 请先填写 GitHub 设置'); return; }
+  cloudBusy = true;
+  $('#cloudSync').disabled = true;
+  setCloudUI('⏳ 同步中，请稍候…');
+  try {
+    /* 1. 拉取云端 data.json */
+    const remote = await ghGetFile('data.json');
+    let cloudData = null;
+    if (remote) {
+      try { cloudData = JSON.parse(b64ToUtf8(remote.b64)); } catch (e) { cloudData = null; }
+    }
+    /* 2. 拉取云端照片并合并 */
+    const needImgs = [];
+    if (cloudData) (cloudData.records || []).forEach(cr => (cr.images || []).forEach(fn => { if (typeof fn === 'string' && fn.indexOf('photos/') === 0) needImgs.push(fn); }));
+    const imgCache = {};
+    for (const fn of needImgs) {
+      if (imgCache[fn]) continue;
+      const g = await ghGetFile(fn);
+      if (g) imgCache[fn] = 'data:image/jpeg;base64,' + g.b64;
+    }
+    let added = 0;
+    if (cloudData) added = mergeCloud(cloudData, imgCache);
+    /* 3) 上传本地照片为独立文件 */
+    const dir = await ghFetch('photos');
+    const dirMap = {};
+    if (dir && Array.isArray(dir)) dir.forEach(f => { dirMap[f.name] = f.sha; });
+    let putN = 0;
+    for (const r of DB.records) {
+      for (let i = 0; i < r.images.length; i++) {
+        const fn = r.id + '_' + i + '.jpg';
+        if (dirMap[fn]) continue;
+        const src = r.images[i];
+        if (typeof src !== 'string' || src.indexOf('data:image') !== 0) continue;
+        const b64 = src.split(',')[1];
+        await ghPutFile('photos/' + fn, b64);
+        putN++;
+      }
+    }
+    /* 4) 上传 data.json（照片引用文件名） */
+    const cloudOut = {
+      app: 'fanfan-notebook', ver: 2, exportedAt: new Date().toISOString(),
+      records: DB.records.map(r => ({ id: r.id, date: r.date, text: r.text, createdAt: r.createdAt, images: r.images.map((s, i) => 'photos/' + r.id + '_' + i + '.jpg') })),
+      growth: DB.growth, messages: DB.messages, milestones: DB.milestones
+    };
+    await ghPutFile('data.json', utf8ToB64(JSON.stringify(cloudOut, null, 2)), remote ? remote.sha : undefined);
+    save();
+    renderAll();
+    const parts = [];
+    if (putN) parts.push('新传 ' + putN + ' 张照片');
+    if (added) parts.push('拉取 ' + added + ' 条新记录');
+    setCloudUI('✅ 同步完成！' + (parts.length ? ' ' + parts.join('，') + '。' : '') + '云端已是最新', 'ok');
+    toast('☁️ 同步成功！');
+  } catch (e) {
+    setCloudUI('❌ 同步失败：' + (e.message || '未知错误') + '（检查 Token 与网络）', 'err');
+    toast('❌ 同步失败');
+  } finally {
+    cloudBusy = false;
+    $('#cloudSync').disabled = false;
+  }
+}
+
+/* ===== 弹窗：记一笔 ===== */
+function openRecordModal(withPhoto) {
+  $('#recDate').value = todayKey();
+  $('#recText').value = '';
+  recDraftImgs = [];
+  renderRecPreview();
+  $('#recordModal').classList.add('show');
+  if (withPhoto) setTimeout(() => $('#recFiles').click(), 260);
+}
+function renderRecPreview() {
+  $('#recPreview').innerHTML = recDraftImgs.map((src, i) =>
+    `<div class="ip"><img src="${src}"><button class="rm" data-rmi="${i}">✕</button></div>`).join('');
+}
+
+/* ===== 事件绑定 ===== */
+function bind() {
+  $$('.tab').forEach(t => t.onclick = () => flipTo(t.dataset.page));
+
+  $('#btnAddRecord').onclick = () => openRecordModal(false);
+  $('#btnAddPhoto').onclick = () => openRecordModal(true);
+  $$('[data-close]').forEach(b => b.onclick = () => $('#recordModal').classList.remove('show'));
+
+  $('#recPick').onclick = () => $('#recFiles').click();
+  $('#recFiles').addEventListener('change', async e => {
+    const files = [...e.target.files].slice(0, 9 - recDraftImgs.length);
+    if (!files.length) return;
+    toast('🖼 正在处理照片…');
+    for (const f of files) {
+      try { recDraftImgs.push(await compressImage(f, 960)); } catch (err) {}
+    }
+    renderRecPreview();
+    e.target.value = '';
+  });
+  $('#recPreview').addEventListener('click', e => {
+    const b = e.target.closest('[data-rmi]');
+    if (b) { recDraftImgs.splice(Number(b.dataset.rmi), 1); renderRecPreview(); }
+  });
+  $('#recSave').onclick = () => {
+    const date = $('#recDate').value || todayKey();
+    const text = $('#recText').value.trim();
+    if (!text && !recDraftImgs.length) { toast('✍️ 写点什么或选张照片吧'); return; }
+    DB.records.unshift({ id: uid(), date, text, images: recDraftImgs, createdAt: Date.now() });
+    DB.records.sort((a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt);
+    save();
+    $('#recordModal').classList.remove('show');
+    renderNotes(); renderGallery(); renderAbout();
+    toast('✅ 写进手账啦');
+  };
+
+  $('#noteList').addEventListener('click', e => {
+    const del = e.target.closest('[data-delrec]');
+    if (del) {
+      const id = del.dataset.delrec;
+      DB.records = DB.records.filter(r => r.id !== id);
+      save(); renderNotes(); renderGallery(); renderAbout();
+      toast('🗑 已撕掉这一页');
+      return;
+    }
+    const img = e.target.closest('img[data-lb]');
+    if (img) openLightbox(img.dataset.lb, Number(img.dataset.lbi));
+  });
+  $('#galleryGrid').addEventListener('click', e => {
+    const dl = e.target.closest('[data-dl]');
+    if (dl) {
+      const it = galleryItems[Number(dl.dataset.dl)];
+      if (it) downloadPhoto(it.src, '饭饭的照片-' + it.date + '-' + (Number(dl.dataset.dl) + 1) + '.jpg');
+      return;
+    }
+    const it = e.target.closest('.g-item');
+    if (it) openLightbox(it.dataset.lbg, 0);
+  });
+
+  $('#growDate').value = todayKey();
+  $('#growSave').onclick = () => {
+    const date = $('#growDate').value || todayKey();
+    const h = parseFloat($('#growHeight').value);
+    const w = parseFloat($('#growWeight').value);
+    if ((!h || h <= 0) && (!w || w <= 0)) { toast('📏 至少填一项身高或体重哦'); return; }
+    const same = DB.growth.find(g => g.date === date);
+    if (same) {
+      if (h > 0) same.height = h;
+      if (w > 0) same.weight = w;
+      toast('♻️ 已更新 ' + fmtMD(date) + ' 的记录');
+    } else {
+      DB.growth.push({ id: uid(), date, height: h > 0 ? h : null, weight: w > 0 ? w : null });
+      toast('✅ 记下啦');
+    }
+    DB.growth.sort((a, b) => a.date.localeCompare(b.date));
+    save();
+    $('#growHeight').value = ''; $('#growWeight').value = '';
+    renderGrowth(); renderAbout();
+  };
+  $$('#page-grow .chip').forEach(c => c.onclick = () => {
+    curveMode = c.dataset.cm;
+    $$('#page-grow .chip').forEach(x => x.classList.toggle('on', x === c));
+    renderCurve();
+  });
+  $('#growTable').addEventListener('click', e => {
+    const d = e.target.closest('[data-delgrow]');
+    if (d) {
+      DB.growth = DB.growth.filter(g => g.id !== d.dataset.delgrow);
+      save(); renderGrowth(); renderAbout();
+      toast('🗑 已删除这条记录');
+    }
+  });
+
+  $('#msgSend').onclick = () => {
+    const text = $('#msgText').value.trim();
+    if (!text) { toast('💌 写点什么吧'); return; }
+    DB.messages.unshift({ id: uid(), date: todayKey(), from: $('#msgFrom').value.trim() || '姐姐', text, createdAt: Date.now() });
+    save();
+    $('#msgText').value = '';
+    renderMsgs(); renderAbout();
+    toast('✅ 已投进手账');
+  };
+  $('#msgList').addEventListener('click', e => {
+    const d = e.target.closest('[data-delmsg]');
+    if (d) {
+      DB.messages = DB.messages.filter(m => m.id !== d.dataset.delmsg);
+      save(); renderMsgs(); renderAbout();
+      toast('🗑 已删除');
+    }
+  });
+
+  /* ===== 里程碑 ===== */
+  $('#milePresets').addEventListener('click', e => {
+    const c = e.target.closest('[data-mileadd]');
+    if (c) addMilestone(c.dataset.mileadd, todayKey());
+  });
+  $('#mileList').addEventListener('click', e => {
+    const d = e.target.closest('[data-delmile]');
+    if (d) {
+      DB.milestones = DB.milestones.filter(m => m.id !== d.dataset.delmile);
+      save(); renderMilestones(); renderAbout();
+      toast('🗑 已删除这个里程碑');
+    }
+  });
+  $('#mileAdd').onclick = () => {
+    const name = $('#mileName').value;
+    if (!name.trim()) { toast('🎖 写个名字吧'); return; }
+    addMilestone(name, $('#mileDate').value || todayKey());
+    $('#mileName').value = '';
+  };
+
+  /* ===== 灯箱按钮 ===== */
+  $('#lbClose').onclick = lbClose;
+  $('#lbPrev').onclick = () => lbStep(-1);
+  $('#lbNext').onclick = () => lbStep(1);
+  $('#lbDownload').onclick = lbDownloadCur;
+  $('#lbShare').onclick = lbShareCur;
+  $('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') lbClose(); });
+
+  /* ===== 云同步 ===== */
+  $('#btnCloud').onclick = () => flipTo('about');
+  $('#cloudTest').onclick = cloudTest;
+  $('#cloudSave').onclick = () => {
+    cloudCfg.repo = $('#cloudRepo').value.trim().replace(/^https?:\/\/github.com\//, '').replace(/\/$/, '');
+    cloudCfg.token = $('#cloudToken').value.trim();
+    if (!cloudCfg.repo || !cloudCfg.token) { toast('☁️ 请把仓库名和 Token 都填上'); return; }
+    saveCloud();
+    renderCloudUI();
+    toast('💾 已保存设置');
+  };
+  $('#cloudSync').onclick = cloudSync;
+
+  $('#btnExport').onclick = exportBackup;
+  $('#btnBackup').onclick = exportBackup;
+  function exportBackup() {
+    const total = DB.records.reduce((s, r) => s + r.images.length, 0);
+    if (!DB.records.length && !DB.growth.length && !DB.messages.length) { toast('📦 还没有数据可备份'); return; }
+    const blob = new Blob([JSON.stringify({ app: 'fanfan-notebook', ver: 1, exportedAt: new Date().toISOString(), ...DB }, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '饭饭成长手账备份-' + todayKey() + '.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('📦 备份已下载（' + total + ' 张照片已包含）');
+  }
+  $('#btnImport').onclick = () => $('#fileImport').click();
+  $('#fileImport').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        DB = normalizeDB(JSON.parse(r.result));
+        save();
+        renderAll();
+        toast('📥 恢复成功！');
+      } catch (err) { toast('😅 文件格式不对'); }
+      e.target.value = '';
+    };
+    r.readAsText(f, 'utf-8');
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      $('#recordModal').classList.remove('show');
+      lbClose();
+    }
+    if (e.key === 'ArrowLeft') lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+  });
+}
+
+/* ===== 渲染全部 & 启动 ===== */
+function renderAll() {
+  renderNotes(); renderGallery(); renderGrowth(); renderMsgs(); renderAbout(); renderTop();
+  renderMilestones(); renderSpace();
+}
+(function init() {
+  loadCloud();
+  load();
+  bind();
+  renderAll();
+  renderCloudUI();
+})();
+
+/* ===== 静态托管平台角标清理（CodeSandbox 注入的右下角水印，本地文件无影响） ===== */
+try {
+  const style = document.createElement('style');
+  style.textContent = 'iframe[style*="z-index: 9999999999999"]{display:none!important}';
+  document.head.appendChild(style);
+  const isBadge = n => n && n.tagName === 'IFRAME' && !n.src && n.style.position === 'fixed' && n.style.zIndex === '9999999999999';
+  new MutationObserver(list => {
+    list.forEach(m => m.addedNodes.forEach(n => { if (isBadge(n)) n.remove(); }));
+  }).observe(document.body, { childList: true });
+} catch (e) {}
+</script>
+</body>
+</html>
