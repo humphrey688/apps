@@ -83,6 +83,21 @@ header.hero .sub{font-size:12.5px;opacity:.92;margin-top:4px}
 .rules li{font-size:12.8px;color:var(--ink2);margin:7px 0 7px 18px}
 .rules li b{color:var(--ink)}
 .foot{text-align:center;font-size:11px;color:var(--ink3);margin-top:22px;line-height:1.8}
+/* 当前焦点 */
+.focus{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:14px 15px;box-shadow:var(--shadow);margin-bottom:14px}
+.focus h2{font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+.focus h2 .today{margin-left:auto;font-size:11px;font-weight:600;color:var(--ink3)}
+.fgrp{font-size:11.5px;font-weight:800;margin:11px 0 6px;display:flex;align-items:center;gap:6px}
+.fgrp.g-now{color:var(--red-deep)}
+.fgrp.g-next{color:var(--blue-deep)}
+.fgrp.g-soon{color:var(--yellow-deep)}
+.fitem{display:flex;gap:9px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:9px 12px;margin-bottom:6px}
+.fitem.hot{background:var(--red-bg);border-color:#f5c1c0}
+.fitem .fe{font-size:18px;flex-shrink:0;line-height:1.4}
+.fitem .ft{flex:1;min-width:0}
+.fitem .ft b{font-size:13px;display:block}
+.fitem .ft span{font-size:11.5px;color:var(--ink2)}
+.fitem .fw{flex-shrink:0;font-size:10.5px;color:var(--ink3);text-align:right}
 @media(min-width:640px){ .ccard .head{padding:15px 18px 13px} .cbody{padding:0 18px 16px} }
 @media(max-width:480px){
   .badge{font-size:10px;padding:3px 7px;white-space:nowrap}
@@ -104,6 +119,8 @@ header.hero .sub{font-size:12.5px;opacity:.92;margin-top:4px}
     <div class="score-pill">已到手<b>+0.5</b></div>
   </div>
 </header>
+
+<div class="focus" id="focus"></div>
 
 <div class="asset-bar">
   <div class="asset"><div class="t">✅ 已到手</div><div class="v">美赛 H 奖 +0.5</div><div class="d">C17 · 已锁定</div></div>
@@ -133,13 +150,13 @@ header.hero .sub{font-size:12.5px;opacity:.92;margin-top:4px}
 /* ============ 数据 ============ */
 const TIMELINE = [
   { m:'2026.09', now:true, t:'<b>国赛 9/10-13</b> · <b>三四级 9/26-27</b> · <b>华为ICT报名(9-10月)</b> · 百度之星二场初赛 9/19' },
-  { m:'2026.10', t:'蓝桥杯报名(~10/20 起) · AI算法赛省赛 10/14(可选) · 华为ICT校赛 · 组队定作品选题' },
-  { m:'2026.11', t:'<b>NCRE 出成绩</b> · <b>国赛出成绩</b> · 华为ICT省赛(11-12月) · 作品开发启动' },
-  { m:'2026.12', t:'蓝桥杯报名截止(~12/15) · <b>大唐杯/信科赛报名</b> · <b>计设大赛报名</b> · ICT创新赛初赛(12月)' },
+  { m:'2026.10', t:'蓝桥杯报名(~10/20 起) · <b>数学竞赛最后冲刺</b> · AI算法赛省赛 10/14(可选) · 华为ICT校赛 · 组队定作品选题' },
+  { m:'2026.11', t:'<b>数学竞赛初赛 11/14(上午)</b> · <b>NCRE 出成绩</b> · <b>国赛出成绩</b> · 华为ICT省赛(11-12月) · 作品开发启动' },
+  { m:'2026.12', t:'蓝桥杯报名截止(~12/15) · <b>大唐杯/信科赛报名</b> · <b>计设大赛报名</b> · ICT创新赛初赛(12月) · 数学竞赛省奖陆续公布' },
   { m:'2027.01', t:'寒假主攻：作品开发 + 蓝桥杯真题每周2套（AI 辅助复盘）' },
   { m:'2027.02', t:'<b>服创大赛报名(2/11-3/20)</b> · 作品 v2 打磨' },
-  { m:'2027.03', t:'<b>华为ICT中国总决赛(3月)</b> · 计设省赛提交 · 天梯赛校内报名 · 软件杯报名(4月启动前哨)' },
-  { m:'2027.04', t:'<b>蓝桥杯省赛</b> · 计设省级评审 · <b>大唐杯省赛(4月)</b> · 天梯赛全国总决赛(4月中)' },
+  { m:'2027.03', t:'<b>华为ICT中国总决赛(3月)</b> · 计设省赛提交 · <b>数学竞赛决赛(3月底-4月·大连)</b> · 天梯赛校内报名 · 软件杯报名(4月启动前哨)' },
+  { m:'2027.04', t:'<b>蓝桥杯省赛</b> · 计设省级评审 · <b>大唐杯省赛(4月)</b> · 天梯赛全国总决赛(4月中) · 数学竞赛决赛/国奖出分' },
   { m:'2027.05', t:'服创区域赛(5-6月) · ICT全球总决赛(5月，中国区名次已计)' },
   { m:'2027.06', t:'<b>蓝桥杯国赛(6月上旬)</b> · 大唐杯晋级备赛' },
   { m:'2027.07', t:'软件杯决赛 · <b>计设国赛(7-8月)</b> · <b>大唐杯全国总决赛(7月)</b> · 百度之星(新一届初赛)' },
@@ -335,12 +352,71 @@ const CONTESTS = [
       { t:'完赛提交论文', w:'9/13' },
       { t:'查成绩', w:'11月' }
     ]
+  },
+  {
+    id:'cmc', emoji:'📐', name:'全国大学生数学竞赛（第十八届）', pri:'done', priTxt:'✅ 已报名 · 11/14 初赛',
+    tag:'国奖满分3 / 湖北省一1 · 考高等数学',
+    rows:[
+      ['是什么','全国统一初赛（湖北赛区即第十五届湖北省大学生数学竞赛）→ 决赛两级。非数学类考高等数学，与专业课同源'],
+      ['准确时间','初赛 <b>2026.11.14(周六) 9:00-11:30</b> → 省奖约12月底-1月出 → 决赛 <b>2027.3月底-4月·大连理工</b> → 国奖 4-5 月'],
+      ['最佳赛道','非数学类（你已报）；省赛获奖面较大，决赛名额看初赛排名'],
+      ['要做什么','① 10月起每周 1 套历年真题 ② AI 辅助整理错题本 ③ 11 月初最后冲刺'],
+      ['成绩落地','省奖 12-1 月、国奖 2027.4-5 → 全部赶认定 ✅'],
+      ['加分说明','细则里是两条：B13 国奖(满分3) + C54 湖北赛区省奖(满分1.5)，初赛省奖先到手保底 1 分']
+    ],
+    safe:1, rush:3, safeTxt:'省一 1 分', rushTxt:'国一 3 分',
+    cks:[
+      { t:'历年真题 5 套刷完', w:'11月初' },
+      { t:'初赛完赛', w:'11/14' },
+      { t:'查省奖成绩', w:'12-1月' },
+      { t:'晋级则赴大连决赛', w:'2027.3-4' }
+    ]
   }
 ];
 
 /* ============ 渲染 ============ */
 const $ = s => document.querySelector(s);
 const esc = s => String(s);
+
+/* ===== 当前焦点（按今天日期自动变化） ===== */
+const FOCUS = [
+  { e:'🧮', t:'数模国赛进行中', d:'9/10 18:00 - 9/13 20:00 · 全力以赴，稳住心态', s:'2026-09-10', e2:'2026-09-13', hot:true },
+  { e:'⭐', t:'百度之星二场初赛', d:'9/19 14:00 线上赛 · star.baidu.com 报名 + 刷2套往年题', s:'2026-09-11', e2:'2026-09-19' },
+  { e:'🏆', t:'华为ICT实践赛报名', d:'拉队友、找教练定赛道（AI/Datacom），官网注册', s:'2026-09-10', e2:'2026-10-31' },
+  { e:'📜', t:'计算机三四级冲刺', d:'9/26-27 考试 · 真题卷过一遍 + AI 背大题模板', s:'2026-09-14', e2:'2026-09-27' },
+  { e:'🤖', t:'AI算法精英大赛报名截止 10/7', d:'联系学院确认是否组织参赛', s:'2026-09-20', e2:'2026-10-07' },
+  { e:'📐', t:'数学竞赛初赛冲刺', d:'11/14 上午开考 · 每周1套真题 + AI 错题复盘', s:'2026-10-01', e2:'2026-11-14' },
+  { e:'🟦', t:'蓝桥杯报名', d:'预计 10/20 开抢 · Python 组', s:'2026-10-15', e2:'2026-12-15' },
+  { e:'🎨', t:'计设大赛：组队定题+作品开发', d:'自己当队长 · AI 应用赛道 · 11 月启动', s:'2026-11-01', e2:'2027-03-31' },
+  { e:'📡', t:'大唐杯/信科赛报名', d:'12月起 · 跟学院报 3 人队（工程实践赛）', s:'2026-12-01', e2:'2027-03-10' },
+  { e:'💼', t:'服创大赛报名', d:'2/11-3/20 · 复用作品对准企业命题清单', s:'2027-02-01', e2:'2027-03-20' },
+  { e:'🪜', t:'天梯赛校内报名', d:'关注学院 ACM 队通知 · 与蓝桥杯共用积累', s:'2027-03-01', e2:'2027-03-31' },
+  { e:'🏆', t:'华为ICT中国总决赛', d:'3 月开赛 · 冲国三/国二', s:'2027-03-01', e2:'2027-03-31', hot:true },
+  { e:'🟦', t:'蓝桥杯省赛', d:'4 月中 · 冲省一', s:'2027-04-01', e2:'2027-04-30', hot:true },
+  { e:'📐', t:'数学竞赛决赛（大连理工）', d:'3月底-4月 · 冲国奖', s:'2027-03-20', e2:'2027-04-20' },
+  { e:'💼', t:'服创/计设/大唐杯 决赛季', d:'7-8 月集中完赛，盯获奖公示', s:'2027-07-01', e2:'2027-08-31', hot:true },
+  { e:'🎯', t:'推免材料提交', d:'一般 9 月上中旬 · 提前整理证书与公示截图', s:'2027-09-01', e2:'2027-09-20', hot:true }
+];
+function renderFocus(){
+  const now = new Date(); now.setHours(0,0,0,0);
+  const D = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+  const act = [], next = [];
+  FOCUS.forEach(f => {
+    const s = D(f.s), en = D(f.e2);
+    if (s <= now && now <= en) act.push(f);
+    else if (s > now && (s - now) / 86400000 <= 45) next.push(f);
+  });
+  act.sort((a,b) => D(a.e2) - D(b.e2));
+  next.sort((a,b) => D(a.s) - D(b.s));
+  const fmt = d => (d.getMonth()+1) + '/' + d.getDate();
+  const item = f => `<div class="fitem${f.hot?' hot':''}"><span class="fe">${f.e}</span><div class="ft"><b>${f.t}</b><span>${f.d}</span></div><div class="fw">至 ${fmt(D(f.e2))}</div></div>`;
+  const today = (now.getMonth()+1) + ' 月 ' + now.getDate() + ' 日';
+  let html = `<h2>📍 现在应该做什么<span class="today">今天是 ${today}</span></h2>`;
+  if (act.length) html += `<div class="fgrp g-now">🔴 正在进行 / 截止前</div>` + act.map(item).join('');
+  if (next.length) html += `<div class="fgrp g-next">⏳ 接下来 45 天内启动</div>` + next.slice(0,4).map(item).join('');
+  if (!act.length && !next.length) html += `<div class="fitem"><span class="fe">🌴</span><div class="ft"><b>当前没有卡点的任务</b><span>看看下方时间轴和比赛卡，提前准备下一个</span></div></div>`;
+  $('#focus').innerHTML = html;
+}
 
 function renderTimeline(){
   $('#timeline').innerHTML = TIMELINE.map(x =>
@@ -385,6 +461,7 @@ function ck(el){
   el.classList.toggle('on', saved[k]);
 }
 
+renderFocus();
 renderTimeline();
 renderCards();
 </script>
