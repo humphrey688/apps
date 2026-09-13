@@ -1061,13 +1061,19 @@ function saveCloud() {
 function encodePath(p) { return p.split('/').map(encodeURIComponent).join('/'); }
 function utf8ToB64(s) { return btoa(String.fromCharCode(...new TextEncoder().encode(s))); }
 function b64ToUtf8(b) { return new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0))); }
+async function ghErrMsg(r) {
+  let msg = 'HTTP ' + r.status;
+  try { const j = await r.json(); if (j && j.message) msg += '（' + j.message + '）'; } catch (e) {}
+  if (r.status === 403) msg += ' —— 通常是 Token 没有写入权限（Fine-grained 需在 Permissions→Contents 选 Read and write）或单文件超 1MB';
+  return msg;
+}
 async function ghFetch(path, method) {
   const r = await fetch('https://api.github.com/repos/' + cloudCfg.repo + '/contents/' + encodePath(path), {
     method: method || 'GET',
     headers: { Authorization: 'token ' + cloudCfg.token, Accept: 'application/vnd.github+json' }
   });
   if (r.status === 404) return null;
-  if (!r.ok) throw new Error('HTTP ' + r.status);
+  if (!r.ok) throw new Error(await ghErrMsg(r));
   return r.json();
 }
 async function ghGetFile(path) {   // 文件内容：{ b64, sha } 或 null
@@ -1082,7 +1088,7 @@ async function ghPutFile(path, b64, sha) {
     headers: { Authorization: 'token ' + cloudCfg.token, Accept: 'application/vnd.github+json' },
     body: JSON.stringify(body)
   });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
+  if (!r.ok) throw new Error(await ghErrMsg(r));
   return (await r.json()).content.sha;
 }
 function setCloudUI(text, cls) {
@@ -1108,7 +1114,7 @@ async function cloudTest() {
       setCloudUI('✅ 连接成功！仓库「' + j.name + '」' + (j.private ? '（私有）' : '（公开）'), 'ok');
       toast('✅ 连接成功！');
     } else {
-      const msg = r.status === 401 ? 'Token 无效，请重新生成' : r.status === 404 ? '仓库不存在（检查用户名/仓库名）' : 'HTTP ' + r.status;
+      const msg = r.status === 401 ? 'Token 无效，请重新生成' : r.status === 404 ? '仓库不存在（检查用户名/仓库名）' : r.status === 403 ? 'Token 没有这个仓库的权限（Fine-grained 需勾选该仓库且 Contents 为 Read and write）' : 'HTTP ' + r.status;
       setCloudUI('❌ ' + msg, 'err');
       toast('❌ ' + msg);
     }
@@ -1168,6 +1174,7 @@ async function cloudSync() {
     const dirMap = {};
     if (dir && Array.isArray(dir)) dir.forEach(f => { dirMap[f.name] = f.sha; });
     let putN = 0;
+    const failPhotos = [];
     for (const r of DB.records) {
       for (let i = 0; i < r.images.length; i++) {
         const fn = r.id + '_' + i + '.jpg';
@@ -1175,8 +1182,14 @@ async function cloudSync() {
         const src = r.images[i];
         if (typeof src !== 'string' || src.indexOf('data:image') !== 0) continue;
         const b64 = src.split(',')[1];
-        await ghPutFile('photos/' + fn, b64);
-        putN++;
+        const kb = Math.round(b64.length * 0.75 / 1024);
+        try {
+          if (kb > 950) { failPhotos.push(fn + '（' + kb + 'KB 超过单文件1MB上限，删掉这条照片重新添加即可）'); continue; }
+          await ghPutFile('photos/' + fn, b64);
+          putN++;
+        } catch (pe) {
+          failPhotos.push(fn + '（' + pe.message + '）');
+        }
       }
     }
     /* 4) 上传 data.json（照片引用文件名） */
@@ -1191,11 +1204,16 @@ async function cloudSync() {
     const parts = [];
     if (putN) parts.push('新传 ' + putN + ' 张照片');
     if (added) parts.push('拉取 ' + added + ' 条新记录');
-    setCloudUI('✅ 同步完成！' + (parts.length ? ' ' + parts.join('，') + '。' : '') + '云端已是最新', 'ok');
-    toast('☁️ 同步成功！');
+    if (failPhotos.length) {
+      setCloudUI('⚠️ 文字数据已同步，但 ' + failPhotos.length + ' 张照片没传上：' + failPhotos[0] + (failPhotos.length > 1 ? ' 等 ' + failPhotos.length + ' 张' : '') + '，其余已同步', 'err');
+      toast('⚠️ ' + failPhotos.length + ' 张照片没传上，其余已同步');
+    } else {
+      setCloudUI('✅ 同步完成！' + (parts.length ? ' ' + parts.join('，') + '。' : '') + '云端已是最新', 'ok');
+      toast('☁️ 同步成功！');
+    }
   } catch (e) {
-    setCloudUI('❌ 同步失败：' + (e.message || '未知错误') + '（检查 Token 与网络）', 'err');
-    toast('❌ 同步失败');
+    setCloudUI('❌ 同步失败：' + (e.message || '未知错误'), 'err');
+    toast('❌ 同步失败，详见状态说明');
   } finally {
     cloudBusy = false;
     $('#cloudSync').disabled = false;
