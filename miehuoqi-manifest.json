@@ -1,0 +1,14 @@
+{
+  "name": "灭火器",
+  "short_name": "灭火器",
+  "description": "吵架了就进来 · 嘴先休息，用手说",
+  "start_url": "https://humphrey688.github.io/apps/miehuoqi.html",
+  "scope": "https://humphrey688.github.io/apps/",
+  "display": "standalone",
+  "background_color": "#fff6eb",
+  "theme_color": "#faf6f4",
+  "icons": [
+    { "src": "miehuoqi-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "miehuoqi-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
