@@ -285,6 +285,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hira
   <button class="big-btn big-btn-green" onclick="openWarmthModal('her')">+ 我记一件</button>
 </div>
 
+<!-- 她的指南页 -->
+<div id="page-her-guide" class="page hidden">
+  <div style="padding:20px 16px 0;text-align:center">
+    <div style="font-size:19px;font-weight:700">📖 使用指南</div>
+    <div style="font-size:13px;color:var(--sub);margin-top:4px">三分钟搞明白这个小站</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:8px">🚀 三步上手</div>
+    <div style="font-size:13.5px;color:var(--sub);line-height:2">
+      <b style="color:var(--text)">① 切人</b>：顶部按钮切「🌸 我的 / 💙 给他点」<br>
+      <b style="color:var(--text)">② 他点</b>：把手机递给他，点一个心情，再点一个信号（想抱抱 / 态度不好 / 要空间 / 想聊聊），完事
+      <b style="color:var(--text)">③ 我调</b>：你这边去冷静呼吸、写树洞，情绪下来了再看他的信号，好好聊
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:8px">🧭 五个页面各是干嘛的</div>
+    <div style="font-size:13px;color:var(--sub);line-height:2.1">
+      🏠 <b style="color:var(--text)">首页</b>：两人今天的心情一览，14 天心情曲线，吵多了自动发现规律<br>
+      🌬️ <b style="color:var(--text)">冷静</b>：情绪上头先来 30 秒呼吸，冷下来再挑一句开场话，不硬呛<br>
+      🕳️ <b style="color:var(--text)">树洞</b>：只有你自己能看，想写啥写啥，写完就放下<br>
+      ⚡ <b style="color:var(--text)">简记</b>：刚吵完 10 秒记一笔（选标签就行），攒多了规律自动现形<br>
+      🌺 <b style="color:var(--text)">温暖</b>：记对方做的小事，气头上翻一翻，降低火力
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:8px">💡 小建议</div>
+    <div style="font-size:13px;color:var(--sub);line-height:2">
+      · 吵架当晚：先「冷静」，再「简记」记一笔，别急着讲道理<br>
+      · 平时没事：随手记「温暖小事」，攒多了是灭火器<br>
+      · 他的界面故意做得极简，就是让他没负担，别嫌他只会点按钮 🙂
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:8px">🔒 数据在哪</div>
+    <div style="font-size:13px;color:var(--sub);line-height:2">
+      所有记录只存在这台手机的浏览器里，不上网、不外传，树洞他看不到。<br>
+      ⚠️ 换手机或清理浏览器数据（缓存/网站数据）会一起清空，想留的文字先截图保存。
+    </div>
+  </div>
+</div>
+
 </div><!-- /modeHer -->
 
 <!-- ============ 他的模式 ============ -->
@@ -356,6 +401,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hira
   <div class="tabbar-item" data-tab="diary" onclick="goHer('diary')"><span class="icon">🕳️</span><span>树洞</span></div>
   <div class="tabbar-item" data-tab="log" onclick="goHer('log')"><span class="icon">⚡</span><span>简记</span></div>
   <div class="tabbar-item" data-tab="warmth" onclick="goHer('warmth')"><span class="icon">🌺</span><span>温暖</span></div>
+  <div class="tabbar-item" data-tab="guide" onclick="goHer('guide')"><span class="icon">❓</span><span>指南</span></div>
 </div>
 
 <!-- 模式切换 -->
