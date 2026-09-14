@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>🧯 灭火器 · 吵架了就进来</title>
+<style>
+:root{
+  --bg:#faf6f4; --card:#fff; --ink:#2d2a26; --sub:#9b948c; --line:#eee;
+  --fire:#ff6b5e; --fire-deep:#e8483f; --fire-bg:#fff0ee;
+  --water:#4ea8de; --water-deep:#1b6fa8; --water-bg:#eef6fc;
+  --green:#52c41a; --green-bg:#f0f9e9;
+  --radius:18px; --shadow:0 2px 14px rgba(45,42,38,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;max-width:520px;margin:0 auto;padding:0 0 90px;font-size:15px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin:12px 16px}
+.hidden{display:none!important}
+
+/* 顶部 */
+.hero{background:linear-gradient(135deg,#ff8577 0%,#e8483f 55%,#c9302c 100%);border-radius:22px;margin:14px 16px 0;padding:20px 18px;color:#fff;box-shadow:0 8px 24px rgba(232,72,63,.25)}
+.hero h1{font-size:21px;font-weight:800}
+.hero .sub{font-size:12.5px;opacity:.92;margin-top:3px}
+.mode-switch{display:flex;margin:12px 16px 0;background:#fff;border-radius:26px;overflow:hidden;box-shadow:var(--shadow)}
+.mode-btn{flex:1;text-align:center;padding:12px;cursor:pointer;font-size:14px;font-weight:700;color:var(--sub);transition:all .2s}
+.mode-btn.on-a{background:linear-gradient(135deg,#ff9a8a,#ff6b5e);color:#fff}
+.mode-btn.on-b{background:linear-gradient(135deg,#74c0ec,#4ea8de);color:#fff}
+
+/* 火势 */
+.fire-status{text-align:center;padding:18px 16px 8px}
+.fire-emoji{font-size:64px;display:inline-block}
+.fire-emoji.burn{animation:burn .5s ease-in-out infinite alternate}
+@keyframes burn{from{transform:scale(1) rotate(-2deg)}to{transform:scale(1.08) rotate(2deg)}}
+.fire-level{font-size:18px;font-weight:800;margin-top:2px}
+.fire-hint{font-size:12.5px;color:var(--sub);margin-top:2px}
+.timer{font-size:12px;color:var(--sub);margin-top:6px;font-variant-numeric:tabular-nums}
+
+/* 情绪 */
+.mood-row{display:flex;gap:8px;margin:10px 0}
+.md{flex:1;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:10px 4px;text-align:center;cursor:pointer;border:2.5px solid transparent;transition:all .15s}
+.md:active{transform:scale(.92)}
+.md.sel-a{border-color:var(--fire);background:var(--fire-bg);transform:scale(1.04)}
+.md.sel-b{border-color:var(--water);background:var(--water-bg);transform:scale(1.04)}
+.md .e{font-size:27px}
+.md .l{font-size:10.5px;color:var(--sub);margin-top:2px}
+.who-tag{font-size:12px;font-weight:700;margin:16px 16px 0;display:flex;align-items:center;gap:6px}
+.who-tag .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+/* 按钮 */
+.big-btn{display:block;width:calc(100% - 32px);margin:12px 16px;padding:16px;border:none;border-radius:16px;font-size:15.5px;font-weight:800;cursor:pointer;transition:transform .15s;text-align:center;font-family:inherit}
+.big-btn:active{transform:scale(.98)}
+.bg-fire{background:linear-gradient(135deg,#ff9a8a,#ff6b5e);color:#fff;box-shadow:0 4px 16px rgba(255,107,94,.3)}
+.bg-water{background:linear-gradient(135deg,#74c0ec,#4ea8de);color:#fff;box-shadow:0 4px 16px rgba(78,168,222,.3)}
+.bg-green{background:linear-gradient(135deg,#8fd175,#52c41a);color:#fff;box-shadow:0 4px 16px rgba(82,196,26,.25)}
+.bg-gray{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+
+/* 呼吸覆盖层 */
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(250,246,244,.98);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column}
+.overlay.show{display:flex}
+.breath-circle{width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#74c0ec,#4ea8de);display:flex;align-items:center;justify-content:center;font-size:52px;color:#fff;cursor:pointer;user-select:none;box-shadow:0 10px 40px rgba(78,168,222,.35)}
+.breath-circle.breathing{animation:breathe 8s ease-in-out infinite}
+@keyframes breathe{0%{transform:scale(.85)}50%{transform:scale(1.18)}100%{transform:scale(.85)}}
+.breath-text{font-size:17px;font-weight:800;margin-top:22px}
+.breath-sub{font-size:13px;color:var(--sub);margin-top:4px}
+.breath-count{font-size:12.5px;color:var(--water-deep);margin-top:10px;font-variant-numeric:tabular-nums}
+.breath-done{font-size:14px;font-weight:700;color:var(--green);margin-top:14px}
+
+/* 传话台 */
+.script-group{margin:12px 0 4px;font-size:13px;font-weight:700;color:var(--ink)}
+.script-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.sg{padding:10px 14px;border-radius:14px;border:2px solid var(--line);font-size:13.5px;cursor:pointer;transition:all .15s;background:#fff}
+.sg:active{transform:scale(.93)}
+.sg.a-said{border-color:var(--fire);background:var(--fire-bg)}
+.sg.b-said{border-color:var(--water);background:var(--water-bg)}
+.free-box{margin-top:12px}
+.free-box textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-size:14px;font-family:inherit;resize:none;min-height:64px;background:#fff}
+.free-box textarea:focus{border-color:var(--fire);outline:none}
+.free-tip{font-size:11.5px;color:var(--sub);margin-top:4px}
+
+/* 时间线 */
+.msg-item{border-radius:14px;padding:11px 14px;margin:8px 0;font-size:13.5px;line-height:1.55;position:relative}
+.msg-a{background:var(--fire-bg);border-left:4px solid var(--fire)}
+.msg-b{background:var(--water-bg);border-left:4px solid var(--water)}
+.msg-item .m-who{font-size:10.5px;font-weight:700;opacity:.65}
+.msg-item .m-time{font-size:10px;color:var(--sub);margin-top:3px}
+
+/* 和好 */
+.peace-row{display:flex;gap:10px;margin-top:10px}
+.peace-p{flex:1;border-radius:14px;padding:12px;text-align:center;font-size:12.5px;border:2px solid var(--line);background:#fff}
+.peace-p.ok{border-color:var(--green);background:var(--green-bg)}
+.peace-p .pe{font-size:22px;display:block}
+.peace-p .pw{font-weight:700;margin-top:2px}
+
+/* 统计 */
+.stat-grid{display:flex;gap:8px;flex-wrap:wrap}
+.st{flex:1;min-width:100px;background:var(--bg);border-radius:12px;padding:10px;text-align:center}
+.st .sv{font-size:17px;font-weight:800}
+.st .sl{font-size:10.5px;color:var(--sub)}
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:9px 4px;border-bottom:1px solid #f3f0ec;font-size:12.5px}
+.hist-item:last-child{border-bottom:none}
+.hist-item .hl{color:var(--sub)}
+
+/* 庆祝 */
+.cele-emoji{font-size:80px;animation:cele .6s ease}
+@keyframes cele{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+.rain{position:fixed;top:-40px;font-size:22px;animation:fall linear forwards;z-index:201;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+
+/* 其他 */
+.rule-li{font-size:13px;color:var(--sub);line-height:2;margin-left:2px}
+.rule-li b{color:var(--ink)}
+.toast{position:fixed;top:46%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:10px 22px;border-radius:12px;font-size:14px;z-index:300;display:none;white-space:nowrap}
+.toast.show{display:block}
+.mini-ops{text-align:center;font-size:12px;color:var(--sub);margin:16px 0 6px}
+.mini-ops span{cursor:pointer;text-decoration:underline;margin:0 8px}
+.empty{text-align:center;padding:22px 16px;color:var(--sub);font-size:13.5px}
+.fade{animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🧯 灭火器</h1>
+  <div class="sub">吵架了就进来 · 嘴先休息，用手说 · 两个人都只能用这个沟通</div>
+</header>
+
+<div class="mode-switch" id="modeSwitch">
+  <div class="mode-btn on-a" data-m="a" onclick="setMode('a')">🔥 我这侧</div>
+  <div class="mode-btn" data-m="b" onclick="setMode('b')">💧 递给 TA 用</div>
+</div>
+
+<div id="main"></div>
+
+<!-- 呼吸覆盖层 -->
+<div class="overlay" id="breathOverlay">
+  <div class="breath-circle" id="breathCircle" onclick="toggleBreath()">🫁</div>
+  <div class="breath-text" id="breathText">点我开始</div>
+  <div class="breath-sub" id="breathSub">4 秒吸气 · 4 秒呼气 · 做 30 秒</div>
+  <div class="breath-count" id="breathCount"></div>
+  <div class="breath-done hidden" id="breathDone">✔ 一轮完成，火小了一点，感觉一下</div>
+  <div style="margin-top:16px"><button class="big-btn bg-gray" style="width:auto;padding:10px 30px;margin:0" onclick="closeBreath()">先出去透口气</button></div>
+</div>
+
+<!-- 和好庆祝覆盖层 -->
+<div class="overlay" id="celeOverlay">
+  <div class="cele-emoji">💧</div>
+  <div style="font-size:22px;font-weight:800;margin-top:8px">火灭了</div>
+  <div class="sub" id="celeStat" style="font-size:14px;color:var(--sub);margin-top:6px"></div>
+  <div style="font-size:13px;color:var(--sub);margin-top:12px;text-align:center;line-height:1.9">这次吵了 <b id="celeDur" style="color:var(--fire-deep)"></b> 才灭<br>抱一下吧，就现在 🤗</div>
+  <div style="margin-top:18px"><button class="big-btn bg-green" style="width:auto;padding:12px 40px;margin:0" onclick="closeCele()">好，抱了</button></div>
+</div>
+
+<input type="file" id="importFile" accept=".json" style="display:none">
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 数据层（固定存储键：升级不丢数据） ===== */
+const LS_KEY = 'fireExtinguisher.v1';
+function loadDB(){ try { const d = JSON.parse(localStorage.getItem(LS_KEY)); if (d && d.sessions) return d; } catch(e){} return { ver:1, sessions: [] }; }
+function saveDB(){ try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){} }
+let DB = loadDB();
+let mode = 'a';   // a = 我这侧(红)  b = TA(蓝)
+
+const MOODS = [
+  { k:'angry', e:'😤', l:'在气头上', v:3 },
+  { k:'upset', e:'🥺', l:'委屈', v:2 },
+  { k:'annoy', e:'😖', l:'烦躁', v:2 },
+  { k:'sad',   e:'😔', l:'难过', v:1 },
+  { k:'meh',   e:'😶', l:'不想说话', v:1 },
+  { k:'calm',  e:'🤍', l:'冷静了', v:0 },
+  { k:'cool',  e:'🙂', l:'好点了', v:-1 },
+  { k:'fine',  e:'😊', l:'没事了', v:-2 }
+];
+const moodOf = k => MOODS.find(m => m.k === k);
+function curMood(w){ const s = active(); if (!s) return null; const arr = s.moods.filter(m => m.w === w); return arr.length ? moodOf(arr[arr.length-1].m) : null; }
+
+/* 传话话术（低攻击性，生气时照着点） */
+const SCRIPTS = [
+  { g:'① 先停火', items:['我们先暂停 10 分钟','我不想吵架，我想解决问题','我现在很气，但不是不爱你','先别吵，我们都会后悔'] },
+  { g:'② 小声开口', items:['我想听你怎么想','刚才我语气不好','我不是那个意思','你在气什么，我想知道','抱一下再说'] },
+  { g:'③ 一起修', items:['我们聊聊怎么解决','下次这种事，我们可以…','我需要你哄我一下','和好吧，我累了对不起','走，出去吃点好的'] }
+];
+
+function active(){ const s = DB.sessions; for (let i = s.length-1; i >= 0; i--) if (!s[i].resolved) return s[i]; return null; }
+function fmtDur(ms){ const m = Math.floor(ms/60000), sec = Math.floor(ms%60000/1000); return m > 0 ? m + ' 分 ' + sec + ' 秒' : sec + ' 秒'; }
+function fmtClock(ms){ const m = String(Math.floor(ms/60000)).padStart(2,'0'), s = String(Math.floor(ms%60000/1000)).padStart(2,'0'); return m + ':' + s; }
+function fmtTime(t){ const d = new Date(t); return (d.getMonth()+1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
+function showToast(m){ const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1600); }
+
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('.mode-btn').forEach(b => { b.classList.remove('on-a','on-b'); });
+  document.querySelector('[data-m="' + m + '"]').classList.add(m === 'a' ? 'on-a' : 'on-b');
+  render();
+  window.scrollTo(0, 0);
+}
+
+/* ===== 火势计算 ===== */
+function fireLevel(){
+  const s = active(); if (!s) return null;
+  const ma = curMood('a'), mb = curMood('b');
+  const va = ma ? ma.v : 2, vb = mb ? mb.v : 2;
+  const tot = va + vb;
+  if (tot >= 6) return { e:'🔥', cls:'burn', lv:'🔥 森林大火', hint:'都别说话，先各自深呼吸', tot };
+  if (tot >= 4) return { e:'🔥', cls:'burn', lv:'🔥 火势正旺', hint:'深呼吸 30 秒，再传话', tot };
+  if (tot >= 2) return { e:'🕯️', cls:'', lv:'🕯️ 小火苗', hint:'快灭了，稳住语气', tot };
+  if (tot >= 0) return { e:'💨', cls:'', lv:'💨 冒烟中', hint:'能好好说了，别翻旧账', tot };
+  return { e:'💧', cls:'', lv:'💧 已熄灭', hint:'现在可以抱一下了', tot };
+}
+
+/* ===== 渲染 ===== */
+function render(){
+  const s = active();
+  const fl = fireLevel();
+  let h = '';
+
+  /* 火势卡 */
+  if (!s) {
+    h += `<div class="fire-status"><div class="fire-emoji">🧯</div>
+      <div class="fire-level" style="color:var(--green)">待命中 · 一切平静</div>
+      <div class="fire-hint">没吵架就好好过日子，有火再进来灭</div></div>
+      <button class="big-btn bg-fire" onclick="startFight()">🔥 吵起来了，开始灭火</button>
+      ${DB.sessions.length ? statCardHTML() : ''}`;
+    h += rulesCard();
+  } else {
+    h += `<div class="fire-status"><div class="fire-emoji ${fl.cls}">${fl.e}</div>
+      <div class="fire-level">${fl.lv}</div>
+      <div class="fire-hint">${fl.hint}</div>
+      <div class="timer">⏱ 本次灭火 ${fmtClock(Date.now() - s.start)}</div></div>`;
+    h += rulesCard(true);
+
+    /* 双方情绪 */
+    const my = mode === 'a' ? 'a' : 'b', ta = mode === 'a' ? 'b' : 'a';
+    const myM = curMood(my), taM = curMood(ta);
+    h += `<div class="who-tag"><span class="dot" style="background:var(--fire)"></span>我现在的感觉（${mode==='a'?'点一下更新':'TA 视角'}）</div>
+      <div class="mood-row">` + MOODS.slice(0,4).map(m => `<div class="md ${myM && myM.k===m.k ? (my==='a'?'sel-a':'sel-b') : ''}" onclick="setMood('${m.k}')"><div class="e">${m.e}</div><div class="l">${m.l}</div></div>`).join('') + `</div>
+      <div class="mood-row">` + MOODS.slice(4).map(m => `<div class="md ${myM && myM.k===m.k ? (my==='a'?'sel-a':'sel-b') : ''}" onclick="setMood('${m.k}')"><div class="e">${m.e}</div><div class="l">${m.l}</div></div>`).join('') + `</div>`;
+    h += `<div class="who-tag"><span class="dot" style="background:var(--water)"></span>TA 现在的感觉</div>
+      <div class="card" style="margin-top:6px;display:flex;align-items:center;gap:12px">
+        <div style="font-size:34px">${taM ? taM.e : '🤍'}</div>
+        <div><div style="font-size:14px;font-weight:700">${taM ? taM.l : '还没点'}</div>
+        <div style="font-size:11px;color:var(--sub)">把手机递给 TA，TA 点了这里就会变</div></div>
+      </div>`;
+
+    /* 深呼吸 */
+    const breathMe = (s.breath[my] || 0) > 0;
+    h += `<button class="big-btn ${breathMe ? 'bg-green' : 'bg-water'}" onclick="openBreath()">${breathMe ? '🌬️ 已呼吸过 · 再来一轮' : '🌬️ 先深呼吸 30 秒（强烈建议）'}</button>`;
+
+    /* 传话台 */
+    h += `<div class="card">
+      <div style="font-size:14px;font-weight:800">📮 传话台</div>
+      <div style="font-size:12px;color:var(--sub);margin-top:2px">生气时容易说错话，挑一句传过去，比张嘴安全</div>
+      ${SCRIPTS.map(g => `<div class="script-group">${g.g}</div><div class="script-grid">` +
+        g.items.map(t => {
+          const said = s.msgs.some(m => m.w === my && m.text === t);
+          return `<div class="sg ${said ? (my==='a'?'a-said':'b-said') : ''}" onclick="sendMsg('${t.replace(/'/g,"\\'")}')">${t}</div>`;
+        }).join('') + `</div>`).join('')}
+      <div class="free-box">
+        <textarea id="freeInput" maxlength="60" placeholder="按钮不够用？自己写一句（60字内）"></textarea>
+        <div class="free-tip">💡 火气大的时候，句子越短越好，别带刺</div>
+        <button class="big-btn bg-fire" style="margin:10px 0 0" onclick="sendFree()">传出去</button>
+      </div>
+      <div id="msgFlow">${msgFlowHTML(s)}</div>
+    </div>`;
+
+    /* 和好握手 */
+    const pa = s.peace.a, pb = s.peace.b;
+    h += `<div class="card">
+      <div style="font-size:14px;font-weight:800">🤝 和好需要两个人点头</div>
+      <div class="peace-row">
+        <div class="peace-p ${pa?'ok':''}"><span class="pe">${pa?'✅':'🔥'}</span><div class="pw">我这侧 ${pa?'已点头':'没点头'}</div></div>
+        <div class="peace-p ${pb?'ok':''}"><span class="pe">${pb?'✅':'💧'}</span><div class="pw">TA 那侧 ${pb?'已点头':'没点头'}</div></div>
+      </div>
+      <button class="big-btn ${s.peace[my] ? 'bg-gray' : 'bg-green'}" style="margin:12px 16px 0" onclick="offerPeace()">${s.peace[my] ? '⏳ 已点头，等 TA 那一侧' : '🤝 我愿意和好'}</button>
+      ${pa && pb ? '' : '<div style="text-align:center;font-size:11.5px;color:var(--sub);margin-top:6px">两个人都点了，火才算真灭</div>'}
+    </div>`;
+    h += statCardHTML();
+  }
+
+  /* 底部通用 */
+  h += `<div class="mini-ops"><span onclick="exportData()">导出备份</span><span onclick="document.getElementById('importFile').click()">导入恢复</span></div>
+    <div style="text-align:center;font-size:11px;color:var(--sub);padding:0 30px;line-height:1.8">所有记录只存在这台手机的浏览器里，不上传不外传<br>生气的时候，记得两个人都只能用这个说话 🧯</div>`;
+
+  document.getElementById('main').innerHTML = h;
+}
+
+function rulesCard(compact){
+  return `<div class="card">
+    <div style="font-size:14px;font-weight:800">📜 灭火器公约 ${compact ? '' : '（第一次先看这个）'}</div>
+    <div class="rule-li">1. <b>吵起来就进来</b>，嘴里的话改用按钮传</div>
+    <div class="rule-li">2. <b>传话前先呼吸</b>，火大时说的话都会后悔</div>
+    <div class="rule-li">3. <b>火灭了才出去</b>，两边都点🤝才算数</div>
+  </div>`;
+}
+
+function msgFlowHTML(s){
+  if (!s.msgs.length) return '<div class="empty" style="padding:16px">还没有传话，谁先来一句？</div>';
+  return '<div style="margin-top:14px"><div style="font-size:12px;font-weight:700;color:var(--sub);margin-bottom:4px">📨 传话记录（新在上）</div>' +
+    s.msgs.slice().reverse().map(m => `<div class="msg-item ${m.w==='a'?'msg-a':'msg-b'}">
+      <div class="m-who">${m.w==='a'?'🔥 我这侧':'💧 TA'}</div>${m.text}
+      <div class="m-time">${fmtTime(m.t)}</div></div>`).join('') + '</div>';
+}
+
+function statCardHTML(){
+  const done = DB.sessions.filter(s => s.resolved);
+  if (!done.length && !DB.sessions.length) return '';
+  let avg = 0, fastest = Infinity;
+  done.forEach(s => { avg += s.end - s.start; if (s.end - s.start < fastest) fastest = s.end - s.start; });
+  avg = done.length ? avg / done.length : 0;
+  let best = 0, run = 0, prev = null;
+  done.slice().sort((a,b) => a.end - b.end).forEach(s => { run = (prev !== null && s.end - prev < 2*86400000) ? run + 1 : 1; if (run > best) best = run; prev = s.end; });
+  return `<div class="card">
+    <div style="font-size:14px;font-weight:800">📊 灭火战绩</div>
+    <div class="stat-grid">
+      <div class="st"><div class="sv">${done.length}</div><div class="sl">成功灭火</div></div>
+      <div class="st"><div class="sv">${done.length ? fmtDur(avg) : '—'}</div><div class="sl">平均用时</div></div>
+      <div class="st"><div class="sv">${done.length ? fmtDur(fastest) : '—'}</div><div class="sl">最快一次</div></div>
+      <div class="st"><div class="sv">${best}</div><div class="sl">最长连和天数</div></div>
+    </div>
+    ${done.length ? '<div style="margin-top:10px">' + done.slice(-4).reverse().map(s => `<div class="hist-item"><span>${fmtTime(s.start)}</span><span style="font-size:12px">用了 ${fmtDur(s.end-s.start)}</span><span class="hl">✅ 已和好</span></div>`).join('') + '</div>' : ''}
+  </div>`;
+}
+
+/* ===== 动作 ===== */
+function startFight(){
+  if (active()) { showToast('已经在灭火中了'); return; }
+  DB.sessions.push({ id: Date.now(), start: Date.now(), end: null, moods: [], msgs: [], breath: { a:0, b:0 }, peace: { a:false, b:false }, resolved: false });
+  saveDB(); render();
+  showToast('🧯 灭火开始，先点你现在的感觉');
+}
+function setMood(k){
+  const s = active(); if (!s) return;
+  s.moods.push({ w: mode, m: k, t: Date.now() }); saveDB(); render();
+  if (moodOf(k).v <= 0) showToast('火小了，继续保持');
+}
+function sendMsg(text){
+  const s = active(); if (!s) return;
+  if (s.msgs.some(m => m.w === mode && m.text === text && Date.now() - m.t < 60000)) { showToast('这句 1 分钟内刚传过'); return; }
+  s.msgs.push({ w: mode, text, t: Date.now() }); saveDB(); render();
+  showToast('📮 已传到对方视野，把手机递过去吧');
+}
+function sendFree(){
+  const s = active(); if (!s) return;
+  const el = document.getElementById('freeInput');
+  const text = (el.value || '').trim();
+  if (!text) { showToast('写一句再传'); return; }
+  s.msgs.push({ w: mode, text, t: Date.now() }); saveDB(); render();
+  showToast('📮 已传出，愿它不带刺');
+}
+function offerPeace(){
+  const s = active(); if (!s) return;
+  if (s.peace[mode]) { showToast('你已经点过了'); return; }
+  s.peace[mode] = true; saveDB();
+  if (s.peace.a && s.peace.b) {
+    s.resolved = true; s.end = Date.now(); saveDB();
+    document.getElementById('celeDur').textContent = fmtDur(s.end - s.start);
+    document.getElementById('celeStat').textContent = '第 ' + DB.sessions.filter(x => x.resolved).length + ' 次成功灭火';
+    document.getElementById('celeOverlay').classList.add('show');
+    rain();
+  } else {
+    render();
+    showToast('🤝 已点头，等 TA 也点一下');
+  }
+}
+function closeCele(){ document.getElementById('celeOverlay').classList.remove('show'); render(); }
+function rain(){
+  const es = ['💧','💚','🤍','🌈','🎉','✨'];
+  for (let i = 0; i < 24; i++) {
+    const d = document.createElement('div');
+    d.className = 'rain'; d.textContent = es[i % es.length];
+    d.style.left = Math.random() * 100 + 'vw';
+    d.style.animationDuration = (1.4 + Math.random() * 1.2) + 's';
+    d.style.animationDelay = Math.random() * .6 + 's';
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 3200);
+  }
+}
+
+/* ===== 呼吸 ===== */
+let breathTimer = null, breathT0 = 0, breathDone = false;
+function openBreath(){ document.getElementById('breathOverlay').classList.add('show'); resetBreathUI(); }
+function closeBreath(){ stopBreath(); document.getElementById('breathOverlay').classList.remove('show'); render(); }
+function resetBreathUI(){
+  document.getElementById('breathText').textContent = '点我开始';
+  document.getElementById('breathSub').textContent = '4 秒吸气 · 4 秒呼气 · 做 30 秒';
+  document.getElementById('breathCount').textContent = '';
+  document.getElementById('breathDone').classList.add('hidden');
+}
+function toggleBreath(){
+  const c = document.getElementById('breathCircle');
+  if (breathTimer) { stopBreath(); return; }
+  const s = active();
+  breathT0 = Date.now(); breathDone = false;
+  c.classList.add('breathing');
+  document.getElementById('breathText').textContent = '吸气……';
+  document.getElementById('breathSub').textContent = '跟着圈的大小，别想吵架的事';
+  let phase = 0;
+  const names = ['吸气……','呼气——','吸气……','呼气--','吸气……','呼气--','快好了……','最后一下……'];
+  document.getElementById('breathCount').textContent = '已呼吸 0 秒';
+  breathTimer = setInterval(() => {
+    const el = Date.now() - breathT0;
+    const sec = Math.floor(el / 1000);
+    document.getElementById('breathText').textContent = names[phase];
+    document.getElementById('breathCount').textContent = '已呼吸 ' + sec + ' 秒';
+    if (sec % 4 === 0 && sec > 0) phase = Math.min(phase + 1, names.length - 1);
+    if (el >= 30000) {
+      stopBreath(true);
+      if (s) { s.breath[mode] = (s.breath[mode] || 0) + 1; saveDB(); }
+      c.classList.remove('breathing'); c.classList.add('done');
+      document.getElementById('breathCircle').style.background = 'linear-gradient(135deg,#8fd175,#52c41a)';
+      document.getElementById('breathText').textContent = '✔ 完成';
+      document.getElementById('breathCount').textContent = '';
+      document.getElementById('breathDone').classList.remove('hidden');
+      showToast('🌬️ 火小了一点');
+    }
+  }, 250);
+}
+function stopBreath(keep){
+  if (breathTimer) { clearInterval(breathTimer); breathTimer = null; }
+  const c = document.getElementById('breathCircle');
+  c.classList.remove('breathing');
+  if (!keep) {
+    c.style.background = 'linear-gradient(135deg,#74c0ec,#4ea8de)';
+    resetBreathUI();
+  }
+}
+
+/* ===== 备份 ===== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(DB)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '灭火器备份-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  showToast('💾 备份文件已下载');
+}
+document.getElementById('importFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      if (d && d.sessions) { DB = d; saveDB(); render(); showToast('✅ 数据已恢复'); }
+      else showToast('❌ 文件格式不对');
+    } catch (err) { showToast('❌ 读取失败'); }
+    e.target.value = '';
+  };
+  r.readAsText(f);
+});
+
+render();
+</script>
+</body>
+</html>
