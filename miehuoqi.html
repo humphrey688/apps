@@ -55,8 +55,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans 
 .bg-gray{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
 
 /* 呼吸覆盖层 */
-.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(250,246,244,.98);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(250,246,244,.98);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;padding:18px}
 .overlay.show{display:flex}
+/* 开场大火（强制冷却） */
+#firestormOverlay{background:radial-gradient(ellipse at center,#3a161a 0%,#1c0b0d 75%);padding:18px;overflow:hidden}
+.fs-title{font-size:21px;font-weight:800;color:#ffd9d4;text-align:center;margin-top:14px}
+.fs-sub{font-size:12.5px;color:#ff9d95;text-align:center;margin-top:5px}
+.fs-stage{position:relative;width:100%;flex:1;display:flex;align-items:center;justify-content:center;min-height:52vh}
+.fire-el{position:absolute;animation:burn .5s ease-in-out infinite alternate;transition:transform .5s,opacity .5s;pointer-events:none;z-index:1}
+.fire-el.out{transform:scale(0) rotate(30deg);opacity:0}
+.drop-el{position:absolute;font-size:18px;animation:dropFall .8s ease-in forwards;pointer-events:none;z-index:3}
+@keyframes dropFall{from{transform:translateY(-140px);opacity:0}30%{opacity:1}to{transform:translateY(6px);opacity:.95}}
+.fs-breath-area{display:flex;flex-direction:column;align-items:center;z-index:5}
+.fs-circle{width:148px!important;height:148px!important;font-size:40px!important;box-shadow:0 10px 44px rgba(78,168,222,.5)!important}
+.fs-phase{font-size:19px;font-weight:800;color:#cfeaff;margin-top:20px;letter-spacing:2px}
+.fs-sec{font-size:12.5px;color:#8fc4e8;margin-top:6px;font-variant-numeric:tabular-nums}
 .breath-circle{width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#74c0ec,#4ea8de);display:flex;align-items:center;justify-content:center;font-size:52px;color:#fff;cursor:pointer;user-select:none;box-shadow:0 10px 40px rgba(78,168,222,.35)}
 .breath-circle.breathing{animation:breathe 8s ease-in-out infinite}
 @keyframes breathe{0%{transform:scale(.85)}50%{transform:scale(1.18)}100%{transform:scale(.85)}}
@@ -140,6 +153,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans 
   <div class="breath-count" id="breathCount"></div>
   <div class="breath-done hidden" id="breathDone">✔ 一轮完成，火小了一点，感觉一下</div>
   <div style="margin-top:16px"><button class="big-btn bg-gray" style="width:auto;padding:10px 30px;margin:0" onclick="closeBreath()">先出去透口气</button></div>
+</div>
+
+<!-- 开场大火（强制冷却，不可跳过） -->
+<div class="overlay" id="firestormOverlay">
+  <div class="fs-title" id="fsTitle">🔥🔥🔥 火势很大！</div>
+  <div class="fs-sub" id="fsSub">先深呼吸 15 秒 · 跟着圈呼吸，水正在灭火</div>
+  <div class="fs-stage" id="fsStage">
+    <div class="fs-breath-area">
+      <div class="breath-circle fs-circle" id="fsCircle">🫁</div>
+      <div class="fs-phase" id="fsPhase">吸——</div>
+      <div class="fs-sec" id="fsSec">0 / 15 秒</div>
+    </div>
+  </div>
+  <button class="big-btn bg-green hidden" id="fsGo" style="margin:14px 0 20px" onclick="finishFirestorm()">火变小了，开始灭火 →</button>
 </div>
 
 <!-- 和好庆祝覆盖层 -->
@@ -283,6 +310,10 @@ function render(){
     <div style="text-align:center;font-size:11px;color:var(--sub);padding:0 30px;line-height:1.8">所有记录只存在这台手机的浏览器里，不上传不外传<br>生气的时候，记得两个人都只能用这个说话 🧯</div>`;
 
   document.getElementById('main').innerHTML = h;
+
+  /* 强制冷却：只要有未冷却的灭火中会话，就锁定在大火开场（刷新也跳不过） */
+  const ac = active();
+  if (ac && !ac.cooled && !document.getElementById('firestormOverlay').classList.contains('show')) openFirestorm();
 }
 
 function rulesCard(compact){
@@ -322,12 +353,93 @@ function statCardHTML(){
   </div>`;
 }
 
+/* ===== 开场强制冷却：满屏大火 → 跟练 15 秒呼吸（水同步灭火） → 火变小 ===== */
+let fsTimer = null, fsT0 = 0, fsFires = [], fsAlive = [], fsDoused = -1;
+function openFirestorm(){
+  document.getElementById('firestormOverlay').classList.add('show');
+  document.getElementById('fsTitle').textContent = '🔥🔥🔥 火势很大！';
+  document.getElementById('fsSub').textContent = '先深呼吸 15 秒 · 跟着圈呼吸，水正在灭火';
+  document.getElementById('fsGo').classList.add('hidden');
+  document.getElementById('fsCircle').style.background = 'linear-gradient(135deg,#74c0ec,#4ea8de)';
+  buildFires();
+  startFsBreath();
+}
+function buildFires(){
+  const stage = document.getElementById('fsStage');
+  stage.querySelectorAll('.fire-el,.drop-el').forEach(e => e.remove());
+  fsFires = []; fsAlive = []; fsDoused = -1;
+  const N = 18;
+  for (let i = 0; i < N; i++) {
+    const f = document.createElement('div');
+    f.className = 'fire-el'; f.textContent = '🔥';
+    f.style.fontSize = (22 + Math.random() * 34) + 'px';
+    f.style.left = (3 + Math.random() * 86) + '%';
+    f.style.top = (Math.random() * 88) + '%';
+    f.style.animationDelay = (Math.random() * 0.5) + 's';
+    stage.appendChild(f);
+    fsFires.push(f); fsAlive.push(f);
+  }
+}
+function startFsBreath(){
+  if (fsTimer) clearInterval(fsTimer);
+  fsT0 = Date.now();
+  document.getElementById('fsCircle').classList.add('breathing');
+  fsTimer = setInterval(() => {
+    const el = Date.now() - fsT0;
+    const sec = el / 1000;
+    document.getElementById('fsPhase').textContent = (sec % 8) < 4 ? '吸——' : '呼——';
+    document.getElementById('fsSec').textContent = Math.min(15, Math.floor(sec)) + ' / 15 秒';
+    const batch = Math.floor(el / 2500);
+    if (batch > fsDoused && fsAlive.length > 1) { douseBatch(); fsDoused = batch; }
+    if (el >= 15000) finishFsBreath();
+  }, 200);
+}
+function douseBatch(){
+  const stage = document.getElementById('fsStage');
+  const n = Math.min(3, fsAlive.length - 1);
+  for (let i = 0; i < n; i++) {
+    const f = fsAlive.splice(Math.floor(Math.random() * fsAlive.length), 1)[0];
+    const rect = f.getBoundingClientRect(), sRect = stage.getBoundingClientRect();
+    const d = document.createElement('div');
+    d.className = 'drop-el';
+    d.textContent = '💧';
+    d.style.left = (rect.left - sRect.left + rect.width / 2 - 9) + 'px';
+    d.style.top = (rect.top - sRect.top - 6) + 'px';
+    stage.appendChild(d);
+    setTimeout(() => { f.classList.add('out'); d.remove(); }, 700);
+  }
+}
+function finishFsBreath(){
+  clearInterval(fsTimer); fsTimer = null;
+  const s = active();
+  if (s) {
+    s.cooled = true;
+    s.moods.push({ w: 'a', m: 'annoy', t: Date.now() });
+    s.moods.push({ w: 'b', m: 'annoy', t: Date.now() });
+    s.breath[mode] = (s.breath[mode] || 0) + 1;
+    saveDB();
+  }
+  fsAlive.forEach(f => f.classList.add('out'));
+  const c = document.getElementById('fsCircle');
+  c.classList.remove('breathing');
+  c.style.background = 'linear-gradient(135deg,#8fd175,#52c41a)';
+  document.getElementById('fsPhase').textContent = '✔ 火变小了';
+  document.getElementById('fsSec').textContent = '现在可以正式开始灭火';
+  document.getElementById('fsTitle').textContent = '🔥 一团普通大小的火';
+  document.getElementById('fsSub').textContent = '深呼吸起效了，水也帮了忙 · 接下来用手说话';
+  document.getElementById('fsGo').classList.remove('hidden');
+}
+function finishFirestorm(){
+  document.getElementById('firestormOverlay').classList.remove('show');
+  render();
+  showToast('🧯 现在点你当前的感觉，开始传话');
+}
+
 /* ===== 动作 ===== */
 function startFight(){
   if (active()) { showToast('已经在灭火中了'); return; }
-  DB.sessions.push({ id: Date.now(), start: Date.now(), end: null, moods: [], msgs: [], breath: { a:0, b:0 }, peace: { a:false, b:false }, resolved: false });
-  saveDB(); render();
-  showToast('🧯 灭火开始，先点你现在的感觉');
+  DB.sessions.push({ id: Date.now(), start: Date.now(), end: null, moods: [], msgs: [], breath: { a:0, b:0 }, peace: { a:false, b:false }, resolved: false, cooled: false });
+  saveDB(); render();   // render 末尾会自动弹出强制冷却开场
 }
 function setMood(k){
   const s = active(); if (!s) return;
