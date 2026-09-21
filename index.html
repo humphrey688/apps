@@ -264,7 +264,7 @@ input, textarea { font-family: inherit; outline: none; color: var(--ink); }
 .task { display: flex; align-items: center; gap: 10px; padding: 8px 9px; border-radius: 9px; transition: background .13s; }
 .task:hover { background: var(--hover); }
 .task-mark { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-.task-text { flex: 1; font-size: 13.5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.task-text { flex: 1; font-size: 13.5px; min-width: 0; word-break: break-word; white-space: normal; line-height: 1.5; }
 .task-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .task-cat-dot { width: 8px; height: 8px; border-radius: 50%; }
 .task-energy { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
