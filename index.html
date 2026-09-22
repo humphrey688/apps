@@ -881,7 +881,7 @@ function snapDrawerForm() {
   ['good', 'improve', 'tomorrow'].forEach(f => { const el = $('#ref-' + f); if (el) s.reflect[f] = el.value; });
   return s;
 }
-function restoreDrawerForm(s) {
+function restoreDrawerForm(s, noFocus) {
   if (!s) return;
   Object.keys(s.reflect).forEach(f => {
     clearTimeout(saveTimers[f]);
@@ -896,7 +896,7 @@ function restoreDrawerForm(s) {
   if (inp) {
     inp.value = s.task;
     try { inp.setSelectionRange(s.cursor, s.cursor); } catch (e) {}
-    if (s.task) inp.focus();
+    if (s.task && !noFocus) inp.focus();
   }
 }
 function addTask() {
@@ -1262,8 +1262,9 @@ function bind() {
       if (chip.dataset.cat) draft.cat = chip.dataset.cat;
       if (chip.dataset.energy) draft.energy = Number(chip.dataset.energy);
       const snap = snapDrawerForm();   // 保留输入中的名字/反省，修：选分类/精力时清空名字
+      const tmpInp = $('#taskInput'); if (tmpInp) tmpInp.blur();   // 选分类/分数时先收起键盘
       renderDrawer();
-      restoreDrawerForm(snap);
+      restoreDrawerForm(snap, true);
       return;
     }
     const fav = e.target.closest('.fav-chip');
