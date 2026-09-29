@@ -339,11 +339,21 @@ function updateTokenStatus(){
 // ===== 数据 =====
 async function loadData(){
   try {
-    const r = await fetch(RAW + '/data.json?t=' + Date.now());
-    DATA = await r.json();
+    if(token){
+      const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/data.json?ref=${BRANCH}`, {
+        headers: { 'Authorization': 'token ' + token, 'User-Agent': 'AP-Admin' }
+      });
+      if(r.ok){
+        const d = await r.json();
+        DATA = JSON.parse(decodeURIComponent(escape(atob(d.content))));
+        return;
+      }
+    }
+    const r2 = await fetch(RAW + '/data.json?t=' + Date.now());
+    DATA = await r2.json();
   } catch(e) {
-    DATA = { zones:{}, looks:[], storeInfo:{} };
-    toast('数据加载失败','err');
+    if(!DATA) DATA = { zones:{}, looks:[], storeInfo:{} };
+    console.warn('data load fallback:', e.message);
   }
 }
 async function refreshData(){
