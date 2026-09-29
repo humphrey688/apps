@@ -9,6 +9,14 @@
       "items": [
         {
           "img": "images/shirt-cream.jpg",
+          "t": "测试-删除流程验证",
+          "d": "测试完自动删除",
+          "tags": [
+            "测试"
+          ]
+        },
+        {
+          "img": "images/shirt-cream.jpg",
           "t": "奶白方领衬衫",
           "d": "垂感面料，微泡泡袖，单穿或当内搭都显精神。",
           "tags": [
