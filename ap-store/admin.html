@@ -25,11 +25,20 @@
 
   /* 管理面板 */
   .admin{display:none;max-width:680px;margin:0 auto;padding:16px 16px 80px}
-  .admin-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .admin-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .admin-head h1{font-size:20px;font-weight:700}
   .admin-head .links{display:flex;gap:8px}
   .admin-head .links a{font-size:13px;color:#8C8378;text-decoration:none;padding:8px 12px;border:1px solid #E5DCCB;border-radius:999px}
   .admin-head .links a:active{background:#fff}
+
+  /* 同步状态条 */
+  .sync-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:14px;margin-bottom:14px;font-size:14px;gap:10px}
+  .sync-bar.ok{background:#E8F0E4;color:#4A6B3C}
+  .sync-bar.dirty{background:#F6EAE4;color:#B9685C}
+  .sync-bar .sync-btn{padding:8px 18px;border-radius:999px;font-size:14px;font-weight:600;flex:none}
+  .sync-bar.ok .sync-btn{background:#5A7B5A;color:#fff}
+  .sync-bar.dirty .sync-btn{background:#DE8577;color:#fff}
+  .sync-bar .sync-msg{flex:1;line-height:1.5}
 
   /* Tab */
   .tabs{display:flex;gap:0;margin-bottom:16px;background:#EDE5D8;border-radius:14px;padding:4px}
@@ -45,12 +54,11 @@
   .form-card{background:#FBF6EE;border:1px solid #E5DCCB;border-radius:16px;padding:16px;margin-bottom:16px}
   .form-card label{display:block;font-size:13px;color:#8C8378;margin-bottom:6px;font-weight:600}
   .form-card .field{margin-bottom:14px}
-  .form-card input[type=text],.form-card textarea,.form-card input[type=password]{
+  .form-card input[type=text],.form-card textarea{
     width:100%;padding:12px 14px;border:1px solid #E5DCCB;border-radius:10px;background:#fff;outline:none;color:#3B3733
   }
   .form-card input:focus,.form-card textarea:focus{border-color:#DE8577}
   .form-card textarea{resize:vertical;min-height:60px;line-height:1.6}
-  .form-card .tags-input{font-size:14px}
 
   /* 拍照区 */
   .photo-zone{border:2px dashed #D8CBB4;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;cursor:pointer;background:#fff;transition:border-color .2s}
@@ -74,13 +82,10 @@
   .ir-info h5{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ir-info p{font-size:13px;color:#8C8378;margin-top:3px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .ir-info .ir-tags{font-size:11px;color:#DE8577;margin-top:4px}
-  /* 操作按钮行 */
   .ir-actions{display:flex;gap:8px;margin-top:12px}
   .ir-actions button{flex:1;padding:10px 0;border-radius:10px;font-size:14px;transition:all .2s}
   .ir-edit{background:#F6EFE4;color:#3B3733;border:1px solid #E5DCCB!important}
-  .ir-edit:active{background:#EDE5D8}
   .ir-move{background:#E6F0F5;color:#3A6B8E;border:1px solid #C4DCE8!important}
-  .ir-move:active{background:#D4E5F0}
   .ir-del{background:#F6EAE4;color:#B9685C;border:1px solid #EAC7C0!important}
   .ir-del:active{background:#DE8577;color:#fff}
   .empty{padding:30px;text-align:center;color:#8C8378;font-size:14px}
@@ -96,22 +101,19 @@
   .modal .btn-cancel{background:#EDE5D8;color:#3B3733}
   .modal .btn-danger{background:#DE8577;color:#fff}
   .modal .btn-save{background:#3B3733;color:#FBF6EE}
-  /* 编辑弹窗 */
   .modal .edit-field{margin-bottom:14px}
   .modal .edit-field label{display:block;font-size:13px;color:#8C8378;margin-bottom:6px;font-weight:600}
   .modal .edit-field input,.modal .edit-field textarea{width:100%;padding:10px 12px;border:1px solid #E5DCCB;border-radius:8px;background:#fff;outline:none;font-size:15px}
-  .modal .edit-field input:focus,.modal .edit-field textarea:focus{border-color:#DE8577}
   .modal .edit-field textarea{min-height:50px;resize:vertical}
-  /* 移动分区弹窗 */
   .move-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-  .move-grid button{padding:12px 8px;border:1px solid #E5DCCB;border-radius:10px;background:#fff;font-size:14px;transition:all .2s}
+  .move-grid button{padding:12px 8px;border:1px solid #E5DCCB;border-radius:10px;background:#fff;font-size:14px}
   .move-grid button.on{background:#3B3733;color:#FBF6EE;border-color:#3B3733}
 
-  /* 店铺信息表单 */
+  /* 店铺信息 */
   .info-form .field{margin-bottom:16px}
 
   /* Toast */
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#3B3733;color:#FBF6EE;padding:12px 24px;border-radius:999px;font-size:14px;z-index:400;transition:transform .3s ease;white-space:nowrap}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#3B3733;color:#FBF6EE;padding:12px 24px;border-radius:999px;font-size:14px;z-index:400;transition:transform .3s ease;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}
   .toast.show{transform:translateX(-50%) translateY(0)}
   .toast.ok{background:#5A7B5A}
   .toast.err{background:#DE8577}
@@ -129,9 +131,8 @@
   .look-form .day-tags button{padding:6px 12px;border:1px solid #E5DCCB;border-radius:999px;font-size:12px;background:#fff}
   .look-form .day-tags button.on{background:#DE8577;color:#fff;border-color:#DE8577}
 
-  /* 刷新按钮 */
-  .refresh-btn{width:100%;padding:12px;border-radius:999px;background:#EDE5D8;color:#3B3733;font-size:15px;margin-bottom:14px;border:1px solid #E5DCCB}
-  .refresh-btn:active{background:#E5D8CB}
+  /* 分享同步码弹窗 */
+  .share-text{width:100%;height:200px;border:1px solid #E5DCCB;border-radius:10px;padding:10px;font-size:11px;font-family:monospace;background:#fff;resize:vertical;margin-bottom:12px;word-break:break-all}
 </style>
 </head>
 <body>
@@ -155,10 +156,16 @@
     </div>
   </div>
 
+  <!-- 同步状态条 -->
+  <div class="sync-bar ok" id="syncBar">
+    <div class="sync-msg" id="syncMsg">已同步</div>
+    <button class="sync-btn" id="syncBtn" onclick="syncNow()">同步到线上</button>
+  </div>
+
   <!-- Token 设置 -->
   <div class="token-section">
     <h4>GitHub 授权 Token</h4>
-    <p>第一次使用需要填一次，之后不用再填。问帮你建网站的人要。</p>
+    <p>同步到线上需要填一次。不填也能编辑，只是改完保存在本手机上。</p>
     <input type="text" id="tokenInput" placeholder="ghp_ 开头的一串字符">
     <div style="margin-top:8px"><span class="token-status off" id="tokenStatus">未设置</span></div>
     <button class="enter-btn" style="width:auto;padding:10px 20px;margin-top:10px;font-size:14px" onclick="saveToken()">保存 Token</button>
@@ -204,15 +211,15 @@
       </div>
       <div class="field">
         <label>标签（用逗号隔开，可不填）</label>
-        <input type="text" id="itemTags" class="tags-input" placeholder="本周上新, 百搭">
+        <input type="text" id="itemTags" placeholder="本周上新, 百搭">
       </div>
     </div>
-    <button class="publish-btn" id="publishBtn" onclick="publishItem()">发布上新</button>
+    <button class="publish-btn" id="publishBtn" onclick="publishItem()">保存上新（存到本手机）</button>
+    <p style="text-align:center;font-size:12px;color:#8C8378;margin-top:10px">保存后点顶部「同步到线上」，顾客才能看到</p>
   </div>
 
   <!-- 商品管理 -->
   <div id="tab-manage" class="atab" style="display:none">
-    <button class="refresh-btn" onclick="refreshData()">↻ 刷新列表</button>
     <div class="zone-pick">
       <button class="on" data-mzone="tops" onclick="pickMZone(this)">上装</button>
       <button data-mzone="skirts" onclick="pickMZone(this)">裙装</button>
@@ -245,25 +252,13 @@
           <button data-day="本周日" onclick="pickDay(this)">日</button>
         </div>
       </div>
-      <div class="field">
-        <label>搭配名称</label>
-        <input type="text" id="lookName" placeholder="比如：法式通勤风">
-      </div>
-      <div class="field">
-        <label>一句话描述</label>
-        <textarea id="lookSub" placeholder="比如：白衬衫 + 卡其阔腿裤，温和不挑人"></textarea>
-      </div>
-      <div class="field">
-        <label>单品清单（每行一个）</label>
-        <textarea id="lookItems" placeholder="白色方领衬衫&#10;卡其高腰阔腿裤&#10;浅米色腋下包"></textarea>
-      </div>
-      <div class="field">
-        <label>搭配小抄</label>
-        <textarea id="lookTip" placeholder="比如：衬衫最上一粒扣松开，脖子显得长"></textarea>
-      </div>
+      <div class="field"><label>搭配名称</label><input type="text" id="lookName" placeholder="比如：法式通勤风"></div>
+      <div class="field"><label>一句话描述</label><textarea id="lookSub" placeholder="比如：白衬衫 + 卡其阔腿裤，温和不挑人"></textarea></div>
+      <div class="field"><label>单品清单（每行一个）</label><textarea id="lookItems" placeholder="白色方领衬衫&#10;卡其高腰阔腿裤&#10;浅米色腋下包"></textarea></div>
+      <div class="field"><label>搭配小抄</label><textarea id="lookTip" placeholder="比如：衬衫最上一粒扣松开，脖子显得长"></textarea></div>
     </div>
-    <button class="publish-btn" onclick="publishLook()">发布搭配</button>
-    <div style="margin-top:20px"><h4 style="margin-bottom:10px">已发布搭配（点 ✕ 删除）</h4><div id="lookList"></div></div>
+    <button class="publish-btn" onclick="publishLook()">保存搭配（存到本手机）</button>
+    <div style="margin-top:20px"><h4 style="margin-bottom:10px">已保存搭配（点 ✕ 删除）</h4><div id="lookList"></div></div>
   </div>
 
   <!-- 店铺信息 -->
@@ -290,15 +285,18 @@ const REPO = 'humphrey688/apps';
 const BRANCH = 'main';
 const BASE = 'ap-store';
 const API = 'https://api.github.com';
-const RAW = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + BASE;
+const PAGE_BASE = location.href.replace(/admin\.html.*$/, '');
+const RAW = PAGE_BASE; // 同域拉取 data.json，走 github.io
 const ZONE_NAMES = { tops:'上装', skirts:'裙装', pants:'裤装', new:'本周上新', fitting:'试衣间', cashier:'收银台' };
 let token = localStorage.getItem('gh_token') || '';
 let DATA = null;
+let dirty = false;
 let currentZone = 'tops';
 let currentMZone = 'tops';
 let currentDay = '';
-let photoData = null;
+let photoData = null;      // base64 图，同步时上传
 let lookPhotoData = null;
+let pendingImages = [];    // [{name, b64}] 待上传的图片
 
 // ===== 登录 =====
 function doLogin(){
@@ -319,7 +317,7 @@ function toast(msg, type){
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.className = 'toast show ' + (type||'');
-  setTimeout(()=> t.className='toast', 2500);
+  setTimeout(()=> t.className='toast', 3000);
 }
 
 // ===== Token =====
@@ -336,55 +334,166 @@ function updateTokenStatus(){
   else { s.textContent='未设置'; s.className='token-status off'; }
 }
 
-// ===== 数据 =====
-async function loadData(){
-  try {
-    if(token){
-      const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/data.json?ref=${BRANCH}`, {
-        headers: { 'Authorization': 'token ' + token }
-      });
-      if(r.ok){
-        const d = await r.json();
-        DATA = JSON.parse(decodeURIComponent(escape(atob(d.content))));
-        return;
-      }
-    }
-    const r2 = await fetch(RAW + '/data.json?t=' + Date.now());
-    DATA = await r2.json();
-  } catch(e) {
-    if(!DATA) DATA = { zones:{}, looks:[], storeInfo:{} };
-    console.warn('data load fallback:', e.message);
+// ===== 数据：本地缓存优先，线上为参考 =====
+function saveLocal(){
+  localStorage.setItem('ap_data', JSON.stringify(DATA));
+  localStorage.setItem('ap_dirty', dirty ? '1' : '0');
+  updateSyncBar();
+}
+function markDirty(){ dirty = true; saveLocal(); }
+function updateSyncBar(){
+  const bar = document.getElementById('syncBar');
+  const msg = document.getElementById('syncMsg');
+  if(dirty){
+    bar.className = 'sync-bar dirty';
+    msg.textContent = '有修改没同步，顾客还看不到';
+    document.getElementById('syncBtn').textContent = '↑ 同步到线上';
+  } else {
+    bar.className = 'sync-bar ok';
+    msg.textContent = token ? '已同步，顾客看到的是最新' : '已同步（未设 Token 时仅本手机生效）';
+    document.getElementById('syncBtn').textContent = '同步到线上';
   }
 }
-async function refreshData(){
-  toast('刷新中...');
-  await loadData();
-  renderManageList(); renderLookList(); loadInfoForm();
-  toast('已刷新','ok');
+
+// 拉数据：API → 同域 → 本地缓存
+async function fetchRemote(){
+  // 1) GitHub API（最准）
+  if(token){
+    try {
+      const r = await fetchWithTimeout(`${API}/repos/${REPO}/contents/${BASE}/data.json?ref=${BRANCH}`, {
+        headers: { 'Authorization': 'token ' + token }
+      }, 8000);
+      if(r.ok){
+        const d = await r.json();
+        return { data: JSON.parse(decodeURIComponent(escape(atob(d.content)))), source:'api' };
+      }
+    } catch(e) { console.warn('API fetch failed:', e.message); }
+  }
+  // 2) 同域 github.io
+  try {
+    const r2 = await fetchWithTimeout(RAW + 'data.json?t=' + Date.now(), {}, 8000);
+    if(r2.ok) return { data: await r2.json(), source:'page' };
+  } catch(e) { console.warn('Page fetch failed:', e.message); }
+  return null;
 }
 
-// ===== GitHub API =====
+function fetchWithTimeout(url, opts, ms){
+  const c = new AbortController();
+  const t = setTimeout(()=> c.abort(), ms);
+  return fetch(url, {...opts, signal: c.signal}).finally(()=> clearTimeout(t));
+}
+
+async function loadData(showToast){
+  const remote = await fetchRemote();
+  const cached = localStorage.getItem('ap_data');
+  if(remote){
+    const cachedData = cached ? JSON.parse(cached) : null;
+    if(dirty && cachedData){
+      // 本地有未同步的修改 → 保留本地，避免被线上旧数据覆盖
+      DATA = cachedData;
+    } else {
+      DATA = remote.data;
+      dirty = false;
+    }
+  } else {
+    if(cached){ DATA = JSON.parse(cached); }
+    else { DATA = { zones:{}, looks:[], storeInfo:{} }; }
+    if(showToast) toast('网络不通，用本手机保存的数据','err');
+  }
+  saveLocal();
+}
+
+async function refreshData(){
+  toast('刷新中...');
+  await loadData(true);
+  renderManageList(); renderLookList(); loadInfoForm();
+  toast(dirty ? '已刷新（本地有未同步修改）' : '已刷新','ok');
+}
+
+// ===== GitHub API 写入 =====
 async function ghPut(path, content, isBase64, sha){
-  const body = { message: 'Update ' + path, branch: BRANCH, content: isBase64 ? content : btoa(unescape(encodeURIComponent(content))) };
+  const body = { message: 'AP store update', branch: BRANCH, content: isBase64 ? content : btoa(unescape(encodeURIComponent(content))) };
   if(sha) body.sha = sha;
-  const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/${path}`, {
+  const r = await fetchWithTimeout(`${API}/repos/${REPO}/contents/${BASE}/${path}`, {
     method: 'PUT',
     headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
-  });
-  if(!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
+  }, 15000);
+  if(!r.ok) { let m='GitHub API error'; try{ const e=await r.json(); m=e.message||m; }catch(_){} throw new Error(m); }
   return r.json();
 }
 async function ghGetSha(path){
-  const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/${path}?ref=${BRANCH}`, {
+  const r = await fetchWithTimeout(`${API}/repos/${REPO}/contents/${BASE}/${path}?ref=${BRANCH}`, {
     headers: { 'Authorization': 'token ' + token }
-  });
+  }, 8000);
   if(!r.ok) return null;
   return (await r.json()).sha;
 }
-async function saveData(){
-  const sha = await ghGetSha('data.json');
-  await ghPut('data.json', JSON.stringify(DATA, null, 2), false, sha);
+
+// ===== 同步（带重试） =====
+function getCleanData(){
+  const clean = JSON.parse(JSON.stringify(DATA));
+  // 清理 _local 临时字段（本地预览用的 base64，不推到线上）
+  Object.values(clean.zones || {}).forEach(z => {
+    if(z && z.items) z.items.forEach(it => { delete it._local; });
+  });
+  (clean.looks || []).forEach(l => { delete l._local; });
+  return clean;
+}
+async function syncNow(retryCount){
+  retryCount = retryCount || 0;
+  if(!token){ toast('请先设置 GitHub Token','err'); document.getElementById('tokenInput').focus(); return; }
+  if(!dirty){ toast('没有需要同步的修改'); return; }
+  const btn = document.getElementById('syncBtn');
+  btn.disabled = true;
+  btn.textContent = '同步中...';
+  try {
+    // 1. 上传待传的图片
+    for(const img of pendingImages){
+      await ghPut('images/' + img.name, img.b64, true);
+    }
+    pendingImages = [];
+    // 2. 推 data.json（去掉 _local 字段）
+    const sha = await ghGetSha('data.json');
+    await ghPut('data.json', JSON.stringify(getCleanData(), null, 2), false, sha);
+    // 3. 同步成功，清理本地 _local 临时字段（图片已在 GitHub 上）
+    Object.values(DATA.zones || {}).forEach(z => { if(z && z.items) z.items.forEach(it => { delete it._local; }); });
+    (DATA.looks || []).forEach(l => { delete l._local; });
+    dirty = false;
+    saveLocal();
+    toast('同步成功！顾客刷新就能看到','ok');
+  } catch(e) {
+    console.warn('sync fail:', e.message);
+    if(retryCount < 2){
+      btn.textContent = '重试中...';
+      await new Promise(r=>setTimeout(r, 2000));
+      btn.disabled = false;
+      return syncNow(retryCount + 1);
+    }
+    toast('同步失败：网络连不上 GitHub','err');
+    openShareModal();
+  }
+  btn.disabled = false;
+  updateSyncBar();
+}
+
+// 同步失败 → 分享给家人
+function openShareModal(){
+  const text = '【AP店铺-待同步数据】请把下面这段发给家人，让助手同步到线上：\n\n' + JSON.stringify(DATA);
+  openModal(`
+    <h3>同步失败怎么办</h3>
+    <p>网络连不上 GitHub。可以：<br>1. 等网络好的时候（比如连了 WiFi）再点「同步到线上」<br>2. 或者复制下面的数据发给家人，让助手帮忙同步</p>
+    <textarea class="share-text" id="shareText" readonly>${text.replace(/</g,'&lt;')}</textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">关闭</button>
+      <button class="btn-save" onclick="copyShare()">复制数据</button>
+    </div>`);
+}
+function copyShare(){
+  const ta = document.getElementById('shareText');
+  ta.select();
+  if(navigator.clipboard){ navigator.clipboard.writeText(ta.value).then(()=>toast('已复制','ok')); }
+  else { document.execCommand('copy'); toast('已复制','ok'); }
 }
 
 // ===== 图片压缩 =====
@@ -455,39 +564,32 @@ function switchTab(name){
 function openModal(html){ document.getElementById('modalBox').innerHTML = html; document.getElementById('modalMask').classList.add('show'); }
 function closeModal(){ document.getElementById('modalMask').classList.remove('show'); }
 
-// ===== 发布新品 =====
-async function publishItem(){
-  if(!token){ toast('请先设置 GitHub Token','err'); return; }
+// ===== 上架（本地保存，同步时上传图片） =====
+function publishItem(){
   if(!photoData){ toast('请先拍一张照片','err'); return; }
   const name = document.getElementById('itemName').value.trim();
   const desc = document.getElementById('itemDesc').value.trim();
   const tags = document.getElementById('itemTags').value.trim().split(/[,，]/).map(s=>s.trim()).filter(Boolean);
   if(!name){ toast('请填写商品名称','err'); return; }
   if(!desc){ toast('请填写一句话描述','err'); return; }
-
-  const btn = document.getElementById('publishBtn');
-  btn.disabled = true; btn.textContent = '发布中...';
-  try {
-    const b64 = photoData.split(',')[1];
-    const fileName = 'img_' + Date.now() + '.jpg';
-    await ghPut('images/' + fileName, b64, true);
-    await loadData();
-    if(!DATA.zones[currentZone]) DATA.zones[currentZone] = { kicker: currentZone, title: '', desc:'', items: [] };
-    if(!DATA.zones[currentZone].items) DATA.zones[currentZone].items = [];
-    DATA.zones[currentZone].items.unshift({ img: 'images/' + fileName, t: name, d: desc, tags: tags });
-    await saveData();
-    toast('发布成功！顾客刷新就能看到','ok');
-    document.getElementById('itemName').value = '';
-    document.getElementById('itemDesc').value = '';
-    document.getElementById('itemTags').value = '';
-    photoData = null;
-    document.getElementById('photoPreview').style.display = 'none';
-    document.getElementById('photoHint').style.display = 'block';
-  } catch(e) { toast('发布失败：' + e.message, 'err'); }
-  btn.disabled = false; btn.textContent = '发布上新';
+  // 图片暂存，同步时上传；本地先用 base64 缩略图
+  const imgName = 'img_' + Date.now() + '.jpg';
+  pendingImages.push({ name: imgName, b64: photoData.split(',')[1] });
+  if(!DATA.zones[currentZone]) DATA.zones[currentZone] = { kicker: currentZone, title: '', desc:'', items: [] };
+  if(!DATA.zones[currentZone].items) DATA.zones[currentZone].items = [];
+  DATA.zones[currentZone].items.unshift({ img: 'images/' + imgName, t: name, d: desc, tags: tags, _local: photoData });
+  markDirty();
+  toast('已保存到本手机，记得点「同步到线上」','ok');
+  document.getElementById('itemName').value = '';
+  document.getElementById('itemDesc').value = '';
+  document.getElementById('itemTags').value = '';
+  photoData = null;
+  document.getElementById('photoPreview').style.display = 'none';
+  document.getElementById('photoHint').style.display = 'block';
+  renderManageList();
 }
 
-// ===== 商品管理列表 =====
+// ===== 商品管理 =====
 function renderManageList(){
   const list = document.getElementById('manageList');
   const z = DATA && DATA.zones[currentMZone];
@@ -495,14 +597,16 @@ function renderManageList(){
     list.innerHTML = `<div class="empty">${ZONE_NAMES[currentMZone]}区还没有商品</div>`;
     return;
   }
-  list.innerHTML = z.items.map((it,i) => `
+  list.innerHTML = z.items.map((it,i) => {
+    const imgSrc = it._local ? it._local : it.img;
+    return `
     <div class="item-row">
       <div class="ir-top">
-        <div class="ir-img"><img src="${it.img}" alt="" loading="lazy"></div>
+        <div class="ir-img"><img src="${imgSrc}" alt="" loading="lazy"></div>
         <div class="ir-info">
           <h5>${it.t}</h5>
           <p>${it.d}</p>
-          <div class="ir-tags">${(it.tags||[]).join(' · ')}</div>
+          <div class="ir-tags">${(it.tags||[]).join(' · ')}${it._local ? ' · 待同步' : ''}</div>
         </div>
       </div>
       <div class="ir-actions">
@@ -510,10 +614,10 @@ function renderManageList(){
         <button class="ir-move" onclick="openMoveModal('${currentMZone}',${i})">⇄ 移动分区</button>
         <button class="ir-del" onclick="openDelModal('${currentMZone}',${i})">✕ 删除</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-// 删除弹窗
 function openDelModal(zone, idx){
   const it = DATA.zones[zone].items[idx];
   openModal(`
@@ -524,22 +628,14 @@ function openDelModal(zone, idx){
       <button class="btn-danger" onclick="doDelete('${zone}',${idx})">确认删除</button>
     </div>`);
 }
-async function doDelete(zone, idx){
+function doDelete(zone, idx){
   closeModal();
-  if(!token){ toast('请先设置 Token','err'); return; }
-  if(!DATA || !DATA.zones[zone] || !DATA.zones[zone].items || !DATA.zones[zone].items[idx]){
-    toast('数据异常，请点「刷新列表」后重试','err'); return;
-  }
-  toast('删除中...');
-  try {
-    DATA.zones[zone].items.splice(idx, 1);
-    await saveData();
-    toast('已删除','ok');
-    renderManageList();
-  } catch(e) { toast('删除失败：'+e.message,'err'); }
+  DATA.zones[zone].items.splice(idx, 1);
+  markDirty();
+  toast('已删除（记得同步）','ok');
+  renderManageList();
 }
 
-// 编辑弹窗
 function openEditModal(zone, idx){
   const it = DATA.zones[zone].items[idx];
   openModal(`
@@ -552,28 +648,20 @@ function openEditModal(zone, idx){
       <button class="btn-save" onclick="doEdit('${zone}',${idx})">保存修改</button>
     </div>`);
 }
-async function doEdit(zone, idx){
+function doEdit(zone, idx){
   const t = document.getElementById('editName').value.trim();
   const d = document.getElementById('editDesc').value.trim();
   const tags = document.getElementById('editTags').value.trim().split(/[,，]/).map(s=>s.trim()).filter(Boolean);
   if(!t){ toast('名称不能为空','err'); return; }
   closeModal();
-  if(!token){ toast('请先设置 Token','err'); return; }
-  if(!DATA || !DATA.zones[zone] || !DATA.zones[zone].items[idx]){
-    toast('数据异常，请刷新后重试','err'); return;
-  }
-  toast('保存中...');
-  try {
-    DATA.zones[zone].items[idx].t = t;
-    DATA.zones[zone].items[idx].d = d;
-    DATA.zones[zone].items[idx].tags = tags;
-    await saveData();
-    toast('修改已保存','ok');
-    renderManageList();
-  } catch(e) { toast('保存失败：'+e.message,'err'); }
+  DATA.zones[zone].items[idx].t = t;
+  DATA.zones[zone].items[idx].d = d;
+  DATA.zones[zone].items[idx].tags = tags;
+  markDirty();
+  toast('修改已保存（记得同步）','ok');
+  renderManageList();
 }
 
-// 移动分区弹窗
 function openMoveModal(zone, idx){
   const it = DATA.zones[zone].items[idx];
   openModal(`
@@ -583,39 +671,34 @@ function openMoveModal(zone, idx){
     </div>
     <div class="modal-btns"><button class="btn-cancel" onclick="closeModal()">取消</button></div>`);
 }
-async function doMove(fromZone, idx, toZone){
+function doMove(fromZone, idx, toZone){
   closeModal();
-  if(!token){ toast('请先设置 Token','err'); return; }
-  if(!DATA || !DATA.zones[fromZone] || !DATA.zones[fromZone].items[idx]){
-    toast('数据异常，请刷新后重试','err'); return;
-  }
-  toast('移动中...');
-  try {
-    const it = DATA.zones[fromZone].items.splice(idx, 1)[0];
-    if(!DATA.zones[toZone]) DATA.zones[toZone] = { kicker: toZone, title: '', desc:'', items: [] };
-    if(!DATA.zones[toZone].items) DATA.zones[toZone].items = [];
-    DATA.zones[toZone].items.unshift(it);
-    await saveData();
-    toast('已移动到' + ZONE_NAMES[toZone],'ok');
-    renderManageList();
-  } catch(e) { toast('移动失败：'+e.message,'err'); }
+  const it = DATA.zones[fromZone].items.splice(idx, 1)[0];
+  if(!DATA.zones[toZone]) DATA.zones[toZone] = { kicker: toZone, title: '', desc:'', items: [] };
+  if(!DATA.zones[toZone].items) DATA.zones[toZone].items = [];
+  DATA.zones[toZone].items.unshift(it);
+  markDirty();
+  toast('已移动到' + ZONE_NAMES[toZone] + '（记得同步）','ok');
+  renderManageList();
 }
 
 // ===== 每日搭配 =====
 function renderLookList(){
   const list = document.getElementById('lookList');
-  if(!DATA || !DATA.looks || DATA.looks.length === 0){ list.innerHTML = '<div class="empty">还没有搭配</div>'; return; }
-  list.innerHTML = DATA.looks.map((l,i) => `
+  if(!DATA.looks || DATA.looks.length === 0){ list.innerHTML = '<div class="empty">还没有搭配</div>'; return; }
+  list.innerHTML = DATA.looks.map((l,i) => {
+    const imgSrc = l._local ? l._local : l.img;
+    return `
     <div class="item-row">
       <div class="ir-top">
-        <div class="ir-img"><img src="${l.img}" alt="" loading="lazy"></div>
+        <div class="ir-img"><img src="${imgSrc}" alt="" loading="lazy"></div>
         <div class="ir-info"><h5>${l.day} · ${l.name}</h5><p>${l.sub}</p></div>
         <button class="ir-del" style="width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#F6EAE4;color:#B9685C;font-size:16px" onclick="delLook(${i})">✕</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
-async function publishLook(){
-  if(!token){ toast('请先设置 GitHub Token','err'); return; }
+function publishLook(){
   if(!lookPhotoData){ toast('请先拍一张照片','err'); return; }
   if(!currentDay){ toast('请选星期','err'); return; }
   const name = document.getElementById('lookName').value.trim();
@@ -624,25 +707,21 @@ async function publishLook(){
   const tip = document.getElementById('lookTip').value.trim();
   if(!name){ toast('请填搭配名称','err'); return; }
   if(!sub){ toast('请填描述','err'); return; }
-  try {
-    const b64 = lookPhotoData.split(',')[1];
-    const fileName = 'look_' + Date.now() + '.jpg';
-    await ghPut('images/' + fileName, b64, true);
-    await loadData();
-    if(!DATA.looks) DATA.looks = [];
-    DATA.looks = DATA.looks.filter(l => l.day !== currentDay);
-    DATA.looks.push({ img: 'images/' + fileName, day: currentDay, name, sub, items, tip });
-    await saveData();
-    toast('搭配发布成功！','ok');
-    document.getElementById('lookName').value = '';
-    document.getElementById('lookSub').value = '';
-    document.getElementById('lookItems').value = '';
-    document.getElementById('lookTip').value = '';
-    lookPhotoData = null;
-    document.getElementById('lookPhotoPreview').style.display = 'none';
-    document.getElementById('lookPhotoHint').style.display = 'block';
-    renderLookList();
-  } catch(e) { toast('发布失败：'+e.message,'err'); }
+  const imgName = 'look_' + Date.now() + '.jpg';
+  pendingImages.push({ name: imgName, b64: lookPhotoData.split(',')[1] });
+  if(!DATA.looks) DATA.looks = [];
+  DATA.looks = DATA.looks.filter(l => l.day !== currentDay);
+  DATA.looks.push({ img: 'images/' + imgName, day: currentDay, name, sub, items, tip, _local: lookPhotoData });
+  markDirty();
+  toast('搭配已保存到本手机（记得同步）','ok');
+  document.getElementById('lookName').value = '';
+  document.getElementById('lookSub').value = '';
+  document.getElementById('lookItems').value = '';
+  document.getElementById('lookTip').value = '';
+  lookPhotoData = null;
+  document.getElementById('lookPhotoPreview').style.display = 'none';
+  document.getElementById('lookPhotoHint').style.display = 'block';
+  renderLookList();
 }
 function delLook(i){
   const l = DATA.looks[i];
@@ -654,18 +733,12 @@ function delLook(i){
       <button class="btn-danger" onclick="doDelLook(${i})">确认删除</button>
     </div>`);
 }
-async function doDelLook(i){
+function doDelLook(i){
   closeModal();
-  if(!token){ toast('请先设置 Token','err'); return; }
-  if(!DATA || !DATA.looks || !DATA.looks[i]){
-    toast('数据异常，请刷新后重试','err'); return;
-  }
-  toast('删除中...');
-  try {
-    DATA.looks.splice(i, 1);
-    await saveData();
-    toast('已删除','ok'); renderLookList();
-  } catch(e) { toast('删除失败：'+e.message,'err'); }
+  DATA.looks.splice(i, 1);
+  markDirty();
+  toast('已删除（记得同步）','ok');
+  renderLookList();
 }
 
 // ===== 店铺信息 =====
@@ -675,27 +748,22 @@ function loadInfoForm(){
   document.getElementById('setPhone').value = DATA.storeInfo.phone || '';
   document.getElementById('setWechat').value = DATA.storeInfo.wechat || '';
 }
-async function saveInfo(){
-  if(!token){ toast('请先设置 Token','err'); return; }
-  toast('保存中...');
-  try {
-    if(!DATA) await loadData();
-    DATA.storeInfo = {
-      address: document.getElementById('setAddr').value.trim(),
-      phone: document.getElementById('setPhone').value.trim(),
-      wechat: document.getElementById('setWechat').value.trim(),
-      wechatQR: (DATA.storeInfo && DATA.storeInfo.wechatQR) || ''
-    };
-    await saveData();
-    toast('店铺信息已保存','ok');
-  } catch(e) { toast('保存失败：'+e.message,'err'); }
+function saveInfo(){
+  if(!DATA.storeInfo) DATA.storeInfo = {};
+  DATA.storeInfo.address = document.getElementById('setAddr').value.trim();
+  DATA.storeInfo.phone = document.getElementById('setPhone').value.trim();
+  DATA.storeInfo.wechat = document.getElementById('setWechat').value.trim();
+  markDirty();
+  toast('店铺信息已保存（记得同步）','ok');
 }
 
 async function init(){
   updateTokenStatus();
   if(token) document.getElementById('tokenInput').value = token;
-  await loadData();
+  dirty = localStorage.getItem('ap_dirty') === '1';
+  await loadData(false);
   renderManageList(); renderLookList(); loadInfoForm();
+  updateSyncBar();
 }
 
 // 点弹窗外关闭
