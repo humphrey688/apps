@@ -341,7 +341,7 @@ async function loadData(){
   try {
     if(token){
       const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/data.json?ref=${BRANCH}`, {
-        headers: { 'Authorization': 'token ' + token, 'User-Agent': 'AP-Admin' }
+        headers: { 'Authorization': 'token ' + token }
       });
       if(r.ok){
         const d = await r.json();
@@ -369,7 +369,7 @@ async function ghPut(path, content, isBase64, sha){
   if(sha) body.sha = sha;
   const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/${path}`, {
     method: 'PUT',
-    headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'User-Agent': 'AP-Admin' },
+    headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
   if(!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
@@ -377,7 +377,7 @@ async function ghPut(path, content, isBase64, sha){
 }
 async function ghGetSha(path){
   const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/${path}?ref=${BRANCH}`, {
-    headers: { 'Authorization': 'token ' + token, 'User-Agent': 'AP-Admin' }
+    headers: { 'Authorization': 'token ' + token }
   });
   if(!r.ok) return null;
   return (await r.json()).sha;
@@ -527,9 +527,11 @@ function openDelModal(zone, idx){
 async function doDelete(zone, idx){
   closeModal();
   if(!token){ toast('请先设置 Token','err'); return; }
+  if(!DATA || !DATA.zones[zone] || !DATA.zones[zone].items || !DATA.zones[zone].items[idx]){
+    toast('数据异常，请点「刷新列表」后重试','err'); return;
+  }
   toast('删除中...');
   try {
-    await loadData();
     DATA.zones[zone].items.splice(idx, 1);
     await saveData();
     toast('已删除','ok');
@@ -557,9 +559,11 @@ async function doEdit(zone, idx){
   if(!t){ toast('名称不能为空','err'); return; }
   closeModal();
   if(!token){ toast('请先设置 Token','err'); return; }
+  if(!DATA || !DATA.zones[zone] || !DATA.zones[zone].items[idx]){
+    toast('数据异常，请刷新后重试','err'); return;
+  }
   toast('保存中...');
   try {
-    await loadData();
     DATA.zones[zone].items[idx].t = t;
     DATA.zones[zone].items[idx].d = d;
     DATA.zones[zone].items[idx].tags = tags;
@@ -582,9 +586,11 @@ function openMoveModal(zone, idx){
 async function doMove(fromZone, idx, toZone){
   closeModal();
   if(!token){ toast('请先设置 Token','err'); return; }
+  if(!DATA || !DATA.zones[fromZone] || !DATA.zones[fromZone].items[idx]){
+    toast('数据异常，请刷新后重试','err'); return;
+  }
   toast('移动中...');
   try {
-    await loadData();
     const it = DATA.zones[fromZone].items.splice(idx, 1)[0];
     if(!DATA.zones[toZone]) DATA.zones[toZone] = { kicker: toZone, title: '', desc:'', items: [] };
     if(!DATA.zones[toZone].items) DATA.zones[toZone].items = [];
@@ -651,9 +657,11 @@ function delLook(i){
 async function doDelLook(i){
   closeModal();
   if(!token){ toast('请先设置 Token','err'); return; }
+  if(!DATA || !DATA.looks || !DATA.looks[i]){
+    toast('数据异常，请刷新后重试','err'); return;
+  }
   toast('删除中...');
   try {
-    await loadData();
     DATA.looks.splice(i, 1);
     await saveData();
     toast('已删除','ok'); renderLookList();
@@ -671,7 +679,7 @@ async function saveInfo(){
   if(!token){ toast('请先设置 Token','err'); return; }
   toast('保存中...');
   try {
-    await loadData();
+    if(!DATA) await loadData();
     DATA.storeInfo = {
       address: document.getElementById('setAddr').value.trim(),
       phone: document.getElementById('setPhone').value.trim(),
