@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link rel="icon" href="data:,">
+<title>AP 店铺管理</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#F6F1E8;color:#3B3733;min-height:100vh;-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:16px}
+  input,textarea,select{font-family:inherit;font-size:16px}
+  img{display:block;max-width:100%}
+
+  /* 密码门 */
+  .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+  .gate .logo{font-family:Georgia,serif;font-size:36px;font-weight:700;color:#4A3F32;margin-bottom:8px}
+  .gate .logo span{color:#DE8577}
+  .gate p{color:#8C8378;font-size:14px;margin-bottom:24px}
+  .gate input{width:260px;padding:14px 18px;border:1px solid #E5DCCB;border-radius:999px;text-align:center;background:#fff;margin-bottom:16px;outline:none}
+  .gate input:focus{border-color:#DE8577}
+  .gate .enter-btn{width:260px;padding:14px;border-radius:999px;background:#3B3733;color:#FBF6EE;text-align:center;font-size:16px}
+  .gate .enter-btn:active{background:#000}
+  .gate .err{color:#DE8577;font-size:13px;margin-top:8px;display:none}
+
+  /* 管理面板 */
+  .admin{display:none;max-width:680px;margin:0 auto;padding:16px 16px 80px}
+  .admin-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .admin-head h1{font-size:20px;font-weight:700}
+  .admin-head .links{display:flex;gap:8px}
+  .admin-head .links a{font-size:13px;color:#8C8378;text-decoration:none;padding:8px 12px;border:1px solid #E5DCCB;border-radius:999px}
+  .admin-head .links a:active{background:#fff}
+
+  /* Tab */
+  .tabs{display:flex;gap:0;margin-bottom:16px;background:#EDE5D8;border-radius:14px;padding:4px}
+  .tabs button{flex:1;padding:10px;border-radius:10px;font-size:14px;color:#8C8378;transition:all .25s}
+  .tabs button.on{background:#3B3733;color:#FBF6EE}
+
+  /* 区域选择 */
+  .zone-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+  .zone-pick button{padding:12px 8px;border:1px solid #E5DCCB;border-radius:12px;background:#fff;font-size:14px;color:#3B3733;transition:all .2s}
+  .zone-pick button.on{background:#3B3733;color:#FBF6EE;border-color:#3B3733}
+
+  /* 表单 */
+  .form-card{background:#FBF6EE;border:1px solid #E5DCCB;border-radius:16px;padding:16px;margin-bottom:16px}
+  .form-card label{display:block;font-size:13px;color:#8C8378;margin-bottom:6px;font-weight:600}
+  .form-card .field{margin-bottom:14px}
+  .form-card input[type=text],.form-card textarea,.form-card input[type=password]{
+    width:100%;padding:12px 14px;border:1px solid #E5DCCB;border-radius:10px;background:#fff;outline:none;color:#3B3733
+  }
+  .form-card input:focus,.form-card textarea:focus{border-color:#DE8577}
+  .form-card textarea{resize:vertical;min-height:60px;line-height:1.6}
+  .form-card .tags-input{font-size:14px}
+
+  /* 拍照区 */
+  .photo-zone{border:2px dashed #D8CBB4;border-radius:14px;padding:20px;text-align:center;margin-bottom:14px;cursor:pointer;background:#fff;transition:border-color .2s}
+  .photo-zone:active{border-color:#DE8577}
+  .photo-zone img{max-height:200px;margin:0 auto 8px;border-radius:10px}
+  .photo-zone .hint{font-size:14px;color:#8C8378}
+  .photo-zone .hint b{color:#DE8577}
+  .photo-zone input{display:none}
+
+  /* 发布按钮 */
+  .publish-btn{width:100%;padding:16px;border-radius:999px;background:#DE8577;color:#fff;font-size:17px;font-weight:600;transition:opacity .2s}
+  .publish-btn:active{opacity:.8}
+  .publish-btn:disabled{opacity:.4}
+
+  /* 商品列表 */
+  .item-row{display:flex;gap:12px;background:#fff;border:1px solid #E5DCCB;border-radius:14px;padding:12px;margin-bottom:10px;align-items:center}
+  .item-row .ir-img{width:64px;height:64px;border-radius:10px;overflow:hidden;flex:none;background:#F6F1E8}
+  .item-row .ir-img img{width:100%;height:100%;object-fit:cover}
+  .item-row .ir-info{flex:1;min-width:0}
+  .item-row .ir-info h5{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item-row .ir-info p{font-size:12px;color:#8C8378;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item-row .ir-info .ir-tags{font-size:11px;color:#DE8577;margin-top:3px}
+  .item-row .ir-del{width:36px;height:36px;border-radius:50%;background:#F6EAE4;color:#B9685C;font-size:18px;flex:none;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .item-row .ir-del:active{background:#DE8577;color:#fff}
+
+  /* 店铺信息表单 */
+  .info-form .field{margin-bottom:16px}
+
+  /* Toast */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#3B3733;color:#FBF6EE;padding:12px 24px;border-radius:999px;font-size:14px;z-index:200;transition:transform .3s ease;white-space:nowrap}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .toast.ok{background:#5A7B5A}
+  .toast.err{background:#DE8577}
+
+  /* Token 设置 */
+  .token-section{background:#F6EAE4;border:1px solid #EAC7C0;border-radius:14px;padding:14px;margin-bottom:16px}
+  .token-section h4{font-size:14px;color:#B9685C;margin-bottom:6px}
+  .token-section p{font-size:12px;color:#8C8378;line-height:1.6;margin-bottom:10px}
+  .token-section input{width:100%;padding:10px 12px;border:1px solid #E5DCCB;border-radius:8px;font-size:13px;background:#fff}
+  .token-status{font-size:12px;color:#5A7B5A;font-weight:600}
+  .token-status.off{color:#DE8577}
+
+  .empty{padding:30px;text-align:center;color:#8C8378;font-size:14px}
+
+  /* 搭配管理 */
+  .look-form .day-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .look-form .day-tags button{padding:6px 12px;border:1px solid #E5DCCB;border-radius:999px;font-size:12px;background:#fff}
+  .look-form .day-tags button.on{background:#DE8577;color:#fff;border-color:#DE8577}
+</style>
+</head>
+<body>
+
+<!-- 密码门 -->
+<div class="gate" id="gate">
+  <div class="logo">A<span>P</span></div>
+  <p>店铺管理后台</p>
+  <input type="password" id="pwInput" placeholder="输入管理密码" onkeydown="if(event.key==='Enter')doLogin()">
+  <button class="enter-btn" onclick="doLogin()">进入</button>
+  <div class="err" id="pwErr">密码不对，再试试</div>
+</div>
+
+<!-- 管理面板 -->
+<div class="admin" id="admin">
+  <div class="admin-head">
+    <h1>AP 店铺管理</h1>
+    <div class="links">
+      <a href="index.html" target="_blank">看店铺</a>
+      <a href="javascript:doLogout()">退出</a>
+    </div>
+  </div>
+
+  <!-- Token 设置 -->
+  <div class="token-section">
+    <h4>GitHub 授权 Token</h4>
+    <p>第一次使用需要填一次，之后不用再填。问帮你建网站的人要。</p>
+    <input type="text" id="tokenInput" placeholder="ghp_ 开头的一串字符">
+    <div style="margin-top:8px"><span class="token-status off" id="tokenStatus">未设置</span></div>
+    <button class="enter-btn" style="width:auto;padding:10px 20px;margin-top:10px;font-size:14px" onclick="saveToken()">保存 Token</button>
+  </div>
+
+  <!-- Tab -->
+  <div class="tabs">
+    <button class="on" data-atab="add" onclick="switchTab('add')">上架新品</button>
+    <button data-atab="manage" onclick="switchTab('manage')">管理商品</button>
+    <button data-atab="looks" onclick="switchTab('looks')">每日搭配</button>
+    <button data-atab="info" onclick="switchTab('info')">店铺信息</button>
+  </div>
+
+  <!-- 上架新品 -->
+  <div id="tab-add" class="atab">
+    <div class="form-card">
+      <label>选择分区</label>
+      <div class="zone-pick" style="margin-top:8px">
+        <button class="on" data-zone="tops" onclick="pickZone(this)">上装</button>
+        <button data-zone="skirts" onclick="pickZone(this)">裙装</button>
+        <button data-zone="pants" onclick="pickZone(this)">裤装</button>
+        <button data-zone="new" onclick="pickZone(this)">本周上新</button>
+        <button data-zone="fitting" onclick="pickZone(this)">试衣间</button>
+        <button data-zone="cashier" onclick="pickZone(this)">收银台</button>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="field">
+        <label>商品照片（拍照或选图）</label>
+        <div class="photo-zone" onclick="document.getElementById('photoFile').click()">
+          <div id="photoPreview" style="display:none"><img id="photoImg" src=""></div>
+          <div class="hint" id="photoHint"><b>点这里拍照</b><br>或从相册选一张</div>
+          <input type="file" id="photoFile" accept="image/*" capture="environment">
+        </div>
+      </div>
+      <div class="field">
+        <label>商品名称</label>
+        <input type="text" id="itemName" placeholder="比如：奶白方领衬衫">
+      </div>
+      <div class="field">
+        <label>一句话描述</label>
+        <textarea id="itemDesc" placeholder="比如：垂感面料，单穿或当内搭都好看"></textarea>
+      </div>
+      <div class="field">
+        <label>标签（用逗号隔开，可不填）</label>
+        <input type="text" id="itemTags" class="tags-input" placeholder="本周上新, 百搭">
+      </div>
+    </div>
+    <button class="publish-btn" id="publishBtn" onclick="publishItem()">发布上新</button>
+  </div>
+
+  <!-- 管理商品 -->
+  <div id="tab-manage" class="atab" style="display:none">
+    <div class="zone-pick" style="margin-bottom:16px">
+      <button class="on" data-mzone="tops" onclick="pickMZone(this)">上装</button>
+      <button data-mzone="skirts" onclick="pickMZone(this)">裙装</button>
+      <button data-mzone="pants" onclick="pickMZone(this)">裤装</button>
+      <button data-mzone="new" onclick="pickMZone(this)">本周上新</button>
+      <button data-mzone="fitting" onclick="pickMZone(this)">试衣间</button>
+      <button data-mzone="cashier" onclick="pickMZone(this)">收银台</button>
+    </div>
+    <div id="manageList"></div>
+  </div>
+
+  <!-- 每日搭配 -->
+  <div id="tab-looks" class="atab" style="display:none">
+    <div class="form-card look-form">
+      <label>搭配照片</label>
+      <div class="photo-zone" onclick="document.getElementById('lookPhotoFile').click()" style="margin-top:8px">
+        <div id="lookPhotoPreview" style="display:none"><img id="lookPhotoImg" src=""></div>
+        <div class="hint" id="lookPhotoHint"><b>点这里拍照/选图</b></div>
+        <input type="file" id="lookPhotoFile" accept="image/*" capture="environment">
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label>星期</label>
+        <div class="day-tags">
+          <button data-day="本周一" onclick="pickDay(this)">本周一</button>
+          <button data-day="本周二" onclick="pickDay(this)">本周二</button>
+          <button data-day="本周三" onclick="pickDay(this)">本周三</button>
+          <button data-day="本周四" onclick="pickDay(this)">本周四</button>
+          <button data-day="本周五" onclick="pickDay(this)">本周五</button>
+          <button data-day="本周六" onclick="pickDay(this)">本周六</button>
+          <button data-day="本周日" onclick="pickDay(this)">本周日</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>搭配名称</label>
+        <input type="text" id="lookName" placeholder="比如：法式通勤风">
+      </div>
+      <div class="field">
+        <label>一句话描述</label>
+        <textarea id="lookSub" placeholder="比如：白衬衫 + 卡其阔腿裤，温和不挑人"></textarea>
+      </div>
+      <div class="field">
+        <label>单品清单（每行一个）</label>
+        <textarea id="lookItems" placeholder="白色方领衬衫&#10;卡其高腰阔腿裤&#10;浅米色腋下包"></textarea>
+      </div>
+      <div class="field">
+        <label>搭配小抄</label>
+        <textarea id="lookTip" placeholder="比如：衬衫最上一粒扣松开，脖子显得长"></textarea>
+      </div>
+    </div>
+    <button class="publish-btn" onclick="publishLook()">发布搭配</button>
+    <div style="margin-top:20px"><h4 style="margin-bottom:10px">已发布搭配</h4><div id="lookList"></div></div>
+  </div>
+
+  <!-- 店铺信息 -->
+  <div id="tab-info" class="atab" style="display:none">
+    <div class="form-card info-form">
+      <div class="field"><label>店铺地址</label><input type="text" id="setAddr" placeholder="比如：XX路XX号XX大厦1楼"></div>
+      <div class="field"><label>联系电话</label><input type="text" id="setPhone" placeholder="比如：138XXXXXXXX"></div>
+      <div class="field"><label>微信群 / 客服微信号</label><input type="text" id="setWechat" placeholder="比如：AP客服小助手"></div>
+    </div>
+    <button class="publish-btn" onclick="saveInfo()">保存店铺信息</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PASSWORD = 'ap2026';
+const REPO = 'humphrey688/apps';
+const BRANCH = 'main';
+const BASE = 'ap-store';
+const API = 'https://api.github.com';
+const RAW = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + BASE;
+let token = localStorage.getItem('gh_token') || '';
+let DATA = null;
+let currentZone = 'tops';
+let currentMZone = 'tops';
+let currentDay = '';
+let photoData = null;
+let lookPhotoData = null;
+let pendingUploads = [];
+
+// 登录
+function doLogin(){
+  if(document.getElementById('pwInput').value === PASSWORD){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('admin').style.display='block';
+    init();
+  } else {
+    document.getElementById('pwErr').style.display='block';
+  }
+}
+function doLogout(){
+  document.getElementById('admin').style.display='none';
+  document.getElementById('gate').style.display='flex';
+  document.getElementById('pwInput').value='';
+}
+
+// Toast
+function toast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type||'');
+  setTimeout(()=> t.className='toast', 2500);
+}
+
+// Token
+function saveToken(){
+  token = document.getElementById('tokenInput').value.trim();
+  if(!token){ toast('Token 不能为空','err'); return; }
+  localStorage.setItem('gh_token', token);
+  updateTokenStatus();
+  toast('Token 已保存','ok');
+}
+function updateTokenStatus(){
+  const s = document.getElementById('tokenStatus');
+  if(token){ s.textContent='已设置'; s.className='token-status'; }
+  else { s.textContent='未设置'; s.className='token-status off'; }
+}
+
+// 加载数据
+async function loadData(){
+  try {
+    const r = await fetch(RAW + '/data.json?t=' + Date.now());
+    DATA = await r.json();
+  } catch(e) {
+    DATA = { zones:{}, looks:[], storeInfo:{} };
+    toast('数据加载失败，可离线编辑','err');
+  }
+}
+
+// 图片压缩
+function compressImg(file, maxW, cb){
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      if(w > maxW){ h = Math.round(h * maxW / w); w = maxW; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      cb(canvas.toDataURL('image/jpeg', 0.78));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// 拍照
+document.getElementById('photoFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if(!f) return;
+  compressImg(f, 800, d => {
+    photoData = d;
+    document.getElementById('photoImg').src = d;
+    document.getElementById('photoPreview').style.display = 'block';
+    document.getElementById('photoHint').style.display = 'none';
+  });
+});
+document.getElementById('lookPhotoFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if(!f) return;
+  compressImg(f, 800, d => {
+    lookPhotoData = d;
+    document.getElementById('lookPhotoImg').src = d;
+    document.getElementById('lookPhotoPreview').style.display = 'block';
+    document.getElementById('lookPhotoHint').style.display = 'none';
+  });
+});
+
+// 分区选择
+function pickZone(btn){
+  document.querySelectorAll('#tab-add .zone-pick button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); currentZone = btn.dataset.zone;
+}
+function pickMZone(btn){
+  document.querySelectorAll('#tab-manage .zone-pick button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); currentMZone = btn.dataset.mzone;
+  renderManageList();
+}
+function pickDay(btn){
+  document.querySelectorAll('.day-tags button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); currentDay = btn.dataset.day;
+}
+
+// Tab 切换
+function switchTab(name){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
+  document.querySelector(`.tabs button[data-atab="${name}"]`).classList.add('on');
+  document.querySelectorAll('.atab').forEach(t=>t.style.display='none');
+  document.getElementById('tab-'+name).style.display='block';
+  if(name==='manage') renderManageList();
+  if(name==='looks') renderLookList();
+  if(name==='info') loadInfoForm();
+}
+
+// GitHub API
+async function ghPut(path, content, isBase64, sha){
+  const url = `${API}/repos/${REPO}/contents/${BASE}/${path}`;
+  const body = { message: 'Update ' + path, branch: BRANCH, content: isBase64 ? content : btoa(unescape(encodeURIComponent(content))) };
+  if(sha) body.sha = sha;
+  const r = await fetch(url, {
+    method: 'PUT',
+    headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if(!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
+  return r.json();
+}
+async function ghGetSha(path){
+  const r = await fetch(`${API}/repos/${REPO}/contents/${BASE}/${path}?ref=${BRANCH}`, {
+    headers: { 'Authorization': 'token ' + token }
+  });
+  if(!r.ok) return null;
+  const d = await r.json();
+  return d.sha;
+}
+
+// 发布新品
+async function publishItem(){
+  if(!token){ toast('请先设置 GitHub Token','err'); return; }
+  if(!photoData){ toast('请先拍一张照片','err'); return; }
+  const name = document.getElementById('itemName').value.trim();
+  const desc = document.getElementById('itemDesc').value.trim();
+  const tags = document.getElementById('itemTags').value.trim().split(/[,，]/).map(s=>s.trim()).filter(Boolean);
+  if(!name){ toast('请填写商品名称','err'); return; }
+  if(!desc){ toast('请填写一句话描述','err'); return; }
+
+  const btn = document.getElementById('publishBtn');
+  btn.disabled = true; btn.textContent = '发布中...';
+
+  try {
+    // 上传图片
+    const b64 = photoData.split(',')[1];
+    const fileName = 'img_' + Date.now() + '.jpg';
+    const imgPath = 'images/' + fileName;
+    await ghPut(imgPath, b64, true);
+
+    // 更新 data.json
+    await loadData();
+    if(!DATA.zones[currentZone]) DATA.zones[currentZone] = { kicker: currentZone, title: '', desc:'', items: [] };
+    if(!DATA.zones[currentZone].items) DATA.zones[currentZone].items = [];
+    DATA.zones[currentZone].items.unshift({ img: 'images/' + fileName, t: name, d: desc, tags: tags });
+
+    const jsonStr = JSON.stringify(DATA, null, 2);
+    const sha = await ghGetSha('data.json');
+    await ghPut('data.json', jsonStr, false, sha);
+
+    toast('发布成功！顾客刷新就能看到','ok');
+    // 清空表单
+    document.getElementById('itemName').value = '';
+    document.getElementById('itemDesc').value = '';
+    document.getElementById('itemTags').value = '';
+    photoData = null;
+    document.getElementById('photoPreview').style.display = 'none';
+    document.getElementById('photoHint').style.display = 'block';
+  } catch(e) {
+    toast('发布失败：' + e.message, 'err');
+  }
+  btn.disabled = false; btn.textContent = '发布上新';
+}
+
+// 管理列表
+function renderManageList(){
+  const list = document.getElementById('manageList');
+  if(!DATA || !DATA.zones[currentMZone] || !DATA.zones[currentMZone].items || DATA.zones[currentMZone].items.length === 0){
+    list.innerHTML = '<div class="empty">这个区还没有商品</div>';
+    return;
+  }
+  list.innerHTML = DATA.zones[currentMZone].items.map((it,i) => `
+    <div class="item-row">
+      <div class="ir-img"><img src="${it.img}" alt=""></div>
+      <div class="ir-info"><h5>${it.t}</h5><p>${it.d}</p><div class="ir-tags">${(it.tags||[]).join(' · ')}</div></div>
+      <div class="ir-del" onclick="delItem('${currentMZone}',${i})">✕</div>
+    </div>`).join('');
+}
+async function delItem(zone, idx){
+  if(!token){ toast('请先设置 Token','err'); return; }
+  if(!confirm('确定删除这件商品？')) return;
+  try {
+    await loadData();
+    DATA.zones[zone].items.splice(idx, 1);
+    const sha = await ghGetSha('data.json');
+    await ghPut('data.json', JSON.stringify(DATA, null, 2), false, sha);
+    toast('已删除','ok');
+    renderManageList();
+  } catch(e) { toast('删除失败：'+e.message,'err'); }
+}
+
+// 每日搭配
+function renderLookList(){
+  const list = document.getElementById('lookList');
+  if(!DATA || !DATA.looks || DATA.looks.length === 0){ list.innerHTML = '<div class="empty">还没有搭配</div>'; return; }
+  list.innerHTML = DATA.looks.map((l,i) => `
+    <div class="item-row">
+      <div class="ir-img"><img src="${l.img}" alt=""></div>
+      <div class="ir-info"><h5>${l.day} · ${l.name}</h5><p>${l.sub}</p></div>
+      <div class="ir-del" onclick="delLook(${i})">✕</div>
+    </div>`).join('');
+}
+async function publishLook(){
+  if(!token){ toast('请先设置 GitHub Token','err'); return; }
+  if(!lookPhotoData){ toast('请先拍一张照片','err'); return; }
+  if(!currentDay){ toast('请选星期','err'); return; }
+  const name = document.getElementById('lookName').value.trim();
+  const sub = document.getElementById('lookSub').value.trim();
+  const items = document.getElementById('lookItems').value.trim().split('\n').map(s=>s.trim()).filter(Boolean);
+  const tip = document.getElementById('lookTip').value.trim();
+  if(!name){ toast('请填搭配名称','err'); return; }
+  if(!sub){ toast('请填描述','err'); return; }
+
+  try {
+    const b64 = lookPhotoData.split(',')[1];
+    const fileName = 'look_' + Date.now() + '.jpg';
+    await ghPut('images/' + fileName, b64, true);
+    await loadData();
+    if(!DATA.looks) DATA.looks = [];
+    // 替换同一天的
+    DATA.looks = DATA.looks.filter(l => l.day !== currentDay);
+    DATA.looks.push({ img: 'images/' + fileName, day: currentDay, name, sub, items, tip });
+    const sha = await ghGetSha('data.json');
+    await ghPut('data.json', JSON.stringify(DATA, null, 2), false, sha);
+    toast('搭配发布成功！','ok');
+    document.getElementById('lookName').value = '';
+    document.getElementById('lookSub').value = '';
+    document.getElementById('lookItems').value = '';
+    document.getElementById('lookTip').value = '';
+    lookPhotoData = null;
+    document.getElementById('lookPhotoPreview').style.display = 'none';
+    document.getElementById('lookPhotoHint').style.display = 'block';
+    renderLookList();
+  } catch(e) { toast('发布失败：'+e.message,'err'); }
+}
+async function delLook(i){
+  if(!token){ toast('请先设置 Token','err'); return; }
+  if(!confirm('确定删除这套搭配？')) return;
+  try {
+    await loadData();
+    DATA.looks.splice(i, 1);
+    const sha = await ghGetSha('data.json');
+    await ghPut('data.json', JSON.stringify(DATA, null, 2), false, sha);
+    toast('已删除','ok'); renderLookList();
+  } catch(e) { toast('删除失败：'+e.message,'err'); }
+}
+
+// 店铺信息
+function loadInfoForm(){
+  if(!DATA || !DATA.storeInfo) return;
+  document.getElementById('setAddr').value = DATA.storeInfo.address || '';
+  document.getElementById('setPhone').value = DATA.storeInfo.phone || '';
+  document.getElementById('setWechat').value = DATA.storeInfo.wechat || '';
+}
+async function saveInfo(){
+  if(!token){ toast('请先设置 Token','err'); return; }
+  try {
+    await loadData();
+    DATA.storeInfo = {
+      address: document.getElementById('setAddr').value.trim(),
+      phone: document.getElementById('setPhone').value.trim(),
+      wechat: document.getElementById('setWechat').value.trim(),
+      wechatQR: (DATA.storeInfo && DATA.storeInfo.wechatQR) || ''
+    };
+    const sha = await ghGetSha('data.json');
+    await ghPut('data.json', JSON.stringify(DATA, null, 2), false, sha);
+    toast('店铺信息已保存','ok');
+  } catch(e) { toast('保存失败：'+e.message,'err'); }
+}
+
+async function init(){
+  updateTokenStatus();
+  if(token) document.getElementById('tokenInput').value = token;
+  await loadData();
+  renderManageList();
+  renderLookList();
+  loadInfoForm();
+}
+</script>
+</body>
+</html>
