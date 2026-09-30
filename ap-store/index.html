@@ -7,303 +7,200 @@
 <title>AP · 设计师品牌集合店</title>
 <style>
   :root{
-    --paper:#F6F1E8; --paper-2:#FBF6EE; --ink:#3B3733; --muted:#8C8378;
-    --line:#E5DCCB; --coral:#DE8577; --gold:#C9A87C; --mist:#AEC3D4;
-    --shadow:0 18px 50px rgba(90,70,50,.16); --radius:20px;
+    --paper:#F1EBE3;
+    --card:#FBF8F3;
+    --ink:#26211D;
+    --ink-soft:#4A423A;
+    --muted:#8A7C6E;
+    --line:#E4DBCE;
+    --accent:#A98467;
+    --gold:#C6A15B;
+    --cream:#F7F2E9;
+    --radius:16px;
+    --shadow:0 12px 32px rgba(60,45,30,.10);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--paper);color:var(--ink);
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+  }
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   img{display:block;max-width:100%}
 
-  .topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:rgba(253,255,244,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:baseline;gap:10px;line-height:1.15}
-  .brand .logo{font-family:Georgia,"Songti SC",serif;font-size:24px;font-weight:700;letter-spacing:.06em;color:#4A3F32}
-  .brand .logo span{color:var(--coral)}
-  .brand small{font-size:11px;color:var(--muted);letter-spacing:.18em}
-  .pill-btn{padding:8px 16px;border-radius:999px;font-size:13px;color:var(--ink);border:1px solid var(--line);background:rgba(255,253,246,.6);transition:all .25s ease}
-  .pill-btn:hover{background:#fff;box-shadow:0 4px 12px rgba(90,70,40,.1)}
+  /* ===== 顶栏 ===== */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    background:linear-gradient(rgba(20,16,12,.55), rgba(20,16,12,0));
+    transition:background .3s ease;
+  }
+  .topbar.scrolled{background:rgba(30,24,19,.92);backdrop-filter:blur(12px)}
+  .brand{display:flex;align-items:baseline;gap:8px}
+  .brand .logo{font-family:Georgia,"Songti SC",serif;font-size:22px;font-weight:700;letter-spacing:.1em;color:#F5EDE2}
+  .brand .logo i{font-style:normal;color:var(--gold)}
+  .brand small{font-size:10px;color:rgba(245,237,226,.65);letter-spacing:.24em}
+  .topbar .contact{font-size:12px;color:#F5EDE2;letter-spacing:.12em;padding:8px 14px;border:1px solid rgba(245,237,226,.35);border-radius:999px;transition:all .25s}
+  .topbar .contact:hover{background:rgba(245,237,226,.12)}
 
-  main{max-width:1200px;margin:0 auto;padding:18px 16px 60px}
+  /* ===== 首页壁纸 ===== */
+  .hero{position:relative;width:100%;height:86vh;min-height:520px;overflow:hidden;background:#241C14}
+  .hero img.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg, rgba(18,13,9,.35) 0%, rgba(18,13,9,.05) 40%, rgba(18,13,9,.75) 100%)}
+  .hero .hero-inner{position:absolute;left:0;right:0;bottom:0;padding:0 24px 30px;color:#F5EDE2}
+  .hero .eyebrow{font-size:11px;letter-spacing:.42em;color:rgba(198,161,91,.95);margin-bottom:12px}
+  .hero h1{font-family:Georgia,"Songti SC",serif;font-size:40px;font-weight:700;letter-spacing:.06em;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+  .hero .sub{font-size:13px;letter-spacing:.26em;color:rgba(245,237,226,.78);margin-top:10px}
+  .hero .scroll-hint{position:absolute;bottom:14px;right:20px;color:rgba(245,237,226,.45);font-size:20px;animation:float 2.2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-  .stage{position:relative;border-radius:26px;overflow:hidden;background:var(--paper-2);border:1px solid var(--line);box-shadow:var(--shadow)}
-  .stage svg{width:100%;height:auto;display:block}
-  .stage-hint{position:absolute;left:16px;bottom:16px;z-index:5;display:flex;align-items:center;gap:8px;background:rgba(255,253,246,.9);border:1px solid var(--line);padding:9px 16px;border-radius:999px;font-size:13px;color:var(--muted);box-shadow:0 6px 18px rgba(90,70,40,.12);backdrop-filter:blur(6px);animation:hintPulse 3s ease-in-out infinite}
-  .stage-hint .dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:dotBlink 1.6s infinite}
-  @keyframes dotBlink{0%,100%{opacity:1}50%{opacity:.25}}
-  @keyframes hintPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  main{max-width:1120px;margin:0 auto;padding:0 16px 70px}
 
-  .back-btn{position:fixed;left:16px;top:74px;z-index:40;display:inline-flex;align-items:center;gap:6px;background:rgba(255,253,246,.94);border:1px solid var(--line);padding:9px 16px;border-radius:999px;font-size:13px;color:var(--ink);box-shadow:0 6px 16px rgba(90,70,40,.16);transition:transform .2s}
-  .back-btn:hover{transform:translateX(-3px)}
+  /* ===== 分类筛选 ===== */
+  .filters{position:sticky;top:0;z-index:50;background:rgba(241,235,227,.93);backdrop-filter:blur(10px);padding:14px 0 12px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  .filters .row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px}
+  .filters .row::-webkit-scrollbar{display:none}
+  .filter-chip{flex:none;padding:9px 20px;border-radius:999px;font-size:13px;color:var(--ink-soft);background:#fff;border:1px solid var(--line);transition:all .25s;letter-spacing:.08em}
+  .filter-chip.on{background:#2A231D;color:#F5EDE2;border-color:#2A231D;box-shadow:0 4px 14px rgba(42,35,29,.25)}
 
-  .hotzone{fill:#fff;fill-opacity:0;cursor:pointer;transition:fill-opacity .3s ease}
-  .hotzone:hover{fill:#fff;fill-opacity:.14}
-  .hotzone:focus-visible{outline:none;fill:#fff;fill-opacity:.22}
+  /* ===== 商品双栏网格 ===== */
+  .section-eyebrow{display:flex;align-items:center;gap:10px;margin:34px 0 16px}
+  .section-eyebrow .line{flex:1;height:1px;background:var(--line)}
+  .section-eyebrow span{font-size:11px;letter-spacing:.34em;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .p-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .3s ease, box-shadow .3s ease}
+  .p-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .p-card .thumb{aspect-ratio:3/3.8;overflow:hidden;background:#EDE6DA;position:relative}
+  .p-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+  .p-card:hover .thumb img{transform:scale(1.06)}
+  .p-card .thumb .badge{position:absolute;left:10px;top:10px;background:rgba(20,15,10,.62);color:#F0E3CF;font-size:10px;letter-spacing:.16em;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+  .p-card .meta{padding:12px 14px 14px}
+  .p-card .meta h4{font-size:14px;font-weight:600;letter-spacing:.02em}
+  .p-card .meta p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .p-card .meta .tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+  .p-card .meta .tags span{font-size:10px;padding:2px 8px;border-radius:999px;background:#F0E7DA;color:#8A6F52}
 
-  .stage-wrap{position:relative}
-  .scene{transition:opacity .55s ease, transform .55s cubic-bezier(.22,.8,.28,1)}
-  .scene.leaving{position:absolute;inset:0;opacity:0;transform:scale(1.06);pointer-events:none}
-  .scene.active{opacity:1;transform:scale(1)}
+  /* 福利横幅 */
+  .banner{margin-top:26px;background:linear-gradient(120deg,#3A2F24,#55402B);color:#EFE3CE;border-radius:var(--radius);padding:22px;position:relative;overflow:hidden}
+  .banner::after{content:'';position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(198,161,91,.14)}
+  .banner h4{font-family:Georgia,serif;font-size:17px;letter-spacing:.12em;color:#D8B87C}
+  .banner p{font-size:13px;line-height:1.9;margin-top:8px;color:rgba(239,227,206,.85)}
 
-  /* 手机端大卡片 */
-  .mobile-cards{display:none;margin-top:16px}
-  .m-card{display:flex;align-items:center;gap:14px;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;cursor:pointer;transition:transform .2s, box-shadow .2s}
-  .m-card:active{transform:scale(.98);box-shadow:var(--shadow)}
-  .m-card .mc-icon{width:52px;height:52px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;font-size:24px}
-  .m-card .mc-text{flex:1}
-  .m-card .mc-text h4{font-size:16px;font-weight:600}
-  .m-card .mc-text p{font-size:13px;color:var(--muted);margin-top:3px}
-  .m-card .mc-arrow{font-size:20px;color:var(--muted)}
-  .m-card.enter .mc-icon{background:linear-gradient(135deg,#F2C9C2,#E9A99E);color:#fff}
-
-  /* 每日搭配 */
-  .section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-top:36px;margin-bottom:18px}
-  .section-head .left h2{font-family:Georgia,"Songti SC",serif;font-size:28px;font-weight:600;letter-spacing:.03em}
-  .section-head .left p{color:var(--muted);font-size:14px;margin-top:6px}
-  .section-head .right{font-size:13px;color:var(--coral);font-weight:600;letter-spacing:.08em}
-  .look-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-  .look-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .3s ease, box-shadow .3s ease}
-  .look-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-  .look-card .thumb{aspect-ratio:4/4.6;overflow:hidden;background:var(--paper)}
-  .look-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  /* ===== 每日搭配 ===== */
+  .look-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .look-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .3s ease, box-shadow .3s ease}
+  .look-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .look-card .thumb{aspect-ratio:1;overflow:hidden;background:#E9E6DA;position:relative}
+  .look-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
   .look-card:hover .thumb img{transform:scale(1.05)}
-  .look-card .meta{padding:14px 16px 16px}
-  .look-card .meta .day{font-size:11px;color:var(--coral);letter-spacing:.2em;font-weight:600}
-  .look-card .meta h3{font-size:17px;margin:5px 0 6px;font-family:Georgia,"Songti SC",serif}
-  .look-card .meta p{font-size:13px;color:var(--muted);line-height:1.55}
-  .look-card .meta .tag{margin-top:10px;display:inline-block;font-size:11px;color:var(--coral);border:1px solid #EAC7C0;border-radius:999px;padding:3px 10px}
+  .look-card .thumb .day{position:absolute;left:10px;top:10px;background:rgba(42,35,29,.62);color:#F0E3CF;font-size:10px;letter-spacing:.14em;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+  .look-card .meta{padding:12px 14px 14px}
+  .look-card .meta h4{font-size:14px;font-weight:600;font-family:Georgia,"Songti SC",serif;letter-spacing:.03em}
+  .look-card .meta p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-  /* 店铺信息 */
-  .info-section{margin-top:36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-  .info-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 20px;transition:box-shadow .3s ease}
-  .info-card:hover{box-shadow:var(--shadow)}
-  .info-card .icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
-  .info-card .icon.loc{background:#F0E6F5;color:#8B6BAE}
-  .info-card .icon.tel{background:#E8F0E6;color:#6B8E5A}
-  .info-card .icon.wx{background:#E6F0F5;color:#5A8BAE}
-  .info-card h4{font-size:16px;font-weight:600;margin-bottom:6px}
-  .info-card p{font-size:14px;color:var(--muted);line-height:1.7}
-  .info-card .placeholder{color:#C4B8A8;font-style:italic}
-  .info-card .qr-placeholder{margin-top:12px;width:100px;height:100px;border:2px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#C4B8A8}
+  /* ===== 店铺信息 ===== */
+  .info-section{margin-top:8px;display:grid;grid-template-columns:1fr;gap:12px}
+  .info-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px}
+  .info-card .icon{width:44px;height:44px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:20px;background:#F1E7D8}
+  .info-card h4{font-size:14px;font-weight:600}
+  .info-card p{font-size:13px;color:var(--muted);margin-top:3px}
+  .info-card .placeholder{color:#C4B6A4;font-style:italic}
+  .info-card .qr-placeholder{margin-left:auto;width:64px;height:64px;border:1.5px dashed var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#C4B6A4;text-align:center;flex:none}
 
-  /* 抽屉 */
-  .mask{position:fixed;inset:0;background:rgba(52,44,36,.4);opacity:0;transition:opacity .35s ease;z-index:90;backdrop-filter:blur(3px);pointer-events:none}
+  footer{margin:0 auto;padding:0 16px 36px;color:var(--muted);font-size:11px;text-align:center;line-height:1.9;letter-spacing:.06em}
+  footer a{color:var(--muted);text-decoration:none}
+
+  /* ===== 抽屉 ===== */
+  .mask{position:fixed;inset:0;background:rgba(30,22,15,.5);opacity:0;transition:opacity .3s ease;z-index:90;backdrop-filter:blur(4px);pointer-events:none}
   .mask.show{opacity:1;pointer-events:auto}
-  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,92vw);background:#FFFDF7;z-index:95;transform:translateX(105%);transition:transform .45s cubic-bezier(.22,.61,.28,1);box-shadow:-20px 0 60px rgba(60,45,30,.18);display:flex;flex-direction:column}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,92vw);background:#FCFAF5;z-index:95;transform:translateX(105%);transition:transform .42s cubic-bezier(.22,.61,.28,1);box-shadow:-24px 0 70px rgba(40,25,10,.22);display:flex;flex-direction:column}
   .drawer.show{transform:translateX(0)}
-  .drawer-head{padding:22px 22px 14px;border-bottom:1px solid var(--line)}
-  .drawer-head .kicker{font-size:11px;letter-spacing:.22em;color:var(--coral);font-weight:600}
-  .drawer-head h3{font-size:24px;font-family:Georgia,"Songti SC",serif;margin-top:5px}
-  .drawer-head p{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.6}
+  .drawer-head{padding:24px 22px 14px;border-bottom:1px solid var(--line)}
+  .drawer-head .kicker{font-size:10px;letter-spacing:.3em;color:var(--accent);font-weight:600}
+  .drawer-head h3{font-size:23px;font-family:Georgia,"Songti SC",serif;margin-top:6px}
+  .drawer-head p{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.6}
   .drawer-body{flex:1;overflow-y:auto;padding:18px 22px 24px;-webkit-overflow-scrolling:touch}
-  .p-card{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:14px;opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease}
-  .p-card.in{opacity:1;transform:translateY(0)}
-  .p-card .ph{width:88px;height:108px;border-radius:12px;overflow:hidden;flex:none;background:var(--paper)}
-  .p-card .ph img{width:100%;height:100%;object-fit:cover}
-  .p-card .info{display:flex;flex-direction:column;justify-content:center;flex:1;min-width:0}
-  .p-card .info .t{font-size:15px;font-weight:600}
-  .p-card .info .d{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:4px}
-  .p-card .info .tags{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}
-  .p-card .info .tags span{font-size:11px;padding:2px 9px;border-radius:999px;background:#F6EAE4;color:#B9685C}
-  .drawer-foot{padding:14px 22px 22px}
-  .drawer-foot button{width:100%;padding:13px;border-radius:999px;background:var(--ink);color:#FBF6EE;font-size:15px;transition:transform .2s, background .2s}
-  .drawer-foot button:hover{background:#000;transform:translateY(-1px)}
-  .dose-note{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.6;background:#F6F0E6;border-radius:12px;padding:12px 14px}
+  .d-img{width:100%;aspect-ratio:1;border-radius:14px;overflow:hidden;background:#EBE3D6;margin-bottom:16px}
+  .d-img img{width:100%;height:100%;object-fit:cover}
+  .d-title{font-size:19px;font-weight:600;font-family:Georgia,"Songti SC",serif}
+  .d-desc{font-size:13.5px;color:var(--muted);line-height:1.75;margin-top:8px}
+  .d-tags{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .d-tags span{font-size:11px;padding:3px 11px;border-radius:999px;background:#F3E9DA;color:#8A6B44}
+  .d-more{margin-top:16px;font-size:12.5px;color:var(--accent);letter-spacing:.1em}
+  .drawer-foot{padding:14px 22px 24px}
+  .drawer-foot button{width:100%;padding:14px;border-radius:999px;background:#2A231E;color:#F5EDE2;font-size:15px;letter-spacing:.14em;transition:all .2s}
+  .drawer-foot button:hover{background:#14100C}
 
   /* 搭配详情 */
   .look-detail{display:none;position:fixed;inset:0;background:var(--paper);z-index:110;overflow-y:auto;-webkit-overflow-scrolling:touch}
   .look-detail.show{display:block}
   .look-detail .hero-img{position:relative}
-  .look-detail .hero-img img{width:100%;max-height:50vh;object-fit:cover}
-  .look-detail .close{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,253,246,.95);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:transform .2s;z-index:20}
+  .look-detail .hero-img img{width:100%;max-height:56vh;object-fit:cover}
+  .look-detail .close{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(252,248,240,.94);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 4px 14px rgba(0,0,0,.16);transition:transform .2s;z-index:20}
   .look-detail .close:hover{transform:rotate(90deg)}
-  .look-detail .body{max-width:680px;margin:0 auto;padding:22px 20px 60px}
-  .look-detail .day{font-size:12px;letter-spacing:.22em;color:var(--coral);font-weight:600}
-  .look-detail h2{font-family:Georgia,"Songti SC",serif;font-size:28px;margin:8px 0 10px}
-  .look-detail .sub{color:var(--muted);font-size:14px;line-height:1.7}
-  .look-detail .items{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-  .look-detail .item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+  .look-detail .body{max-width:660px;margin:0 auto;padding:22px 20px 64px}
+  .look-detail .day{font-size:11px;letter-spacing:.3em;color:var(--accent);font-weight:600}
+  .look-detail h2{font-family:Georgia,"Songti SC",serif;font-size:27px;margin:8px 0 10px}
+  .look-detail .sub{color:var(--muted);font-size:14px;line-height:1.8}
+  .look-detail .items{margin-top:22px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .look-detail .item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px}
   .look-detail .item b{font-size:13.5px;display:block}
-  .look-detail .item span{font-size:12px;color:var(--muted);display:block;margin-top:3px}
-  .look-detail .tip{margin-top:24px;background:#F3EFE4;border-radius:14px;padding:14px 16px;font-size:13px;color:#6E6255;line-height:1.7}
+  .look-detail .item span{font-size:11.5px;color:var(--muted);display:block;margin-top:3px}
+  .look-detail .tip{margin-top:20px;background:#F1E9DC;border-radius:14px;padding:14px 16px;font-size:13px;color:#6E5F4C;line-height:1.75}
 
-  footer{max-width:1200px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:12px;text-align:center;line-height:1.8}
-  footer a{color:var(--muted);text-decoration:none}
-
-  /* ===== 手机端 ===== */
-  @media (max-width:768px){
-    .topbar{padding:12px 14px}
-    .brand .logo{font-size:20px}
-    .brand small{display:none}
-    .pill-btn{padding:7px 12px;font-size:12px}
-    .drawer{width:100vw;max-width:100vw}
-    .stage-hint{display:none}
-    .stage{border-radius:0;border-left:none;border-right:none;pointer-events:none}
-    .stage svg{pointer-events:none}
-    main{padding:0 0 60px}
-    .section-head{flex-direction:column;gap:6px;align-items:flex-start;padding:0 14px}
-    .section-head .right{font-size:12px}
-    .look-grid{grid-template-columns:repeat(2,1fr);gap:12px;padding:0 14px}
-    .look-card .thumb{aspect-ratio:1}
-    .look-card .meta{padding:10px 12px 12px}
-    .look-card .meta h3{font-size:15px}
-    .look-card .meta p{font-size:12px}
-    .info-section{grid-template-columns:1fr;padding:0 14px}
-    .mobile-cards{display:block;padding:0 14px}
+  @media (min-width:720px){
+    .grid{grid-template-columns:repeat(3,1fr)}
+    .look-grid{grid-template-columns:repeat(4,1fr)}
+    .info-section{grid-template-columns:repeat(3,1fr)}
+    .hero h1{font-size:56px}
+    .hero{height:78vh}
   }
   @media (prefers-reduced-motion: reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
 <body>
 
-<header class="topbar">
+<header class="topbar" id="topbar">
   <div class="brand">
-    <div class="logo">A<span>P</span></div>
+    <div class="logo">A<i>P</i></div>
     <small>设计师品牌集合店</small>
   </div>
-  <div class="right">
-    <button class="pill-btn" onclick="document.getElementById('store-info').scrollIntoView({behavior:'smooth'})">联系店铺</button>
-  </div>
+  <button class="contact" onclick="document.getElementById('store-info').scrollIntoView({behavior:'smooth'})">联系店铺</button>
 </header>
 
+<div class="hero">
+  <img class="hero-bg" src="images/hero.jpg" alt="AP 品牌形象">
+  <div class="shade"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">ALWAYS PRETTY</div>
+    <h1>AP 设计师品牌集合店</h1>
+    <div class="sub">精选好衣 · 每日搭配</div>
+  </div>
+  <div class="scroll-hint">⌄</div>
+</div>
+
 <main>
-  <section id="tab-shop">
-    <div class="stage-wrap" id="sceneWrap">
-      <!-- 店外门面 SVG（桌面端互动 / 手机端展示图） -->
-      <div class="stage scene active" id="scene-outside">
-        <svg viewBox="0 0 1200 780" role="img" aria-label="服装店门面">
-          <defs>
-            <linearGradient id="skyG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCE8EC"/><stop offset=".6" stop-color="#F0EDE4"/><stop offset="1" stop-color="#F7F0E4"/></linearGradient>
-            <linearGradient id="wallG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBF5EB"/><stop offset="1" stop-color="#F0E6D4"/></linearGradient>
-            <linearGradient id="glassG2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".5" stop-color="#fff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient>
-            <linearGradient id="doorG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5E8D4" stop-opacity=".7"/><stop offset="1" stop-color="#E0CDB4" stop-opacity=".8"/></linearGradient>
-            <linearGradient id="awningG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4C5BA"/><stop offset="1" stop-color="#E8B0A4"/></linearGradient>
-            <linearGradient id="groundG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E0D6C2"/><stop offset="1" stop-color="#D0C3A8"/></linearGradient>
-            <filter id="softShadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#8C7456" flood-opacity=".18"/></filter>
-          </defs>
-          <rect width="1200" height="320" fill="url(#skyG2)"/>
-          <ellipse cx="220" cy="100" rx="80" ry="28" fill="#fff" opacity=".75"/>
-          <ellipse cx="270" cy="92" rx="50" ry="20" fill="#fff" opacity=".8"/>
-          <ellipse cx="960" cy="80" rx="70" ry="24" fill="#fff" opacity=".65"/>
-          <rect y="320" width="1200" height="460" fill="url(#groundG)"/>
-          <line x1="0" y1="360" x2="1200" y2="360" stroke="#C9BCA2" stroke-width="2" opacity=".4"/>
-          <line x1="0" y1="500" x2="1200" y2="500" stroke="#C9BCA2" stroke-width="2" opacity=".2"/>
-          <ellipse cx="600" cy="640" rx="420" ry="18" fill="#000" opacity=".08" filter="blur(6px)"/>
-          <rect x="220" y="100" width="760" height="500" rx="6" fill="url(#wallG2)" stroke="#D8CBB4" stroke-width="2"/>
-          <line x1="220" y1="100" x2="980" y2="100" stroke="#C9BBA0" stroke-width="3"/>
-          <rect x="220" y="100" width="760" height="12" fill="#E8DCC6"/>
-          <rect x="270" y="128" width="660" height="66" rx="8" fill="#4A3F36" filter="url(#softShadow)"/>
-          <rect x="270" y="128" width="660" height="66" rx="8" fill="none" stroke="#6B5B4E" stroke-width="1.5"/>
-          <rect x="280" y="134" width="640" height="54" rx="4" fill="none" stroke="#5C4D42" stroke-width="1" opacity=".4"/>
-          <text x="600" y="170" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="700" fill="#E8C99E" letter-spacing="4">AP</text>
-          <text x="600" y="214" text-anchor="middle" font-size="13" fill="#B09A7E" letter-spacing="6">设计师品牌集合店</text>
-          <g filter="url(#softShadow)">
-            <path d="M240,236 L960,236 L970,262 L230,262 Z" fill="url(#awningG)"/>
-            <g>
-              <path d="M248,236 L256,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M284,236 L292,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M320,236 L328,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M356,236 L364,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M392,236 L400,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M428,236 L436,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M464,236 L472,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M500,236 L508,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M536,236 L544,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M572,236 L580,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M608,236 L616,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M644,236 L652,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M680,236 L688,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M716,236 L724,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M752,236 L760,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M788,236 L796,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M824,236 L832,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M860,236 L868,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M896,236 L904,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/><path d="M932,236 L940,262" stroke="#D8A498" stroke-width="1.5" opacity=".5"/>
-            </g>
-            <path d="M230,262 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 q18,12 36,0 L970,262 Z" fill="#E8B0A4"/>
-          </g>
-          <!-- 橱窗 -->
-          <g><rect x="250" y="286" width="160" height="340" rx="6" fill="#3B3733"/><rect x="256" y="292" width="148" height="328" rx="4" fill="#F2EDE2"/><rect x="256" y="292" width="148" height="328" rx="4" fill="url(#glassG2)"/><line x1="270" y1="320" x2="390" y2="320" stroke="#A0886E" stroke-width="3" stroke-linecap="round"/><g transform="translate(290,322)"><path d="M-3,-4 L3,-4 M-3,-4 l-8,28 M3,-4 l8,28" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-16,24 h32 v12 a5,5 0 0 1 -5,5 h-22 a5,5 0 0 1 -5,-5 z" fill="#F5E8D0" stroke="#D8C49B" stroke-width="1.5"/></g><g transform="translate(330,322)"><path d="M-3,-4 L3,-4 M-3,-4 l-8,28 M3,-4 l8,28" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-16,24 h32 v12 a5,5 0 0 1 -5,5 h-22 a5,5 0 0 1 -5,-5 z" fill="#D9E6F0" stroke="#A9C4D8" stroke-width="1.5"/></g><rect x="260" y="600" width="140" height="18" rx="3" fill="#D0C0A8"/><text x="330" y="616" text-anchor="middle" font-size="14" fill="#8A7460" letter-spacing="2">上装 · 上新</text><rect x="328" y="292" width="4" height="328" fill="#3B3733" opacity=".3"/></g>
-          <rect class="hotzone" x="250" y="286" width="160" height="340" tabindex="0" data-zone="tops" aria-label="上装区上新"/>
-          <g><rect x="430" y="286" width="160" height="340" rx="6" fill="#3B3733"/><rect x="436" y="292" width="148" height="328" rx="4" fill="#F2EDE2"/><rect x="436" y="292" width="148" height="328" rx="4" fill="url(#glassG2)"/><line x1="450" y1="320" x2="570" y2="320" stroke="#A0886E" stroke-width="3" stroke-linecap="round"/><g transform="translate(470,322)"><path d="M-3,-4 L3,-4 M-3,-4 l-8,22 M3,-4 l8,22" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-7,18 l7,8 7,-8 2,24 a8,8 0 0 1 -8,7 h-2 a8,8 0 0 1 -8,-7 z" fill="#F2C9C2" stroke="#D8A49A" stroke-width="1.5"/></g><g transform="translate(510,322)"><path d="M-3,-4 L3,-4 M-3,-4 l-8,22 M3,-4 l8,22" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-7,18 l7,8 7,-8 2,26 a8,8 0 0 1 -8,7 h-2 a8,8 0 0 1 -8,-7 z" fill="#D9E3EC" stroke="#A9BED2" stroke-width="1.5"/></g><rect x="440" y="600" width="140" height="18" rx="3" fill="#D0C0A8"/><text x="510" y="616" text-anchor="middle" font-size="14" fill="#8A7460" letter-spacing="2">裙装 · 上新</text><rect x="506" y="292" width="4" height="328" fill="#3B3733" opacity=".3"/></g>
-          <rect class="hotzone" x="430" y="286" width="160" height="340" tabindex="0" data-zone="skirts" aria-label="裙装区上新"/>
-          <g><rect x="610" y="286" width="160" height="340" rx="6" fill="#3B3733"/><rect x="616" y="292" width="148" height="328" rx="4" fill="#F2EDE2"/><rect x="616" y="292" width="148" height="328" rx="4" fill="url(#glassG2)"/><line x1="630" y1="320" x2="750" y2="320" stroke="#A0886E" stroke-width="3" stroke-linecap="round"/><g transform="translate(655,322)"><path d="M-3,-4 L3,-4 M-3,-4 l-8,18 M3,-4 l8,18" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-14,14 h28 v10 a4,4 0 0 1 -4,4 h-20 a4,4 0 0 1 -4,-4 z" fill="#E6D7BC" stroke="#C7AE83" stroke-width="1.5"/><path d="M-7,28 l-2,26 h6 v-24 h6 v24 h6 l-2,-26 z" fill="#DCCDB0" stroke="#C3AF8B" stroke-width="1.5"/></g><g transform="translate(695,322)"><path d="M-3,-4 L3,-4 M-3,-4 l-8,18 M3,-4 l8,18" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-14,14 h28 v10 a4,4 0 0 1 -4,4 h-20 a4,4 0 0 1 -4,-4 z" fill="#CBD9D2" stroke="#9FB6A2" stroke-width="1.5"/><path d="M-7,18 l-2,26 h6 v-24 h6 v24 h6 l-2,-26 z" fill="#BFD0C8" stroke="#9FB6A2" stroke-width="1.5"/></g><rect x="620" y="600" width="140" height="18" rx="3" fill="#D0C0A8"/><text x="690" y="616" text-anchor="middle" font-size="14" fill="#8A7460" letter-spacing="2">裤装 · 上新</text><rect x="686" y="292" width="4" height="328" fill="#3B3733" opacity=".3"/></g>
-          <rect class="hotzone" x="610" y="286" width="160" height="340" tabindex="0" data-zone="pants" aria-label="裤装区上新"/>
-          <!-- 大门 -->
-          <g filter="url(#softShadow)"><rect x="790" y="286" width="180" height="340" rx="6" fill="#3B3733"/><rect x="798" y="294" width="78" height="324" rx="4" fill="url(#doorG2)" stroke="#A0886E" stroke-width="1.5"/><rect x="884" y="294" width="78" height="324" rx="4" fill="url(#doorG2)" stroke="#A0886E" stroke-width="1.5"/><circle cx="876" cy="450" r="5" fill="#8A7456"/><circle cx="884" cy="450" r="5" fill="#8A7456"/><rect x="808" y="310" width="58" height="80" rx="2" fill="none" stroke="#B89E7E" stroke-width="1.5" opacity=".5"/><rect x="894" y="310" width="58" height="80" rx="2" fill="none" stroke="#B89E7E" stroke-width="1.5" opacity=".5"/><text x="880" y="380" text-anchor="middle" font-size="16" fill="#9A8060" letter-spacing="4" opacity=".6">推门进店</text></g>
-          <rect class="hotzone" x="790" y="286" width="180" height="340" tabindex="0" data-zone="enter" aria-label="推门进店"/>
-          <rect x="206" y="100" width="14" height="500" fill="#E8DCC4" stroke="#D0C0A8" stroke-width="1"/>
-          <rect x="980" y="100" width="14" height="500" fill="#E8DCC4" stroke="#D0C0A8" stroke-width="1"/>
-          <g transform="translate(170,500)" filter="url(#softShadow)"><rect x="-20" y="40" width="40" height="22" rx="3" fill="#A67B5A"/><rect x="-22" y="38" width="44" height="6" rx="2" fill="#9A7050"/><ellipse cx="0" cy="30" rx="32" ry="34" fill="#9EBB9A"/><ellipse cx="-12" cy="38" rx="16" ry="20" fill="#B5D0AE"/><ellipse cx="12" cy="34" rx="14" ry="18" fill="#A8C8A2"/><ellipse cx="0" cy="20" rx="12" ry="14" fill="#C2DBBC"/></g>
-          <g transform="translate(1030,500)" filter="url(#softShadow)"><rect x="-20" y="40" width="40" height="22" rx="3" fill="#A67B5A"/><rect x="-22" y="38" width="44" height="6" rx="2" fill="#9A7050"/><ellipse cx="0" cy="30" rx="32" ry="34" fill="#9EBB9A"/><ellipse cx="12" cy="38" rx="16" ry="20" fill="#B5D0AE"/><ellipse cx="-12" cy="34" rx="14" ry="18" fill="#A8C8A2"/><ellipse cx="0" cy="20" rx="12" ry="14" fill="#C2DBBC"/></g>
-          <ellipse cx="880" cy="638" rx="60" ry="10" fill="#D3C0A4" opacity=".7"/>
-          <g transform="translate(600,680)"><rect x="-50" y="-14" width="100" height="26" rx="13" fill="#4A3F36"/><circle cx="-34" cy="0" r="4" fill="#7FD47F"/><text x="10" y="4" text-anchor="middle" font-size="11" fill="#E8C99E" letter-spacing="3">营业中</text></g>
-        </svg>
-        <div class="stage-hint"><span class="dot"></span>点橱窗先看新品，点大门推门进店</div>
-      </div>
+  <div class="filters"><div class="row" id="filtersRow"></div></div>
+  <div class="grid" id="productGrid"></div>
+  <div class="banner" id="benefitBanner" style="display:none"></div>
 
-      <!-- 店内场景 SVG -->
-      <div class="scene indoor" id="scene-inside" hidden>
-        <button class="back-btn" id="backOutside" aria-label="回到店外">← 回到店外</button>
-        <svg viewBox="0 0 1200 780" role="img" aria-label="店铺内部">
-          <defs>
-            <linearGradient id="wallG3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E8D4"/><stop offset="1" stop-color="#EDDEC4"/></linearGradient>
-            <linearGradient id="floorG3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3D2B9"/><stop offset=".5" stop-color="#D5C0A0"/><stop offset="1" stop-color="#C8B088"/></linearGradient>
-            <linearGradient id="ceilG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8F0E0"/><stop offset="1" stop-color="#EDE0CC"/></linearGradient>
-            <radialGradient id="lightG" cx=".5" cy="0" r=".5"><stop offset="0" stop-color="#FFF8E8" stop-opacity=".5"/><stop offset="1" stop-color="#FFF8E8" stop-opacity="0"/></radialGradient>
-            <filter id="softShadow2" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#8C7456" flood-opacity=".15"/></filter>
-          </defs>
-          <rect width="1200" height="120" fill="url(#ceilG)"/>
-          <line x1="0" y1="120" x2="1200" y2="120" stroke="#D0C0A0" stroke-width="2"/>
-          <g><rect x="180" y="0" width="24" height="8" rx="3" fill="#D8C8A8"/><ellipse cx="192" cy="120" rx="80" ry="50" fill="url(#lightG)"/><rect x="420" y="0" width="24" height="8" rx="3" fill="#D8C8A8"/><ellipse cx="432" cy="120" rx="80" ry="50" fill="url(#lightG)"/><rect x="660" y="0" width="24" height="8" rx="3" fill="#D8C8A8"/><ellipse cx="672" cy="120" rx="80" ry="50" fill="url(#lightG)"/><rect x="900" y="0" width="24" height="8" rx="3" fill="#D8C8A8"/><ellipse cx="912" cy="120" rx="80" ry="50" fill="url(#lightG)"/></g>
-          <rect y="120" width="1200" height="180" fill="url(#wallG3)"/>
-          <line x1="0" y1="300" x2="1200" y2="300" stroke="#D0BC9E" stroke-width="2"/>
-          <line x1="0" y1="250" x2="1200" y2="250" stroke="#D5C2A4" stroke-width="1" opacity=".4"/>
-          <polygon points="0,300 1200,300 1200,780 0,780" fill="url(#floorG3)"/>
-          <g stroke="#C0AB88" stroke-width="1.5" opacity=".25"><line x1="0" y1="300" x2="-200" y2="780"/><line x1="200" y1="300" x2="80" y2="780"/><line x1="400" y1="300" x2="340" y2="780"/><line x1="600" y1="300" x2="600" y2="780"/><line x1="800" y1="300" x2="860" y2="780"/><line x1="1000" y1="300" x2="1120" y2="780"/><line x1="1200" y1="300" x2="1400" y2="780"/></g>
-          <g stroke="#C0AB88" stroke-width="1" opacity=".15"><line x1="0" y1="400" x2="1200" y2="400"/><line x1="0" y1="520" x2="1200" y2="520"/><line x1="0" y1="660" x2="1200" y2="660"/></g>
-          <line x1="140" y1="150" x2="980" y2="150" stroke="#9A8060" stroke-width="5" stroke-linecap="round"/>
-          <circle cx="140" cy="150" r="4" fill="#9A8060"/><circle cx="980" cy="150" r="4" fill="#9A8060"/>
-          <g filter="url(#softShadow2)"><g transform="translate(170,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,26 M3,0 l7,26" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-16,22 h32 v14 a5,5 0 0 1 -5,5 h-22 a5,5 0 0 1 -5,-5 z" fill="#F5E8D0" stroke="#D8C49B" stroke-width="1.5"/></g><g transform="translate(215,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,26 M3,0 l7,26" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-16,22 h32 v14 a5,5 0 0 1 -5,5 h-22 a5,5 0 0 1 -5,-5 z" fill="#D9E6F0" stroke="#A9C4D8" stroke-width="1.5"/></g><g transform="translate(260,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,26 M3,0 l7,26" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-16,22 h32 v14 a5,5 0 0 1 -5,5 h-22 a5,5 0 0 1 -5,-5 z" fill="#F3DFC9" stroke="#D9B98F" stroke-width="1.5"/></g></g>
-          <g transform="translate(215,210)"><rect x="-44" y="-12" width="88" height="22" rx="11" fill="#4A3F36" filter="url(#softShadow2)"/><text x="0" y="3" text-anchor="middle" font-size="13" fill="#E8C99E" letter-spacing="3">上装区</text></g>
-          <rect class="hotzone" x="140" y="140" width="180" height="100" tabindex="0" data-zone="tops" aria-label="上装区"/>
-          <g filter="url(#softShadow2)"><g transform="translate(360,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,20 M3,0 l7,20" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-7,16 l7,8 7,-8 2,28 a8,8 0 0 1 -8,7 h-2 a8,8 0 0 1 -8,-7 z" fill="#F2C9C2" stroke="#D8A49A" stroke-width="1.5"/></g><g transform="translate(400,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,20 M3,0 l7,20" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-7,16 l7,8 7,-8 2,30 a8,8 0 0 1 -8,7 h-2 a8,8 0 0 1 -8,-7 z" fill="#D9E3EC" stroke="#A9BED2" stroke-width="1.5"/></g><g transform="translate(440,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,20 M3,0 l7,20" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-7,16 l7,8 7,-8 2,30 a8,8 0 0 1 -8,7 h-2 a8,8 0 0 1 -8,-7 z" fill="#EFE3C6" stroke="#D3BC8C" stroke-width="1.5"/></g></g>
-          <g transform="translate(400,210)"><rect x="-44" y="-12" width="88" height="22" rx="11" fill="#4A3F36" filter="url(#softShadow2)"/><text x="0" y="3" text-anchor="middle" font-size="13" fill="#E8C99E" letter-spacing="3">裙装区</text></g>
-          <rect class="hotzone" x="330" y="140" width="170" height="100" tabindex="0" data-zone="skirts" aria-label="裙装区"/>
-          <g filter="url(#softShadow2)"><g transform="translate(560,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,16 M3,0 l7,16" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-14,14 h28 v10 a4,4 0 0 1 -4,4 h-20 a4,4 0 0 1 -4,-4 z" fill="#E6D7BC" stroke="#C7AE83" stroke-width="1.5"/><path d="M-7,28 l-2,30 h6 v-28 h6 v28 h6 l-2,-30 z" fill="#DCCDB0" stroke="#C3AF8B" stroke-width="1.5"/></g><g transform="translate(605,152)"><path d="M0,-6 L0,0" stroke="#A0886E" stroke-width="2.5" stroke-linecap="round"/><path d="M-3,0 L3,0 M-3,0 l-7,16 M3,0 l7,16" stroke="#A0886E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M-14,14 h28 v10 a4,4 0 0 1 -4,4 h-20 a4,4 0 0 1 -4,-4 z" fill="#CBD9D2" stroke="#9FB6A2" stroke-width="1.5"/><path d="M-7,18 l-2,30 h6 v-28 h6 v28 h6 l-2,-30 z" fill="#BFD0C8" stroke="#9FB6A2" stroke-width="1.5"/></g></g>
-          <g transform="translate(585,210)"><rect x="-44" y="-12" width="88" height="22" rx="11" fill="#4A3F36" filter="url(#softShadow2)"/><text x="0" y="3" text-anchor="middle" font-size="13" fill="#E8C99E" letter-spacing="3">裤装区</text></g>
-          <rect class="hotzone" x="530" y="140" width="170" height="100" tabindex="0" data-zone="pants" aria-label="裤装区"/>
-          <g filter="url(#softShadow2)"><ellipse cx="600" cy="580" rx="180" ry="42" fill="#D5B893"/><ellipse cx="600" cy="572" rx="170" ry="38" fill="#E0C9A8"/><ellipse cx="600" cy="572" rx="140" ry="28" fill="#EBD5B8"/><ellipse cx="600" cy="554" rx="14" ry="6" fill="#C9A87C"/><path d="M588,554 L586,490 q0,-10 14,-12 q14,-2 14,12 l-2,64 z" fill="#F0E0CC" stroke="#D3BFA0" stroke-width="1.5"/><path d="M580,480 q20,-8 40,0 l2,30 q0,6 -6,6 h-32 q-6,0 -6,-6 z" fill="#F5E8D0" stroke="#D8C49B" stroke-width="1.5"/><line x1="600" y1="470" x2="600" y2="450" stroke="#C9A87C" stroke-width="2"/><circle cx="600" cy="448" r="4" fill="none" stroke="#C9A87C" stroke-width="1.5"/></g>
-          <g transform="translate(600,630)"><rect x="-60" y="-14" width="120" height="24" rx="12" fill="#4A3F36" filter="url(#softShadow2)"/><text x="0" y="3" text-anchor="middle" font-size="13" fill="#E8C99E" letter-spacing="4">本周上新</text></g>
-          <rect class="hotzone" x="420" y="440" width="360" height="200" tabindex="0" data-zone="new" aria-label="本周上新"/>
-          <g filter="url(#softShadow2)"><rect x="960" y="280" width="180" height="320" rx="6" fill="#F0E4CC" stroke="#C9B497" stroke-width="2"/><rect x="972" y="292" width="156" height="296" rx="4" fill="#F6EDE0" stroke="#C9B497" stroke-width="2"/><path d="M976,300 h148 v120 q-12,8 -24,0 q-12,8 -24,0 q-12,8 -24,0 q-12,8 -24,0 q-12,8 -24,0 q-12,8 -28,0 z" fill="#F2C9C2" opacity=".7"/><rect x="1042" y="284" width="16" height="6" rx="2" fill="#D8C8A8"/><ellipse cx="1050" cy="300" rx="20" ry="10" fill="#FFF8E8" opacity=".5"/><g transform="translate(1050,620)"><rect x="-44" y="-12" width="88" height="22" rx="11" fill="#4A3F36"/><text x="0" y="3" text-anchor="middle" font-size="13" fill="#E8C99E" letter-spacing="3">试衣间</text></g><rect x="1000" y="450" width="100" height="120" rx="3" fill="#E8F0F4" opacity=".2" stroke="#B8C8D0" stroke-width="1.5"/></g>
-          <rect class="hotzone" x="960" y="280" width="180" height="280" tabindex="0" data-zone="fitting" aria-label="试衣间搭配推荐"/>
-          <g filter="url(#softShadow2)"><rect x="800" y="600" width="200" height="60" rx="8" fill="#D5B893" stroke="#B99A73" stroke-width="2"/><rect x="810" y="590" width="180" height="20" rx="6" fill="#E0C9A8" stroke="#B99A73" stroke-width="1.5"/><rect x="830" y="560" width="50" height="34" rx="4" fill="#4A3F36"/><rect x="836" y="566" width="38" height="16" rx="2" fill="#2A3F2A"/><text x="855" y="578" text-anchor="middle" font-size="7" fill="#7FD47F" letter-spacing="1">AP</text><ellipse cx="910" cy="582" rx="10" ry="14" fill="#F2C9C2" stroke="#D8A49A" stroke-width="1"/><g transform="translate(900,640)"><rect x="-44" y="-12" width="88" height="22" rx="11" fill="#4A3F36"/><text x="0" y="3" text-anchor="middle" font-size="13" fill="#E8C99E" letter-spacing="3">收银台</text></g></g>
-          <rect class="hotzone" x="800" y="580" width="200" height="80" tabindex="0" data-zone="cashier" aria-label="收银台本周活动"/>
-          <text x="600" y="50" text-anchor="middle" font-size="15" fill="#A08A6E" letter-spacing="3">点货架逛新品 · 点试衣间看搭配 · 点收银台看活动</text>
-        </svg>
-        <div class="stage-hint"><span class="dot"></span>点击每个区域，丝滑打开看细节</div>
-      </div>
+  <div class="section-eyebrow"><span>每日搭配</span><div class="line"></div><span>DAILY LOOKS</span></div>
+  <div class="look-grid" id="lookGrid"></div>
 
-      <!-- 手机端大卡片 -->
-      <div class="mobile-cards" id="mobileCards">
-        <div class="m-card" data-zone="tops"><div class="mc-icon" style="background:#F5E8D0;color:#9A7B4E">👕</div><div class="mc-text"><h4>上装上新</h4><p>衬衫、开衫、外套</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="skirts"><div class="mc-icon" style="background:#F2C9C2;color:#B9685C">👗</div><div class="mc-text"><h4>裙装上新</h4><p>连衣裙、半身裙</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="pants"><div class="mc-icon" style="background:#CBD9D2;color:#5A7B6A">👖</div><div class="mc-text"><h4>裤装上新</h4><p>阔腿裤、西裤</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="new"><div class="mc-icon" style="background:#E8DCC4;color:#8A7456">✨</div><div class="mc-text"><h4>本周上新</h4><p>刚到的好看，先看这几件</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card enter" data-zone="enter"><div class="mc-icon">🚪</div><div class="mc-text"><h4>推门进店</h4><p>进来看看试衣间和收银台</p></div><div class="mc-arrow">›</div></div>
-      </div>
-      <div class="mobile-cards" id="mobileCardsInside" style="display:none">
-        <div class="m-card" data-zone="tops"><div class="mc-icon" style="background:#F5E8D0;color:#9A7B4E">👕</div><div class="mc-text"><h4>上装区</h4><p>货架上的新品</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="skirts"><div class="mc-icon" style="background:#F2C9C2;color:#B9685C">👗</div><div class="mc-text"><h4>裙装区</h4><p>货架上的新品</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="pants"><div class="mc-icon" style="background:#CBD9D2;color:#5A7B6A">👖</div><div class="mc-text"><h4>裤装区</h4><p>货架上的新品</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="new"><div class="mc-icon" style="background:#E8DCC4;color:#8A7456">✨</div><div class="mc-text"><h4>本周上新</h4><p>中岛台重点推荐</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="fitting"><div class="mc-icon" style="background:#E8F0F4;color:#5A8BAE">🪞</div><div class="mc-text"><h4>试衣间</h4><p>今日试穿推荐</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" data-zone="cashier"><div class="mc-icon" style="background:#F0E6F5;color:#8B6BAE">🏷️</div><div class="mc-text"><h4>收银台</h4><p>本周到店福利</p></div><div class="mc-arrow">›</div></div>
-        <div class="m-card" id="mobileBackBtn" style="background:#4A3F36;color:#E8C99E"><div class="mc-icon" style="background:rgba(255,255,255,.15);color:#E8C99E">←</div><div class="mc-text"><h4 style="color:#E8C99E">回到店外</h4><p style="color:rgba(232,201,158,.6)">出门看看橱窗</p></div><div class="mc-arrow" style="color:#E8C99E">›</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="daily-section">
-    <div class="section-head"><div class="left"><h2>每日搭配</h2><p>每天一套，提前帮你搭好，照着穿就好看</p></div><div class="right">每日更新</div></div>
-    <div class="look-grid" id="lookGrid"></div>
-  </section>
-
-  <section id="store-info">
-    <div class="section-head"><div class="left"><h2>联系店铺</h2><p>到店试穿、扫码进群、电话咨询</p></div></div>
-    <div class="info-section">
-      <div class="info-card"><div class="icon loc">📍</div><h4>店铺地址</h4><p class="placeholder" id="infoAddr">（待填写）</p></div>
-      <div class="info-card"><div class="icon tel">📞</div><h4>联系电话</h4><p class="placeholder" id="infoTel">（待填写）</p></div>
-      <div class="info-card"><div class="icon wx">💬</div><h4>微信群 / 客服微信</h4><p class="placeholder" id="infoWx">（待填写）</p><div class="qr-placeholder" id="infoQR">二维码待上传</div></div>
-    </div>
-  </section>
+  <div class="section-eyebrow" id="store-info"><span>联系店铺</span><div class="line"></div></div>
+  <div class="info-section">
+    <div class="info-card"><div class="icon">📍</div><div><h4>店铺地址</h4><p class="placeholder" id="infoAddr">（待填写）</p></div></div>
+    <div class="info-card"><div class="icon">📞</div><div><h4>联系电话</h4><p class="placeholder" id="infoTel">（待填写）</p></div></div>
+    <div class="info-card"><div class="icon">💬</div><div><h4>微信群 / 客服微信</h4><p class="placeholder" id="infoWx">（待填写）</p></div><div class="qr-placeholder" id="qrInfo">二维码<br>待上传</div></div>
+  </div>
 </main>
 
-<footer>AP · 设计师品牌集合店 · <a href="admin.html">管理</a><br>顾客扫码即可云逛店</footer>
+<footer>
+  AP · 设计师品牌集合店 · <a href="admin.html">管理</a><br>
+  到店试穿 · 每日上新
+</footer>
 
 <div class="mask" id="mask"></div>
 <aside class="drawer" id="drawer" aria-hidden="true">
@@ -311,6 +208,7 @@
   <div class="drawer-body" id="drawerBody"></div>
   <div class="drawer-foot"><button id="drawerClose">返回继续逛</button></div>
 </aside>
+
 <div class="look-detail" id="lookDetail">
   <button class="close" id="lookClose" aria-label="关闭">✕</button>
   <div id="lookDetailBody"></div>
@@ -319,32 +217,135 @@
 <script>
 const $ = s => document.querySelector(s);
 let DATA = null;
+let currentFilter = 'all';
+const FILTERS = [
+  { id:'all',   label:'全部' },
+  { id:'new',   label:'本周上新' },
+  { id:'tops',  label:'上装' },
+  { id:'skirts',label:'裙装' },
+  { id:'pants', label:'裤装' }
+];
+const ZONE_META = { new:{kicker:'本周上新'}, tops:{kicker:'上装区'}, skirts:{kicker:'裙装区'}, pants:{kicker:'裤装区'} };
+
 async function loadData(){
-  try { const r = await fetch('data.json?t=' + Date.now()); DATA = await r.json(); renderAll(); }
-  catch(e) { console.error('数据加载失败', e); }
+  try {
+    const r = await fetch('data.json?t=' + Date.now());
+    DATA = await r.json();
+    renderAll();
+  } catch(e){
+    console.error('数据加载失败', e);
+    document.getElementById('productGrid').innerHTML = '<p style="color:#8A7C6E;padding:30px;text-align:center">数据加载失败，请稍后刷新</p>';
+  }
 }
-function openDrawer(key){
-  const z = DATA.zones[key]; if(!z) return;
-  $('#drawerHead').innerHTML = `<div class="kicker">${z.kicker}</div><h3>${z.title}</h3>${z.desc?`<p>${z.desc}</p>`:''}`;
-  $('#drawerBody').innerHTML = z.items.map((it,i)=>`<div class="p-card" style="transition-delay:${i*60}ms"><div class="ph"><img src="${it.img}" alt="${it.t}" loading="lazy"></div><div class="info"><div class="t">${it.t}</div><div class="d">${it.d}</div><div class="tags">${(it.tags||[]).map(x=>`<span>${x}</span>`).join("")}</div></div></div>`).join("") + (z.note?`<div class="dose-note">${z.note.replace(/\n/g,"<br>")}</div>`:"");
-  $('#mask').classList.add('show'); $('#drawer').classList.add('show'); $('#drawer').setAttribute('aria-hidden','false');
-  requestAnimationFrame(()=> $('#drawerBody').querySelectorAll('.p-card').forEach(c=>c.classList.add('in')));
+
+function renderFilters(){
+  $('#filtersRow').innerHTML = FILTERS.map(f => `<button class="filter-chip${f.id===currentFilter?' on':''}" onclick="setFilter('${f.id}')">${f.label}</button>`).join('');
 }
-function closeDrawer(){ $('#drawer').classList.remove('show'); $('#mask').classList.remove('show'); $('#drawer').setAttribute('aria-hidden','true'); setTimeout(()=>{ $('#drawerBody').innerHTML=""; },420); }
-let sceneMode='out';
-function enterShop(){ if(sceneMode==='in')return; sceneMode='in'; const o=$('#scene-outside'),i=$('#scene-inside'); o.classList.add('leaving'); setTimeout(()=>{o.hidden=true;o.classList.remove('active','leaving');},520); i.hidden=false; requestAnimationFrame(()=>requestAnimationFrame(()=>i.classList.add('active'))); if(window.innerWidth<=768){$('#mobileCards').style.display='none';$('#mobileCardsInside').style.display='block';} }
-function exitShop(){ if(sceneMode==='out')return; sceneMode='out'; const o=$('#scene-outside'),i=$('#scene-inside'); i.classList.remove('active');i.classList.add('leaving'); setTimeout(()=>{i.hidden=true;i.classList.remove('leaving');},520); o.hidden=false; requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add('active'))); if(window.innerWidth<=768){$('#mobileCards').style.display='block';$('#mobileCardsInside').style.display='none';} }
-document.addEventListener('click',e=>{const z=e.target.closest('[data-zone]');if(!z)return;const k=z.dataset.zone;if(k==='enter'){enterShop();return;}openDrawer(k);});
-$('#drawerClose').addEventListener('click',closeDrawer);
-$('#mask').addEventListener('click',closeDrawer);
-$('#backOutside').addEventListener('click',exitShop);
-$('#mobileBackBtn')?.addEventListener('click',exitShop);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();$('#lookDetail').classList.remove('show');}});
-function renderLooks(){ $('#lookGrid').innerHTML=DATA.looks.map((l,i)=>`<div class="look-card" data-look="${i}"><div class="thumb"><img src="${l.img}" alt="${l.name}" loading="lazy"></div><div class="meta"><div class="day">${l.day}</div><h3>${l.name}</h3><p>${l.sub}</p><span class="tag">点开看完整搭配</span></div></div>`).join(""); }
-$('#lookGrid').addEventListener('click',e=>{const c=e.target.closest('.look-card');if(!c)return;const l=DATA.looks[+c.dataset.look];$('#lookDetailBody').innerHTML=`<div class="hero-img"><img src="${l.img}" alt="${l.name}"></div><div class="body"><div class="day">${l.day} · 每日搭配</div><h2>${l.name}</h2><p class="sub">${l.sub}</p><div class="items">${l.items.map(i=>`<div class="item"><b>${i}</b><span>可在店内试穿</span></div>`).join("")}</div><div class="tip">搭配小抄：${l.tip}</div></div>`;$('#lookDetail').classList.add('show');closeDrawer();});
-$('#lookClose').addEventListener('click',()=>$('#lookDetail').classList.remove('show'));
-function renderStoreInfo(){const s=DATA.storeInfo||{};if(s.address)$('#infoAddr').textContent=s.address;if(s.phone)$('#infoTel').textContent=s.phone;if(s.wechat)$('#infoWx').textContent=s.wechat;if(s.wechatQR){$('#infoQR').innerHTML=`<img src="${s.wechatQR}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;$('#infoQR').style.border='none';}}
-function renderAll(){renderLooks();renderStoreInfo();}
+function setFilter(id){
+  currentFilter = id;
+  renderFilters(); renderGrid();
+}
+function allItems(){
+  const items = [];
+  ['new','tops','skirts','pants'].forEach(z => {
+    const zone = DATA.zones[z];
+    if(zone && zone.items) zone.items.forEach(it => items.push({...it, zone:z}));
+  });
+  return items;
+}
+function renderGrid(){
+  let items;
+  if(currentFilter === 'all') items = allItems();
+  else items = (DATA.zones[currentFilter] && DATA.zones[currentFilter].items || []).map(it => ({...it, zone:currentFilter}));
+  if(!items.length){ $('#productGrid').innerHTML = '<p style="color:#8A7C6E;padding:30px;text-align:center">这个区还没有商品</p>'; return; }
+  $('#productGrid').innerHTML = items.map(it => `
+    <div class="p-card" onclick="openProduct('${it.zone}',${findIndex(it.zone, it)})">
+      <div class="thumb"><img src="${it._local || it.img}" alt="${it.t}" loading="lazy">${it.tags&&it.tags[0]?`<span class="badge">${it.tags[0]}</span>`:''}</div>
+      <div class="meta"><h4>${it.t}</h4><p>${it.d}</p><div class="tags">${(it.tags||[]).slice(1).map(x=>`<span>${x}</span>`).join('')}</div></div>
+    </div>`).join('');
+}
+function findIndex(zone, it){
+  const arr = DATA.zones[zone] && DATA.zones[zone].items || [];
+  for(let i=0;i<arr.length;i++){ if(arr[i]===it) return i; }
+  return 0;
+}
+
+function openProduct(zone, idx){
+  const it = DATA.zones[zone].items[idx];
+  const meta = ZONE_META[zone] || {};
+  $('#drawerHead').innerHTML = `<div class="kicker">${meta.kicker || 'AP SELECT'}</div><h3>${it.t}</h3>`;
+  $('#drawerBody').innerHTML = `
+    <div class="d-img"><img src="${it._local || it.img}" alt="${it.t}"></div>
+    <div class="d-title">${it.t}</div>
+    <div class="d-desc">${it.d}</div>
+    <div class="d-tags">${(it.tags||[]).map(x=>`<span>${x}</span>`).join('')}</div>
+    <div class="d-more">喜欢可到店试穿 · 欢迎到店选购</div>`;
+  openDrawer();
+}
+function openDrawer(){
+  history.pushState({drawer:true}, '');
+  $('#mask').classList.add('show');
+  $('#drawer').classList.add('show');
+  $('#drawer').setAttribute('aria-hidden','false');
+}
+function closeDrawer(){
+  $('#mask').classList.remove('show');
+  $('#drawer').classList.remove('show');
+  $('#drawer').setAttribute('aria-hidden','true');
+}
+$('#drawerClose').addEventListener('click', closeDrawer);
+$('#mask').addEventListener('click', closeDrawer);
+
+function renderLooks(){
+  $('#lookGrid').innerHTML = (DATA.looks||[]).map((l,i) => `
+    <div class="look-card" onclick="openLook(${i})">
+      <div class="thumb"><img src="${l._local||l.img}" alt="${l.name}" loading="lazy"><span class="day">${l.day}</span></div>
+      <div class="meta"><h4>${l.name}</h4><p>${l.sub}</p></div>
+    </div>`).join('');
+}
+function openLook(i){
+  const l = DATA.looks[i];
+  history.pushState({look:true}, '');
+  $('#lookDetailBody').innerHTML = `
+    <div class="hero-img"><img src="${l._local||l.img}" alt="${l.name}"></div>
+    <div class="body">
+      <div class="day">${l.day} · 每日搭配</div>
+      <h2>${l.name}</h2>
+      <p class="sub">${l.sub}</p>
+      <div class="items">${l.items.map(x=>`<div class="item"><b>${x}</b><span>可在店内试穿</span></div>`).join('')}</div>
+      <div class="tip">搭配小抄：${l.tip}</div>
+    </div>`;
+  $('#lookDetail').classList.add('show');
+}
+$('#lookClose').addEventListener('click', ()=> $('#lookDetail').classList.remove('show'));
+
+function renderBanner(){
+  const note = DATA.zones.cashier && DATA.zones.cashier.note;
+  if(note){
+    const b = $('#benefitBanner');
+    b.style.display = 'block';
+    b.innerHTML = `<h4>本周到店福利</h4><p>${note.replace(/\n/g,'<br>')}</p>`;
+  }
+}
+function renderStoreInfo(){
+  const s = DATA.storeInfo || {};
+  if(s.address) $('#addrInfo').textContent = s.address;
+  if(s.phone) $('#infoTel').textContent = s.phone;
+  if(s.wechat) $('#infoWx').textContent = s.wechat;
+  if(s.wechatQR){ $('#qrInfo').innerHTML = `<img src="${s.wechatQR}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`; $('#qrInfo').style.border='none'; }
+}
+
+/* 微信返回键：先关抽屉/详情，不退出页面 */
+window.addEventListener('popstate', () => {
+  if($('#drawer').classList.contains('show')){ closeDrawer(); return; }
+  if($('#lookDetail').classList.contains('show')){ $('#lookDetail').classList.remove('show'); return; }
+});
+
+window.addEventListener('scroll', () => {
+  $('#topbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+function renderAll(){ renderFilters(); renderGrid(); renderLooks(); renderBanner(); renderStoreInfo(); }
 loadData();
 </script>
 </body>
