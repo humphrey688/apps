@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <link rel="icon" href="data:,">
-<title>AP · 设计师品牌集合店</title>
+<title>AP 路 璁捐甯堝搧鐗岄泦鍚堝簵</title>
 <style>
   :root{
     --paper:#F1EBE3;
@@ -29,7 +29,7 @@
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   img{display:block;max-width:100%}
 
-  /* ===== 顶栏 ===== */
+  /* ===== 椤舵爮 ===== */
   .topbar{
     position:fixed;top:0;left:0;right:0;z-index:60;
     display:flex;align-items:center;justify-content:space-between;
@@ -45,8 +45,8 @@
   .topbar .contact{font-size:12px;color:#F5EDE2;letter-spacing:.12em;padding:8px 14px;border:1px solid rgba(245,237,226,.35);border-radius:999px;transition:all .25s}
   .topbar .contact:hover{background:rgba(245,237,226,.12)}
 
-  /* ===== 首页壁纸 ===== */
-  .hero{position:relative;width:100%;height:86vh;min-height:520px;overflow:hidden;background:#241C14;background-image:url('images/hero.jpg?v=4');background-size:cover;background-position:center 22%;background-repeat:no-repeat}
+  /* ===== 棣栭〉澹佺焊 ===== */
+  .hero{position:relative;width:100%;height:86vh;min-height:520px;overflow:hidden;background:#241C14;background-image:url('images/hero.jpg?v=5');background-size:cover;background-position:center 22%;background-repeat:no-repeat}
   .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg, rgba(18,13,9,.35) 0%, rgba(18,13,9,.05) 40%, rgba(18,13,9,.75) 100%)}
   .hero .hero-inner{position:absolute;left:0;right:0;bottom:0;padding:0 24px 30px;color:#F5EDE2}
   .hero .eyebrow{font-size:11px;letter-spacing:.42em;color:rgba(198,161,91,.95);margin-bottom:12px}
@@ -57,14 +57,14 @@
 
   main{max-width:1120px;margin:0 auto;padding:0 16px 70px}
 
-  /* ===== 分类筛选 ===== */
+  /* ===== 鍒嗙被绛涢€?===== */
   .filters{position:sticky;top:0;z-index:50;background:rgba(241,235,227,.93);backdrop-filter:blur(10px);padding:14px 0 12px;margin-bottom:18px;border-bottom:1px solid var(--line)}
   .filters .row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px}
   .filters .row::-webkit-scrollbar{display:none}
   .filter-chip{flex:none;padding:9px 20px;border-radius:999px;font-size:13px;color:var(--ink-soft);background:#fff;border:1px solid var(--line);transition:all .25s;letter-spacing:.08em}
   .filter-chip.on{background:#2A231D;color:#F5EDE2;border-color:#2A231D;box-shadow:0 4px 14px rgba(42,35,29,.25)}
 
-  /* ===== 商品双栏网格 ===== */
+  /* ===== 鍟嗗搧鍙屾爮缃戞牸 ===== */
   .section-eyebrow{display:flex;align-items:center;gap:10px;margin:34px 0 16px}
   .section-eyebrow .line{flex:1;height:1px;background:var(--line)}
   .section-eyebrow span{font-size:11px;letter-spacing:.34em;color:var(--muted)}
@@ -81,13 +81,13 @@
   .p-card .meta .tags{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
   .p-card .meta .tags span{font-size:10px;padding:2px 8px;border-radius:999px;background:#F0E7DA;color:#8A6F52}
 
-  /* 福利横幅 */
+  /* 绂忓埄妯箙 */
   .banner{margin-top:26px;background:linear-gradient(120deg,#3A2F24,#55402B);color:#EFE3CE;border-radius:var(--radius);padding:22px;position:relative;overflow:hidden}
   .banner::after{content:'';position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(198,161,91,.14)}
   .banner h4{font-family:Georgia,serif;font-size:17px;letter-spacing:.12em;color:#D8B87C}
   .banner p{font-size:13px;line-height:1.9;margin-top:8px;color:rgba(239,227,206,.85)}
 
-  /* ===== 每日搭配 ===== */
+  /* ===== 姣忔棩鎼厤 ===== */
   .look-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .look-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .3s ease, box-shadow .3s ease}
   .look-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
@@ -99,7 +99,7 @@
   .look-card .meta h4{font-size:14px;font-weight:600;font-family:Georgia,"Songti SC",serif;letter-spacing:.03em}
   .look-card .meta p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-  /* ===== 店铺信息 ===== */
+  /* ===== 搴楅摵淇℃伅 ===== */
   .info-section{margin-top:8px;display:grid;grid-template-columns:1fr;gap:12px}
   .info-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px}
   .info-card .icon{width:44px;height:44px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:20px;background:#F1E7D8}
@@ -111,7 +111,7 @@
   footer{margin:0 auto;padding:0 16px 36px;color:var(--muted);font-size:11px;text-align:center;line-height:1.9;letter-spacing:.06em}
   footer a{color:var(--muted);text-decoration:none}
 
-  /* ===== 抽屉 ===== */
+  /* ===== 鎶藉眽 ===== */
   .mask{position:fixed;inset:0;background:rgba(30,22,15,.5);opacity:0;transition:opacity .3s ease;z-index:90;backdrop-filter:blur(4px);pointer-events:none}
   .mask.show{opacity:1;pointer-events:auto}
   .drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,92vw);background:#FCFAF5;z-index:95;transform:translateX(105%);transition:transform .42s cubic-bezier(.22,.61,.28,1);box-shadow:-24px 0 70px rgba(40,25,10,.22);display:flex;flex-direction:column}
@@ -132,7 +132,7 @@
   .drawer-foot button{width:100%;padding:14px;border-radius:999px;background:#2A231E;color:#F5EDE2;font-size:15px;letter-spacing:.14em;transition:all .2s}
   .drawer-foot button:hover{background:#14100C}
 
-  /* 搭配详情 */
+  /* 鎼厤璇︽儏 */
   .look-detail{display:none;position:fixed;inset:0;background:var(--paper);z-index:110;overflow-y:auto;-webkit-overflow-scrolling:touch}
   .look-detail.show{display:block}
   .look-detail .hero-img{position:relative}
@@ -164,19 +164,19 @@
 <header class="topbar" id="topbar">
   <div class="brand">
     <div class="logo">A<i>P</i></div>
-    <small>设计师品牌集合店</small>
+    <small>璁捐甯堝搧鐗岄泦鍚堝簵</small>
   </div>
-  <button class="contact" onclick="document.getElementById('store-info').scrollIntoView({behavior:'smooth'})">联系店铺</button>
+  <button class="contact" onclick="document.getElementById('store-info').scrollIntoView({behavior:'smooth'})">鑱旂郴搴楅摵</button>
 </header>
 
 <div class="hero">
   <div class="shade"></div>
   <div class="hero-inner">
     <div class="eyebrow">ALWAYS PRETTY</div>
-    <h1>AP 设计师品牌集合店</h1>
-    <div class="sub">精选好衣 · 每日搭配</div>
+    <h1>AP 璁捐甯堝搧鐗岄泦鍚堝簵</h1>
+    <div class="sub">绮鹃€夊ソ琛?路 姣忔棩鎼厤</div>
   </div>
-  <div class="scroll-hint">⌄</div>
+  <div class="scroll-hint">鈱?/div>
 </div>
 
 <main>
@@ -184,31 +184,31 @@
   <div class="grid" id="productGrid"></div>
   <div class="banner" id="benefitBanner" style="display:none"></div>
 
-  <div class="section-eyebrow"><span>每日搭配</span><div class="line"></div><span>DAILY LOOKS</span></div>
+  <div class="section-eyebrow"><span>姣忔棩鎼厤</span><div class="line"></div><span>DAILY LOOKS</span></div>
   <div class="look-grid" id="lookGrid"></div>
 
-  <div class="section-eyebrow" id="store-info"><span>联系店铺</span><div class="line"></div></div>
+  <div class="section-eyebrow" id="store-info"><span>鑱旂郴搴楅摵</span><div class="line"></div></div>
   <div class="info-section">
-    <div class="info-card"><div class="icon">📍</div><div><h4>店铺地址</h4><p class="placeholder" id="infoAddr">（待填写）</p></div></div>
-    <div class="info-card"><div class="icon">📞</div><div><h4>联系电话</h4><p class="placeholder" id="infoTel">（待填写）</p></div></div>
-    <div class="info-card"><div class="icon">💬</div><div><h4>微信群 / 客服微信</h4><p class="placeholder" id="infoWx">（待填写）</p></div><div class="qr-placeholder" id="qrInfo">二维码<br>待上传</div></div>
+    <div class="info-card"><div class="icon">馃搷</div><div><h4>搴楅摵鍦板潃</h4><p class="placeholder" id="infoAddr">锛堝緟濉啓锛?/p></div></div>
+    <div class="info-card"><div class="icon">馃摓</div><div><h4>鑱旂郴鐢佃瘽</h4><p class="placeholder" id="infoTel">锛堝緟濉啓锛?/p></div></div>
+    <div class="info-card"><div class="icon">馃挰</div><div><h4>寰俊缇?/ 瀹㈡湇寰俊</h4><p class="placeholder" id="infoWx">锛堝緟濉啓锛?/p></div><div class="qr-placeholder" id="qrInfo">浜岀淮鐮?br>寰呬笂浼?/div></div>
   </div>
 </main>
 
 <footer>
-  AP · 设计师品牌集合店 · <a href="admin.html">管理</a><br>
-  到店试穿 · 每日上新
+  AP 路 璁捐甯堝搧鐗岄泦鍚堝簵 路 <a href="admin.html">绠＄悊</a><br>
+  鍒板簵璇曠┛ 路 姣忔棩涓婃柊
 </footer>
 
 <div class="mask" id="mask"></div>
 <aside class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-head" id="drawerHead"></div>
   <div class="drawer-body" id="drawerBody"></div>
-  <div class="drawer-foot"><button id="drawerClose">返回继续逛</button></div>
+  <div class="drawer-foot"><button id="drawerClose">杩斿洖缁х画閫?/button></div>
 </aside>
 
 <div class="look-detail" id="lookDetail">
-  <button class="close" id="lookClose" aria-label="关闭">✕</button>
+  <button class="close" id="lookClose" aria-label="鍏抽棴">鉁?/button>
   <div id="lookDetailBody"></div>
 </div>
 
@@ -217,13 +217,13 @@ const $ = s => document.querySelector(s);
 let DATA = null;
 let currentFilter = 'all';
 const FILTERS = [
-  { id:'all',   label:'全部' },
-  { id:'new',   label:'本周上新' },
-  { id:'tops',  label:'上装' },
-  { id:'skirts',label:'裙装' },
-  { id:'pants', label:'裤装' }
+  { id:'all',   label:'鍏ㄩ儴' },
+  { id:'new',   label:'鏈懆涓婃柊' },
+  { id:'tops',  label:'涓婅' },
+  { id:'skirts',label:'瑁欒' },
+  { id:'pants', label:'瑁よ' }
 ];
-const ZONE_META = { new:{kicker:'本周上新'}, tops:{kicker:'上装区'}, skirts:{kicker:'裙装区'}, pants:{kicker:'裤装区'} };
+const ZONE_META = { new:{kicker:'鏈懆涓婃柊'}, tops:{kicker:'涓婅鍖?}, skirts:{kicker:'瑁欒鍖?}, pants:{kicker:'瑁よ鍖?} };
 
 async function loadData(){
   try {
@@ -231,8 +231,8 @@ async function loadData(){
     DATA = await r.json();
     renderAll();
   } catch(e){
-    console.error('数据加载失败', e);
-    document.getElementById('productGrid').innerHTML = '<p style="color:#8A7C6E;padding:30px;text-align:center">数据加载失败，请稍后刷新</p>';
+    console.error('鏁版嵁鍔犺浇澶辫触', e);
+    document.getElementById('productGrid').innerHTML = '<p style="color:#8A7C6E;padding:30px;text-align:center">鏁版嵁鍔犺浇澶辫触锛岃绋嶅悗鍒锋柊</p>';
   }
 }
 
@@ -255,7 +255,7 @@ function renderGrid(){
   let items;
   if(currentFilter === 'all') items = allItems();
   else items = (DATA.zones[currentFilter] && DATA.zones[currentFilter].items || []).map(it => ({...it, zone:currentFilter}));
-  if(!items.length){ $('#productGrid').innerHTML = '<p style="color:#8A7C6E;padding:30px;text-align:center">这个区还没有商品</p>'; return; }
+  if(!items.length){ $('#productGrid').innerHTML = '<p style="color:#8A7C6E;padding:30px;text-align:center">杩欎釜鍖鸿繕娌℃湁鍟嗗搧</p>'; return; }
   $('#productGrid').innerHTML = items.map(it => `
     <div class="p-card" onclick="openProduct('${it.zone}',${findIndex(it.zone, it)})">
       <div class="thumb"><img src="${it._local || it.img}" alt="${it.t}" loading="lazy">${it.tags&&it.tags[0]?`<span class="badge">${it.tags[0]}</span>`:''}</div>
@@ -277,7 +277,7 @@ function openProduct(zone, idx){
     <div class="d-title">${it.t}</div>
     <div class="d-desc">${it.d}</div>
     <div class="d-tags">${(it.tags||[]).map(x=>`<span>${x}</span>`).join('')}</div>
-    <div class="d-more">喜欢可到店试穿 · 欢迎到店选购</div>`;
+    <div class="d-more">鍠滄鍙埌搴楄瘯绌?路 娆㈣繋鍒板簵閫夎喘</div>`;
   openDrawer();
 }
 function openDrawer(){
@@ -307,11 +307,11 @@ function openLook(i){
   $('#lookDetailBody').innerHTML = `
     <div class="hero-img"><img src="${l._local||l.img}" alt="${l.name}"></div>
     <div class="body">
-      <div class="day">${l.day} · 每日搭配</div>
+      <div class="day">${l.day} 路 姣忔棩鎼厤</div>
       <h2>${l.name}</h2>
       <p class="sub">${l.sub}</p>
-      <div class="items">${l.items.map(x=>`<div class="item"><b>${x}</b><span>可在店内试穿</span></div>`).join('')}</div>
-      <div class="tip">搭配小抄：${l.tip}</div>
+      <div class="items">${l.items.map(x=>`<div class="item"><b>${x}</b><span>鍙湪搴楀唴璇曠┛</span></div>`).join('')}</div>
+      <div class="tip">鎼厤灏忔妱锛?{l.tip}</div>
     </div>`;
   $('#lookDetail').classList.add('show');
 }
@@ -322,7 +322,7 @@ function renderBanner(){
   if(note){
     const b = $('#benefitBanner');
     b.style.display = 'block';
-    b.innerHTML = `<h4>本周到店福利</h4><p>${note.replace(/\n/g,'<br>')}</p>`;
+    b.innerHTML = `<h4>鏈懆鍒板簵绂忓埄</h4><p>${note.replace(/\n/g,'<br>')}</p>`;
   }
 }
 function renderStoreInfo(){
@@ -333,7 +333,7 @@ function renderStoreInfo(){
   if(s.wechatQR){ $('#qrInfo').innerHTML = `<img src="${s.wechatQR}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`; $('#qrInfo').style.border='none'; }
 }
 
-/* 微信返回键：先关抽屉/详情，不退出页面 */
+/* 寰俊杩斿洖閿細鍏堝叧鎶藉眽/璇︽儏锛屼笉閫€鍑洪〉闈?*/
 window.addEventListener('popstate', () => {
   if($('#drawer').classList.contains('show')){ closeDrawer(); return; }
   if($('#lookDetail').classList.contains('show')){ $('#lookDetail').classList.remove('show'); return; }
