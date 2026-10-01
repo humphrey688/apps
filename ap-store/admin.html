@@ -188,8 +188,6 @@
         <button data-zone="skirts" onclick="pickZone(this)">裙装</button>
         <button data-zone="pants" onclick="pickZone(this)">裤装</button>
         <button data-zone="new" onclick="pickZone(this)">本周上新</button>
-        <button data-zone="fitting" onclick="pickZone(this)">试衣间</button>
-        <button data-zone="cashier" onclick="pickZone(this)">收银台</button>
       </div>
     </div>
     <div class="form-card">
@@ -225,8 +223,6 @@
       <button data-mzone="skirts" onclick="pickMZone(this)">裙装</button>
       <button data-mzone="pants" onclick="pickMZone(this)">裤装</button>
       <button data-mzone="new" onclick="pickMZone(this)">本周上新</button>
-      <button data-mzone="fitting" onclick="pickMZone(this)">试衣间</button>
-      <button data-mzone="cashier" onclick="pickMZone(this)">收银台</button>
     </div>
     <div id="manageList"></div>
   </div>
@@ -287,7 +283,7 @@ const BASE = 'ap-store';
 const API = 'https://api.github.com';
 const PAGE_BASE = location.href.replace(/admin\.html.*$/, '');
 const RAW = PAGE_BASE; // 同域拉取 data.json，走 github.io
-const ZONE_NAMES = { tops:'上装', skirts:'裙装', pants:'裤装', new:'本周上新', fitting:'试衣间', cashier:'收银台' };
+const ZONE_NAMES = { tops:'上装', skirts:'裙装', pants:'裤装', new:'本周上新' };
 let token = localStorage.getItem('gh_token') || '';
 let DATA = null;
 let dirty = false;
