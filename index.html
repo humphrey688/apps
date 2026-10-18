@@ -159,11 +159,11 @@ function renderPlan() {
 .plan-row { display: flex; gap: 8px; font-size: 12.5px; line-height: 1.6; margin-top: 6px; color: var(--ink); }
 .plan-row b { color: var(--blue-deep); margin-right: 4px; flex-shrink: 0; }
 .plan-ico { flex-shrink: 0; }
-.plan-note { margin-top: 8px; font-size: 11.5px; color: var(--ink-2); border-top: 1px dashed var(--line-2); padding-top: 6px; }
+.plan-note { margin-top: 8px; font-size: 11.5px; color: var(--ink); font-weight: 600; border-top: 1px dashed var(--line-2); padding-top: 6px; }
 .plan-mini { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
 .plan-mini-row { font-size: 12.5px; line-height: 1.6; margin-top: 4px; color: var(--ink); }
 .plan-mini-row b { color: var(--blue-deep); margin-right: 4px; }
-.plan-mini-note { margin-top: 6px; font-size: 11.5px; color: var(--ink-3); }
+.plan-mini-note { margin-top: 6px; font-size: 11.5px; color: var(--ink); font-weight: 600; }
 .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
 .sum-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 11px 14px; display: flex; flex-direction: column; gap: 1px; }
 .sum-label { font-size: 11.5px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
@@ -1214,7 +1214,7 @@ function collectRange(from, to) {
     if (hasReflect(k)) { refDays++; if (r.good) goods.push({ k, t: r.good }); if (r.improve) improves.push({ k, t: r.improve }); }
     entries.push({ k, energy: energyDone(k), done: dDone, has: rec });
     const score = dDone * 2 + Math.max(energyDone(k), 0);
-    if (rec && (!star || score > star.score)) star = { k, score, done: dDone, energy: energyDone(k), good: r.good || '' };
+    if (rec && (!star || score > star.score)) star = { k, score, done: dDone, energy: energyDone(k), first: day.tasks.length ? day.tasks[0].text : '' };
   });
   return { keys, done, energy, recDays, refDays, counts, goods, improves, entries, star };
 }
@@ -1234,19 +1234,11 @@ function renderReport() {
   $('#repLabel').textContent = range.label;
   const c = collectRange(range.from, range.to);
   const totalDays = c.keys.length;
-  const sc = repScore(c, totalDays);
   const eCls = c.energy > 0 ? 'pos-c' : (c.energy < 0 ? 'neg-c' : '');
-  const sb = (name, v, max) => `<div class="sb-row"><span class="sb-name">${name}</span><span class="sb-bar"><i style="width:${Math.min(100, v / max * 100)}%"></i></span><span class="sb-val">${Math.round(v)}</span></div>`;
   const totalDone = Object.values(c.counts).reduce((a, b) => a + b, 0);
   const avgRec = c.recDays ? (c.done / c.recDays).toFixed(1) : '0';
 
-  let html = `<div class="card"><div class="card-title">🎼 节拍评分 <span class="sub">${range.label}</span></div>
-    <div class="score-flex">
-      <div><div class="score-num" style="color:${sc.color}">${sc.total}</div><div class="score-grad" style="color:${sc.color}">${sc.grad}</div></div>
-      <div class="score-bars">
-        ${sb('记录密度', sc.parts.rate, 32)}${sb('精力平衡', sc.parts.energy, 40)}${sb('反省习惯', sc.parts.reflect, 20)}${sb('记录覆盖', sc.parts.cover, 12)}
-      </div>
-    </div></div>`;
+  let html = '';
 
   html += `<div class="stat-grid">
     <div class="sum-card"><span class="sum-label">📝 记录</span><span class="sum-val">${c.done}<span class="unit">件</span></span></div>
@@ -1272,18 +1264,15 @@ function renderReport() {
     html += `<div class="card"><div class="card-title">🌟 最闪耀的一天</div>
       <div class="star-day"><div class="star-emoji">✨</div>
         <div class="star-main"><div class="star-title">${fmtMD(c.star.k)} · 记录 ${c.star.done} 件 · 精力 ${c.star.energy > 0 ? '+' : ''}${c.star.energy}</div>
-        <div class="star-sub">${c.star.good ? esc(c.star.good) : '🚀 没有留下反省，但行动已经说明一切'}</div></div>
+        <div class="star-sub">${c.star.first ? esc(c.star.first) : '🚀 那天火力全开，继续保持！'}</div></div>
         <button class="btn-ghost" data-goday="${c.star.k}">👀 查看</button>
       </div></div>`;
   }
 
-  const li = arr => arr.length ? `<ul class="rlist">${arr.map(g => `<li><span class="rdate">${fmtMD(g.k)}</span><span class="rtext">${esc(g.t)}</span></li>`).join('')}</ul>` : '<div class="rlist-empty">🌱 这个周期还没有记录</div>';
-  html += `<div class="card"><div class="card-title">✅ 做得好的 <span class="sub">${c.goods.length} 条</span></div>${li(c.goods)}</div>`;
-  html += `<div class="card"><div class="card-title">🔧 需要改进的 <span class="sub">${c.improves.length} 条</span></div>${li(c.improves)}</div>`;
 
   const lastGoal = [...c.keys].reverse().find(k => (peek(k).reflect || {}).tomorrow);
   if (lastGoal) {
-    html += `<div class="card"><div class="card-title">🎯 下一步目标</div>
+    html += `<div class="card"><div class="card-title">✍️ 接下来的安排</div>
       <div style="font-size:14px;line-height:1.8">${esc(peek(lastGoal).reflect.tomorrow)}</div>
       <div style="font-size:11.5px;color:var(--ink-3);margin-top:6px">—— 写于 ${fmtMD(lastGoal)}</div></div>`;
   }
@@ -1292,17 +1281,14 @@ function renderReport() {
 function repText() {
   const range = repRange();
   const c = collectRange(range.from, range.to);
-  const sc = repScore(c, c.keys.length);
   const avgRec = c.recDays ? (c.done / c.recDays).toFixed(1) : '0';
   const totalDone = Object.values(c.counts).reduce((a, b) => a + b, 0);
   const catLine = CAT_KEYS.map(k => totalDone ? `${CATS[k].name} ${Math.round(c.counts[k] / totalDone * 100)}%` : '').filter(Boolean).join(' · ');
   let t = `【🎼 生活节拍器 · ${repMode === 'week' ? '周' : repMode === 'month' ? '月' : '年'}报】${range.label}\n`;
-  t += `节拍分 ${sc.total}（${sc.grad}）｜记录 ${c.done} 件 · 日均 ${avgRec} 件｜精力净值 ${c.energy > 0 ? '+' : ''}${c.energy} 点\n`;
-  t += `记录 ${c.recDays}/${c.keys.length} 天 · 反省 ${c.refDays} 天${catLine ? '｜' + catLine : ''}\n`;
-  if (c.goods.length) { t += `\n✅ 做得好的：\n` + c.goods.slice(0, 8).map(g => `· ${g.t}`).join('\n'); }
-  if (c.improves.length) { t += `\n🔧 需要改进：\n` + c.improves.slice(0, 8).map(g => `· ${g.t}`).join('\n'); }
-  const lg = [...c.keys].reverse().find(k => (peek(k).reflect || {}).tomorrow);
-  if (lg) t += `\n🎯 下一步：${peek(lg).reflect.tomorrow}`;
+  t += `记录 ${c.done} 件 · 日均 ${avgRec} 件｜精力净值 ${c.energy > 0 ? '+' : ''}${c.energy} 点\n`;
+  t += `有记录 ${c.recDays}/${c.keys.length} 天${catLine ? '｜' + catLine : ''}\n`;
+      const lg = [...c.keys].reverse().find(k => (peek(k).reflect || {}).tomorrow);
+  if (lg) t += `\n✍️ 接下来：${peek(lg).reflect.tomorrow}`;
   return t;
 }
 /* ===== 寄语（时间胶囊）===== */
