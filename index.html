@@ -1223,7 +1223,8 @@ function collectRange(from, to) {
     const r = day.reflect || {};
     if (hasReflect(k)) { refDays++; if (r.good) goods.push({ k, t: r.good }); if (r.improve) improves.push({ k, t: r.improve }); }
     entries.push({ k, energy: energyDone(k), done: dDone, has: rec });
-    const score = dDone * 2 + Math.max(energyDone(k), 0);
+    const eDay = energyDone(k);
+    const score = dDone * 2 + (eDay > 0 ? eDay * 1.5 : eDay * 2);
     if (rec && (!star || score > star.score)) star = { k, score, done: dDone, energy: energyDone(k), first: day.tasks.length ? day.tasks[0].text : '' };
   });
   return { keys, done, energy, recDays, refDays, counts, goods, improves, entries, star };
