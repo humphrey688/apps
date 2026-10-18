@@ -153,6 +153,16 @@ function renderPlan() {
     <div class="plan-note">${p.note}</div>`;
 }
 /* ===== 月度摘要 ===== */
+.rep-overview { font-size: 12.5px; color: var(--ink); background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; line-height: 1.8; }
+.rep-overview b { color: var(--blue-deep); }
+.pc-row { display: flex; align-items: center; gap: 8px; padding: 8px 4px; border-bottom: 1px dashed var(--line); font-size: 12.5px; cursor: pointer; }
+.pc-row:last-child { border-bottom: none; }
+.pc-date { flex-shrink: 0; font-weight: 700; width: 86px; color: var(--ink); }
+.pc-wk { font-style: normal; font-size: 11px; font-weight: 500; margin-left: 2px; }
+.pc-plan { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); }
+.pc-state { flex-shrink: 0; font-weight: 700; font-size: 12px; }
+.pc-ok { color: var(--green-deep); }
+.pc-miss { color: var(--red-deep); }
 .plan-card { background: linear-gradient(135deg, #eef4fe, #eef7f2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 12px; box-shadow: var(--shadow); }
 .plan-head { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--ink); }
 .plan-cd { font-size: 11.5px; font-weight: 600; color: var(--blue-deep); background: rgba(59,130,246,.10); padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
@@ -885,7 +895,7 @@ function renderSummary() {
     <div class="sum-card"><span class="sum-label">📝 本月记录</span><span class="sum-val">${done}<span class="unit">项</span></span></div>
     <div class="sum-card"><span class="sum-label">⚡ 精力净值</span><span class="sum-val ${eCls}">${(energy > 0 ? '+' : '') + energy}<span class="unit">点</span></span></div>
     <div class="sum-card"><span class="sum-label">🔥 连续记录</span><span class="sum-val">${stk > 0 ? stk : '🌱'}<span class="unit">${stk > 0 ? ' 天' : ''}</span></span></div>
-    <div class="sum-card"><span class="sum-label">📝 反省天数</span><span class="sum-val">${refDays}<span class="unit">天</span></span></div>`;
+    <div class="sum-card"><span class="sum-label">✍️ 写过安排</span><span class="sum-val">${refDays}<span class="unit">天</span></span></div>`;
 }
 
 /* ===== Tab 切换 ===== */
@@ -1234,33 +1244,46 @@ function renderReport() {
   $('#repLabel').textContent = range.label;
   const c = collectRange(range.from, range.to);
   const totalDays = c.keys.length;
-  const eCls = c.energy > 0 ? 'pos-c' : (c.energy < 0 ? 'neg-c' : '');
-  const totalDone = Object.values(c.counts).reduce((a, b) => a + b, 0);
   const avgRec = c.recDays ? (c.done / c.recDays).toFixed(1) : '0';
 
   let html = '';
 
-  html += `<div class="stat-grid">
-    <div class="sum-card"><span class="sum-label">📝 记录</span><span class="sum-val">${c.done}<span class="unit">件</span></span></div>
-    <div class="sum-card"><span class="sum-label">📅 日均记录</span><span class="sum-val">${avgRec}<span class="unit">件/天</span></span></div>
-    <div class="sum-card"><span class="sum-label">⚡ 净值</span><span class="sum-val ${eCls}">${(c.energy > 0 ? '+' : '') + c.energy}<span class="unit">点</span></span></div>
-    <div class="sum-card"><span class="sum-label">📅 记录</span><span class="sum-val">${c.recDays}<span class="unit">/${totalDays}天</span></span></div>
-  </div>`;
+  // 本期概览：一行轻量小结，不与统计页卡片重复
+  html += `<div class="rep-overview">📖 本期记录 <b>${c.done}</b> 件 · 日均 <b>${avgRec}</b> 件 · 精力净值 <b>${(c.energy > 0 ? '+' : '') + c.energy}</b> 点 · 有记录 <b>${c.recDays}/${totalDays}</b> 天</div>`;
 
-  if (totalDone) {
-    html += `<div class="card"><div class="card-title">🌈 时间去了哪儿</div><div class="donut-flex">
-      <svg class="donut-svg" viewBox="0 0 160 160">${donutSVG(c.counts)}</svg>
-      <div class="donut-legend">${CAT_KEYS.map(k => {
-        const pct = totalDone ? Math.round(c.counts[k] / totalDone * 100) : 0;
-        return `<div class="dl-row"><i class="dl-dot" style="background:${CATS[k].hex}"></i><span class="dl-name">${CATS[k].name}</span>
-          <span class="dl-bar"><i style="width:${pct}%;background:${CATS[k].hex}"></i></span><span class="dl-num">${c.counts[k]}</span><span class="dl-pct">${pct}%</span></div>`;
-      }).join('')}</div></div></div>`;
+  // 每日学习对照：当天计划 vs 实际记录（年报改为月度汇总）
+  if (repMode === 'year') {
+    const months = {};
+    c.entries.forEach(p => {
+      const mk = p.k.slice(0, 7);
+      if (!months[mk]) months[mk] = { done: 0, energy: 0, days: 0 };
+      months[mk].done += p.done; months[mk].energy += p.energy;
+      if (p.has) months[mk].days++;
+    });
+    const mks = Object.keys(months).sort();
+    html += `<div class="card"><div class="card-title">📅 月度学习对照 <span class="sub">点击可回看</span></div>
+      ${mks.map(mk => `<div class="pc-row" data-goday="${mk}-01">
+        <span class="pc-date">${mk.replace('-', '/')}</span>
+        <span class="pc-plan">有记录 ${months[mk].days} 天 · ${months[mk].done} 件</span>
+        <span class="pc-state ${months[mk].energy > 0 ? 'pc-ok' : 'pc-miss'}">${(months[mk].energy > 0 ? '+' : '') + months[mk].energy} 点</span>
+      </div>`).join('')}
+    </div>`;
+  } else {
+    html += `<div class="card"><div class="card-title">📅 每日计划对照 <span class="sub">当天计划 vs 实际记录 · 点击回看</span></div>
+      ${c.entries.map(p => {
+        const plan = dayPlan(p.k);
+        const mMod = plan.math.split('：')[0], nMod = plan.net.split('：')[0];
+        const wk = WEEK_CN[new Date(p.k.replace(/-/g, '/')).getDay()];
+        return `<div class="pc-row" data-goday="${p.k}">
+          <span class="pc-date">${fmtMD(p.k)} <i class="pc-wk">周${wk}</i></span>
+          <span class="pc-plan">${p.k === todayKey() ? '📍 ' : ''}${mMod} · ${nMod}</span>
+          <span class="pc-state ${p.has ? 'pc-ok' : 'pc-miss'}">${p.has ? '✓ ' + p.done + ' 件' : '⚠ 未记录'}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
   }
 
-  html += `<div class="card"><div class="card-title">📈 节拍曲线 <span class="sub">折线 = 精力净值 · 柱 = 记录数</span></div>
-    <div class="curve-box">${buildCurve(c.entries)}</div></div>`;
-
-  if (c.star && c.star.score > 0) {
+if (c.star && c.star.score > 0) {
     html += `<div class="card"><div class="card-title">🌟 最闪耀的一天</div>
       <div class="star-day"><div class="star-emoji">✨</div>
         <div class="star-main"><div class="star-title">${fmtMD(c.star.k)} · 记录 ${c.star.done} 件 · 精力 ${c.star.energy > 0 ? '+' : ''}${c.star.energy}</div>
@@ -1287,6 +1310,7 @@ function repText() {
   let t = `【🎼 生活节拍器 · ${repMode === 'week' ? '周' : repMode === 'month' ? '月' : '年'}报】${range.label}\n`;
   t += `记录 ${c.done} 件 · 日均 ${avgRec} 件｜精力净值 ${c.energy > 0 ? '+' : ''}${c.energy} 点\n`;
   t += `有记录 ${c.recDays}/${c.keys.length} 天${catLine ? '｜' + catLine : ''}\n`;
+  t += `🕐 距数学竞赛 ${examInfo().dm} 天 · 距网络考试 ${examInfo().dn} 天\n`;
       const lg = [...c.keys].reverse().find(k => (peek(k).reflect || {}).tomorrow);
   if (lg) t += `\n✍️ 接下来：${peek(lg).reflect.tomorrow}`;
   return t;
