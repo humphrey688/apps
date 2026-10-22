@@ -90,68 +90,7 @@ input, textarea { font-family: inherit; outline: none; color: var(--ink); }
 .card-title .sub { font-weight: 400; font-size: 11.5px; color: var(--ink-3); margin-left: auto; }
 
 
-/* ===== 考试计划与今日计划 ===== */
-const MATH_EXAM = '2026-11-14', NET_EXAM = '2026-11-15', PLAN_START = '2026-10-08';
-const M_PHASE1 = ['函数、极限与连续','一元函数微分学','一元函数积分学','多元函数微分学','多元函数积分学（线/面积分）','无穷级数','常微分方程'];
-const M_PHASE2 = ['极限计算与等价无穷小','导数与微分','积分计算（换元/分部）','多元函数与极值','级数判敛与求和','微分方程求解'];
-const N_PHASE1 = ['体系结构（OSI / TCP-IP）','物理层','数据链路层','网络层','传输层','应用层','局域网/无线与安全'];
-const M_DEPTH = ['① 公式体系梳理：把本模块必背公式、定理过一遍，做公式清单', '② 典型题精练：做本模块基础典型题 4~6 道，标注错题'];
-const N_DEPTH = ['① 通读章节，记核心概念与名词', '② 画结构图/流程图，做本章小练习'];
-function examInfo() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const m = new Date(2026,10,14), n = new Date(2026,10,15);
-  const dm = Math.ceil((m - today) / 86400000), dn = Math.ceil((n - today) / 86400000);
-  return { dm, dn };
-}
-function dayPlan(k) {
-  const [y, m, d] = k.split('-').map(Number);
-  const dt = new Date(y, m-1, d); dt.setHours(0,0,0,0);
-  const ps = new Date(2026,9,8); ps.setHours(0,0,0,0);
-  const diff = Math.floor((dt - ps) / 86400000);
-  const p = { math: '', net: '', note: '' };
-  if (diff < 0) {
-    p.math = '备考 10.8 启动。今天先做「摸底自测」：试做一套往年真题，摸清薄弱点';
-    p.net = '翻一遍教材目录，标记重点章节';
-    p.note = '备考倒计时未开始';
-  } else if (diff <= 13) {
-    const i = Math.floor(diff / 2), j = diff % 2;
-    p.math = M_PHASE1[i % 7] + '：' + M_DEPTH[j];
-    p.net = N_PHASE1[i % 7] + '：' + N_DEPTH[j];
-    p.note = '阶段一 · 基础框架期';
-  } else if (diff <= 29) {
-    const i = diff % 6;
-    p.math = M_PHASE2[i] + '：分类刷题（真题/经典题），错题进错题本';
-    p.net = '二刷重点章节 + 课后习题 / 往年题';
-    p.note = '阶段二 · 分类刷题期';
-  } else if (diff <= 36) {
-    const day = diff - 29;
-    p.math = (day % 2 === 0 ? '整套限时模拟卷（掐时间练节奏）+ 错题二刷' : '模拟卷订正 + 错题本复盘 + 公式总背');
-    p.net = '背诵重点：协议细节、命令、报文格式 + 查漏';
-    p.note = '阶段三 · 冲刺模拟期';
-  } else if (diff === 37) {
-    p.math = '今天考数学竞赛！发挥即可，考完放松';
-    p.net = '今晚全身心冲刺计算机网络（背重点+往年题）';
-    p.note = '📝 考试日';
-  } else {
-    p.math = '今天计算机网络考试，沉着应对';
-    p.net = '考完收工 🎉';
-    p.note = '📝 考试日';
-  }
-  return p;
-}
-function renderPlan() {
-  const el = $('#planCard'); if (!el) return;
-  const k = todayKey();
-  const p = dayPlan(k);
-  const { dm, dn } = examInfo();
-  const countdown = dm > 0 && dn > 0
-    ? `距离数学竞赛 <b>${dm}</b> 天 · 距离网络考试 <b>${dn}</b> 天`
-    : (dm === 0 ? '今天数学竞赛！' : (dn === 0 ? '今天网络考试！' : '两场考试都已结束 🎉'));
-  el.innerHTML = `<div class="plan-head">🎯 今日计划 <span class="plan-cd">${countdown}</span></div>
-    <div class="plan-row"><span class="plan-ico">📚</span><div><b>数学</b>${p.math}</div></div>
-    <div class="plan-row"><span class="plan-ico">🌐</span><div><b>网络</b>${p.net}</div></div>
-    <div class="plan-note">${p.note}</div>`;
-}
+
 /* ===== 月度摘要 ===== */
 [data-theme="dark"] .plan-card { background: linear-gradient(135deg, var(--blue-bg), var(--green-bg)); }
 [data-theme="dark"] .plan-cd { color: var(--blue); background: rgba(59,130,246,.18); }
@@ -180,6 +119,11 @@ function renderPlan() {
 .plan-mini-row { font-size: 12.5px; line-height: 1.6; margin-top: 4px; color: var(--ink); }
 .plan-mini-row b { color: var(--blue-deep); margin-right: 4px; }
 .plan-mini-note { margin-top: 6px; font-size: 11.5px; color: var(--ink); font-weight: 600; }
+.plan-check { flex-shrink: 0; border: 1px solid var(--line-2); border-radius: 8px; padding: 5px 10px; font-size: 11.5px; font-weight: 700; color: var(--ink-2); background: var(--card); transition: all .15s; }
+.plan-check.on { background: var(--green); border-color: transparent; color: #fff; }
+.plan-bar { height: 5px; border-radius: 99px; background: var(--track); margin-top: 9px; overflow: hidden; }
+.plan-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width .4s; }
+.phase-tip { font-size: 11.5px; color: var(--ink); font-weight: 600; margin-top: 6px; }
 .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
 .sum-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 11px 14px; display: flex; flex-direction: column; gap: 1px; }
 .sum-label { font-size: 11.5px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
@@ -608,6 +552,91 @@ function renderPlan() {
 <div class="toast" id="toast"></div>
 
 <script>
+
+/* ===== 考试计划与今日计划 ===== */
+const MATH_EXAM = '2026-11-14', NET_EXAM = '2026-11-15', PLAN_START = '2026-10-08';
+const M_PHASE1 = ['函数、极限与连续','一元函数微分学','一元函数积分学','多元函数微分学','多元函数积分学（线/面积分）','无穷级数','常微分方程'];
+const M_PHASE2 = ['极限计算与等价无穷小','导数与微分','积分计算（换元/分部）','多元函数与极值','级数判敛与求和','微分方程求解'];
+const N_PHASE1 = ['体系结构（OSI / TCP-IP）','物理层','数据链路层','网络层','传输层','应用层','局域网/无线与安全'];
+const M_DEPTH = ['① 公式体系梳理：把本模块必背公式、定理过一遍，做公式清单', '② 典型题精练：做本模块基础典型题 4~6 道，标注错题'];
+const N_DEPTH = ['① 通读章节，记核心概念与名词', '② 画结构图/流程图，做本章小练习'];
+function examInfo() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const m = new Date(2026,10,14), n = new Date(2026,10,15);
+  const dm = Math.ceil((m - today) / 86400000), dn = Math.ceil((n - today) / 86400000);
+  return { dm, dn };
+}
+function dayPlan(k) {
+  const [y, m, d] = k.split('-').map(Number);
+  const dt = new Date(y, m-1, d); dt.setHours(0,0,0,0);
+  const ps = new Date(2026,9,8); ps.setHours(0,0,0,0);
+  const diff = Math.floor((dt - ps) / 86400000);
+  const p = { math: '', net: '', note: '' };
+  if (diff < 0) {
+    p.math = '备考 10.8 启动。今天先做「摸底自测」：试做一套往年真题，摸清薄弱点';
+    p.net = '翻一遍教材目录，标记重点章节';
+    p.note = '备考倒计时未开始';
+  } else if (diff <= 13) {
+    const i = Math.floor(diff / 2), j = diff % 2;
+    p.math = M_PHASE1[i % 7] + '：' + M_DEPTH[j];
+    p.net = N_PHASE1[i % 7] + '：' + N_DEPTH[j];
+    p.note = '阶段一 · 基础框架期';
+  } else if (diff <= 29) {
+    const i = diff % 6;
+    p.math = M_PHASE2[i] + '：分类刷题（真题/经典题），错题进错题本';
+    p.net = '二刷重点章节 + 课后习题 / 往年题';
+    p.note = '阶段二 · 分类刷题期';
+  } else if (diff <= 36) {
+    const day = diff - 29;
+    p.math = (day % 2 === 0 ? '整套限时模拟卷（掐时间练节奏）+ 错题二刷' : '模拟卷订正 + 错题本复盘 + 公式总背');
+    p.net = '背诵重点：协议细节、命令、报文格式 + 查漏';
+    p.note = '阶段三 · 冲刺模拟期';
+  } else if (diff === 37) {
+    p.math = '今天考数学竞赛！发挥即可，考完放松';
+    p.net = '今晚全身心冲刺计算机网络（背重点+往年题）';
+    p.note = '📝 考试日';
+  } else {
+    p.math = '今天计算机网络考试，沉着应对';
+    p.net = '考完收工 🎉';
+    p.note = '📝 考试日';
+  }
+  return p;
+}
+function phaseInfo() {
+  const now = new Date(); now.setHours(0, 0, 0, 0);
+  const d1 = new Date(2026, 9, 8), d5 = new Date(2026, 10, 16);
+  const diff = Math.floor((now - d1) / 86400000);
+  const total = Math.floor((d5 - d1) / 86400000) || 39;
+  if (diff < 0) return { pct: 0, text: '备考 10.8 正式启动' };
+  if (diff <= 13) return { pct: Math.round(diff / total * 100), text: '阶段一 基础框架期 · 剩 ' + (13 - diff) + ' 天（10.22 进入刷题期）' };
+  if (diff <= 29) return { pct: Math.round(diff / total * 100), text: '阶段二 分类刷题期 · 剩 ' + (29 - diff) + ' 天（11.7 进入冲刺）' };
+  if (diff <= 36) return { pct: Math.round(diff / total * 100), text: '阶段三 冲刺模拟期 · 剩 ' + (36 - diff) + ' 天（11.14 考试）' };
+  if (diff <= 37) return { pct: 100, text: '今天数学竞赛日，沉着应战' };
+  if (diff <= 38) return { pct: 100, text: '今天网络考试日，沉着应战' };
+  return { pct: 100, text: '两场考试已结束，给自己放个假 🎉' };
+}
+
+function renderPlan() {
+  const el = $('#planCard'); if (!el) return;
+  const k = todayKey();
+  const p = dayPlan(k);
+  const { dm, dn } = examInfo();
+  const checks = (DB.planChecks && DB.planChecks[k]) || {};
+  const doneM = !!checks.math, doneN = !!checks.net;
+  const doneCnt = (doneM ? 1 : 0) + (doneN ? 1 : 0);
+  const ph = phaseInfo();
+  const countdown = dm > 0 && dn > 0
+    ? `距数学竞赛 <b>${dm}</b> 天 · 距网络考试 <b>${dn}</b> 天`
+    : (dm === 0 ? '今天数学竞赛！' : (dn === 0 ? '今天网络考试！' : '两场考试都已结束 🎉'));
+  const checkBtn = (pk, done) => `<button class="plan-check ${done ? 'on' : ''}" data-pk="${pk}">${done ? '✓ 完成' : '完成'}</button>`;
+  el.innerHTML = `<div class="plan-head">🎯 今日计划 <span class="plan-cd">${countdown}</span></div>
+    <div class="plan-row" data-pk="math"><span class="plan-ico">📚</span><div><b>数学</b>${p.math}</div>${checkBtn('math', doneM)}</div>
+    <div class="plan-row" data-pk="net"><span class="plan-ico">🌐</span><div><b>网络</b>${p.net}</div>${checkBtn('net', doneN)}</div>
+    <div class="plan-note">${p.note} · 今日完成 <b>${doneCnt}/2</b></div>
+    <div class="plan-bar"><i style="width:${ph.pct}%"></i></div>
+    <div class="phase-tip">📊 ${ph.text}</div>`;
+  el.querySelector('.plan-bar i').style.width = ph.pct + '%';
+}
 'use strict';
 /* ===== 常量 ===== */
 const CATS = {
@@ -627,7 +656,7 @@ const WEEK_CN = ['日', '一', '二', '三', '四', '五', '六'];
 const MOODS = ['😄', '🙂', '😐', '😔', '🔋'];
 
 /* ===== 状态 ===== */
-let DB = { days: {}, capsules: [], favs: [] };
+let DB = { days: {}, capsules: [], favs: [], planChecks: {} };
 let view = { y: 0, m: 0 };
 let sel = null;
 let curTab = 'cal';
@@ -692,11 +721,11 @@ function normalizeDay(v) {
   return { tasks, reflect };
 }
 function normalizeDB(obj) {
-  const out = { days: {}, capsules: [], favs: [] };
+  const out = { days: {}, capsules: [], favs: [], planChecks: {} };
   if (!obj || typeof obj !== 'object') return out;
   if (obj.days && typeof obj.days === 'object') {
     Object.keys(obj.days).forEach(k => { if (/^\d{4}-\d{2}-\d{2}$/.test(k)) out.days[k] = normalizeDay(obj.days[k] || {}); });
-    if (Array.isArray(obj.capsules)) out.capsules = obj.capsules.filter(c => c && c.text && c.openDate).map(c => ({
+      if (obj.planChecks && typeof obj.planChecks === 'object') out.planChecks = obj.planChecks;if (Array.isArray(obj.capsules)) out.capsules = obj.capsules.filter(c => c && c.text && c.openDate).map(c => ({
       id: String(c.id || Math.random()), text: String(c.text).slice(0, 500),
       openDate: c.openDate, createdAt: c.createdAt || c.openDate, readAt: c.readAt || null
     }));
@@ -823,68 +852,6 @@ function renderCalendar() {
 }
 
 
-/* ===== 考试计划与今日计划 ===== */
-const MATH_EXAM = '2026-11-14', NET_EXAM = '2026-11-15', PLAN_START = '2026-10-08';
-const M_PHASE1 = ['函数、极限与连续','一元函数微分学','一元函数积分学','多元函数微分学','多元函数积分学（线/面积分）','无穷级数','常微分方程'];
-const M_PHASE2 = ['极限计算与等价无穷小','导数与微分','积分计算（换元/分部）','多元函数与极值','级数判敛与求和','微分方程求解'];
-const N_PHASE1 = ['体系结构（OSI / TCP-IP）','物理层','数据链路层','网络层','传输层','应用层','局域网/无线与安全'];
-const M_DEPTH = ['① 公式体系梳理：把本模块必背公式、定理过一遍，做公式清单', '② 典型题精练：做本模块基础典型题 4~6 道，标注错题'];
-const N_DEPTH = ['① 通读章节，记核心概念与名词', '② 画结构图/流程图，做本章小练习'];
-function examInfo() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const m = new Date(2026,10,14), n = new Date(2026,10,15);
-  const dm = Math.ceil((m - today) / 86400000), dn = Math.ceil((n - today) / 86400000);
-  return { dm, dn };
-}
-function dayPlan(k) {
-  const [y, m, d] = k.split('-').map(Number);
-  const dt = new Date(y, m-1, d); dt.setHours(0,0,0,0);
-  const ps = new Date(2026,9,8); ps.setHours(0,0,0,0);
-  const diff = Math.floor((dt - ps) / 86400000);
-  const p = { math: '', net: '', note: '' };
-  if (diff < 0) {
-    p.math = '备考 10.8 启动。今天先做「摸底自测」：试做一套往年真题，摸清薄弱点';
-    p.net = '翻一遍教材目录，标记重点章节';
-    p.note = '备考倒计时未开始';
-  } else if (diff <= 13) {
-    const i = Math.floor(diff / 2), j = diff % 2;
-    p.math = M_PHASE1[i % 7] + '：' + M_DEPTH[j];
-    p.net = N_PHASE1[i % 7] + '：' + N_DEPTH[j];
-    p.note = '阶段一 · 基础框架期';
-  } else if (diff <= 29) {
-    const i = diff % 6;
-    p.math = M_PHASE2[i] + '：分类刷题（真题/经典题），错题进错题本';
-    p.net = '二刷重点章节 + 课后习题 / 往年题';
-    p.note = '阶段二 · 分类刷题期';
-  } else if (diff <= 36) {
-    const day = diff - 29;
-    p.math = (day % 2 === 0 ? '整套限时模拟卷（掐时间练节奏）+ 错题二刷' : '模拟卷订正 + 错题本复盘 + 公式总背');
-    p.net = '背诵重点：协议细节、命令、报文格式 + 查漏';
-    p.note = '阶段三 · 冲刺模拟期';
-  } else if (diff === 37) {
-    p.math = '今天考数学竞赛！发挥即可，考完放松';
-    p.net = '今晚全身心冲刺计算机网络（背重点+往年题）';
-    p.note = '📝 考试日';
-  } else {
-    p.math = '今天计算机网络考试，沉着应对';
-    p.net = '考完收工 🎉';
-    p.note = '📝 考试日';
-  }
-  return p;
-}
-function renderPlan() {
-  const el = $('#planCard'); if (!el) return;
-  const k = todayKey();
-  const p = dayPlan(k);
-  const { dm, dn } = examInfo();
-  const countdown = dm > 0 && dn > 0
-    ? `距离数学竞赛 <b>${dm}</b> 天 · 距离网络考试 <b>${dn}</b> 天`
-    : (dm === 0 ? '今天数学竞赛！' : (dn === 0 ? '今天网络考试！' : '两场考试都已结束 🎉'));
-  el.innerHTML = `<div class="plan-head">🎯 今日计划 <span class="plan-cd">${countdown}</span></div>
-    <div class="plan-row"><span class="plan-ico">📚</span><div><b>数学</b>${p.math}</div></div>
-    <div class="plan-row"><span class="plan-ico">🌐</span><div><b>网络</b>${p.net}</div></div>
-    <div class="plan-note">${p.note}</div>`;
-}
 /* ===== 月度摘要 ===== */
 function renderSummary() {
   let done = 0, energy = 0, refDays = 0;
@@ -1281,10 +1248,16 @@ function renderReport() {
         const plan = dayPlan(p.k);
         const mMod = plan.math.split('：')[0], nMod = plan.net.split('：')[0];
         const wk = WEEK_CN[new Date(p.k.replace(/-/g, '/')).getDay()];
+        const pc = (DB.planChecks && DB.planChecks[p.k]) || {};
+        const planDone = (pc.math ? 1 : 0) + (pc.net ? 1 : 0);
+        const planState = planDone > 0
+          ? `<span class="pc-state pc-ok">✓ 计划 ${planDone}/2</span>`
+          : (p.has ? `<span class="pc-state pc-ok">● ${p.done} 件</span>` : `<span class="pc-state pc-miss">⚠ 未记录</span>`);
+
         return `<div class="pc-row" data-goday="${p.k}">
           <span class="pc-date">${fmtMD(p.k)} <i class="pc-wk">周${wk}</i></span>
           <span class="pc-plan">${p.k === todayKey() ? '📍 ' : ''}${mMod} · ${nMod}</span>
-          <span class="pc-state ${p.has ? 'pc-ok' : 'pc-miss'}">${p.has ? '✓ ' + p.done + ' 件' : '⚠ 未记录'}</span>
+          ${planState}
         </div>`;
       }).join('')}
     </div>`;
@@ -1597,6 +1570,17 @@ function seedDemo() {
   renderCalendar();
   renderSummary();
   renderPlan();
+  $('#planCard').addEventListener('click', e => {
+    const btn = e.target.closest('.plan-check');
+    if (!btn) return;
+    const pk = btn.dataset.pk;
+    if (!DB.planChecks) DB.planChecks = {};
+    const k = todayKey();
+    if (!DB.planChecks[k]) DB.planChecks[k] = {};
+    DB.planChecks[k][pk] = !DB.planChecks[k][pk];
+    save();
+    renderPlan();
+  });
   checkCapsuleNews();
 })();
 
