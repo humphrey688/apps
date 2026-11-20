@@ -34,7 +34,10 @@ code,.mono{font-family:var(--mono)}
 .kpis{display:flex;gap:8px;margin-left:auto;min-width:0;overflow-x:auto;scrollbar-width:none}
 .kpis::-webkit-scrollbar{display:none}
 .kpi{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;
-  background:var(--panel);white-space:nowrap}
+  background:var(--panel);white-space:nowrap;color:var(--txt);cursor:pointer;
+  -webkit-appearance:none;appearance:none;text-align:center;line-height:1.4}
+.kpi:hover{border-color:var(--accent);color:var(--accent)}
+.kpi:active{transform:translateY(1px)}
 .kpi b{color:var(--accent2);font-weight:600}
 .kpi.g{border-color:color-mix(in srgb,var(--ok) 45%,var(--line))}
 .kpi.g b{color:var(--ok)}
@@ -234,10 +237,10 @@ section,.p,.nowdo{scroll-margin-top:96px}
 <div class="top"><div class="in">
   <div class="brand"><span class="led"></span>雅思备考控制台</div>
   <div class="kpis">
-    <div class="kpi">目标 <b>7.5+</b></div>
-    <div class="kpi g">花费 <b>0 元</b></div>
-    <div class="kpi">倒计时 <b id="cd">--</b></div>
-    <div class="kpi">今天 <b id="td">--</b></div>
+    <button class="kpi" data-go="goal" title="跳到模考成绩与目标">目标 <b>7.5+</b></button>
+    <button class="kpi g" data-go="prog" title="跳到全程进度">进度 <b id="ovpMini">0%</b></button>
+    <button class="kpi" data-go="cd" title="跳到备考时间轴">倒计时 <b id="cd">--</b></button>
+    <button class="kpi" data-go="today" title="回到今天任务">今天 <b id="td">--</b></button>
   </div>
   <button class="btn" id="catBtn">☰ 分类</button>
   <button class="btn" id="theme">☾ 夜间</button>
@@ -295,7 +298,7 @@ section,.p,.nowdo{scroll-margin-top:96px}
       <h3>复盘三问</h3>
       <textarea id="reflect" rows="3" style="width:100%" placeholder="① 卡在哪一步？② 错因属于哪类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）？③ 明天第一件事改什么？"></textarea>
     </div>
-    <div class="p" style="margin-top:12px">
+    <div class="p" id="k-prog" style="margin-top:12px">
       <h3>进度</h3>
       <div id="tl" class="tl"></div>
       <div class="dim" id="phaseLine" style="font-size:14.5px"></div>
@@ -606,7 +609,7 @@ function updateStats(){
   const done=Object.keys(localStorage).filter(k=>k.startsWith('ielts.chk.')&&(JSON.parse(localStorage.getItem(k))||[]).length>0).length;
   const total=PLAN.days.length, idx=PLAN.days.findIndex(x=>x.d===todayStr);
   const pct=Math.round(done/total*100);
-  $('#ovp').textContent=pct+'%'; $('#ovb').style.width=pct+'%';
+  $('#ovp').textContent=pct+'%'; $('#ovb').style.width=pct+'%'; const _m=$('#ovpMini'); if(_m) _m.textContent=pct+'%';
   $('#ovs').textContent=`已完成 ${done} / 全程 ${total} 天（今天第 ${idx+1} 天）`;
   const h=LS.get('ielts.hours',0);
   $('#ovh').textContent=`累计投入 ${h} h / 目标 ${PLAN.hours} h`;
@@ -714,7 +717,7 @@ addEventListener('load',()=>{setTopH();setTabH();setTimeout(()=>{setTopH();setTa
 /* ---------- 分类抽屉（手机端） ---------- */
 const CATS={
   today:[{g:'今天'},
-    {t:'现在做这个',s:'#nowDo'},{t:'今日时段',s:'#slots'},{t:'时间轴',s:'#tl'}],
+    {t:'现在做这个',s:'#nowDo'},{t:'今日时段',s:'#slots'},{t:'时间轴',s:'#tl'},{t:'进度',s:'#k-prog'}],
   study:[{g:'四科怎么学'},
     {t:'听力',s:'#k-listen'},{t:'阅读',s:'#k-read'},{t:'写作',s:'#k-write'},
     {t:'口语',s:'#k-speak'},{t:'每天固定两件',s:'#k-daily'},
@@ -753,6 +756,20 @@ dwList.addEventListener('click',e=>{
   if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),160);
 });
 addEventListener('keydown',e=>{if(e.key==='Escape')closeDw();});
+
+/* ---------- 顶栏 KPI 可点击跳转 ---------- */
+const KPI_GO={goal:{tab:'record',sel:'#mock'},prog:{tab:'today',sel:'#k-prog'},
+              cd:{tab:'today',sel:'#tl'},today:{tab:'today',sel:'#dash'}};
+document.querySelectorAll('.kpi[data-go]').forEach(b=>{
+  b.onclick=()=>{
+    const g=KPI_GO[b.getAttribute('data-go')];
+    if(!g) return;
+    const tb=document.querySelector('.tabbar button[data-tab="'+g.tab+'"]');
+    if(tb) tb.click();
+    const el=document.querySelector(g.sel);
+    if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),140);
+  };
+});
 </script>
 </body>
 </html>
