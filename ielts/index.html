@@ -144,24 +144,6 @@ textarea{font-family:inherit}
 .form input{width:100%;margin-top:4px}
 footer{color:var(--dim);font-size:13.5px;border-top:1px solid var(--line);padding-top:12px;margin-top:20px;font-family:var(--mono)}
 
-/* ---------- 口语题库 ---------- */
-#speak .p{overflow-x:auto}
-#speak table{border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:15px;min-width:520px}
-#speak th{background:var(--hl);color:var(--accent2);font-family:var(--mono);font-size:13px;position:sticky;top:0}
-#speak td{border-bottom:1px solid var(--line)}
-#speak tbody tr:hover td{background:var(--panel2)}
-#speak table td:first-child{width:170px;font-weight:600;color:var(--accent)}
-#speak table tr{height:44px}
-#speak table td{padding:8px 10px}
-#speak h1{display:none}
-#speak blockquote{font-size:14.5px;padding:2px 0 2px 12px;border-left-width:2px;background:none;color:var(--dim)}
-#speak p,#speak li{font-size:16px}
-#speak h2{font-size:17px;margin:22px 0 8px;color:var(--accent);border-left:3px solid var(--accent);padding-left:10px}
-#speak h3{font-size:16px;margin:16px 0 6px;color:var(--violet)}
-#speak strong{color:var(--accent2)}
-#speak code{background:var(--bg2);padding:1px 5px;border-radius:4px;border:1px solid var(--line)}
-#speak hr{border:none;border-top:1px solid var(--line);margin:16px 0}
-
 /* ---------- 底部 tab（手机） ---------- */
 .tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--panel);
   border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
@@ -199,11 +181,17 @@ footer{color:var(--dim);font-size:13.5px;border-top:1px solid var(--line);paddin
   .tl{height:70px}
   .tl .seg{padding:0 8px;font-size:11px}
   .tl .seg b{font-size:12px}
-  .tbl{padding:2px 6px 6px}
-  .tbl table,.p table,#speak table{min-width:0;width:100%;table-layout:fixed}
-  .tbl th,.tbl td,.p th,.p td,#speak th,#speak td{width:auto}
-  table{font-size:12.5px}
-  th,td{padding:4px 5px;word-break:break-word;overflow-wrap:anywhere}
+  .tbl{padding:0;border:none;background:none;overflow:visible}
+  .tbl table,.p table{min-width:0;width:100%}
+  table{font-size:13.5px}
+  table.c-tbl thead{display:none}
+  table.c-tbl tbody,table.c-tbl tr,table.c-tbl td{display:block;width:auto!important}
+  table.c-tbl tr{border:1px solid var(--line);border-radius:10px;padding:8px 11px;margin:0 0 8px;background:var(--panel)}
+  table.c-tbl td{border:none;padding:2px 0;line-height:1.6;word-break:break-word;overflow-wrap:anywhere}
+  table.c-tbl td::before{content:attr(data-label);color:var(--dim);font-size:12px;margin-right:5px}
+  table.c-tbl td:empty{display:none}
+  table.c-tbl td:first-child{font-size:14.5px;font-weight:600;color:var(--txt);margin-bottom:2px}
+  table.c-tbl td:first-child::before{font-weight:400}
   .tx{font-size:15.5px}
   .libgrid{grid-template-columns:1fr}
   .form{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -384,17 +372,14 @@ section,.p,.nowdo{scroll-margin-top:96px}
           <tr><td class="nw"><span class="pill g">S2</span> 寒假主攻</td><td class="mono">01-06 → 02-28</td><td>3.5 h</td><td class="mono">162 h</td><td>两套模考 ≥6.5；写作 ≥8 篇、口语 ≥12 张卡</td></tr>
           <tr><td class="nw"><span class="pill">S3</span> 开学冲刺</td><td class="mono">03-01 → 03-20</td><td>2.5 h</td><td class="mono">38 h</td><td>两次机考模拟 ≥7.0；流程零意外</td></tr>
         </tbody></table></div>
+      <div class="dim" style="font-size:13.5px;margin-top:8px">12/11 起进期末周，降到每天 30 分钟保底（词不断档、口语有录音、听力每周 ≥2 套）。每天具体做什么，首页「今天」直接告诉你。</div>
     </div>
-    <div class="p" style="margin-top:12px" id="k-weeks">
-      <h3>寒假 8 周</h3>
+    <details class="p" id="k-weeks" style="margin-top:12px">
+      <summary>寒假 8 周（点开看每周安排）</summary>
       <div id="weeks"></div>
-    </div>
+    </details>
     <div class="grid g2" style="margin-top:12px">
-      <div class="p" id="k-dec">
-        <h3>12 月逐日</h3>
-        <div class="tbl"><table id="decTbl"></table></div>
-        <div class="dim" style="font-size:13.5px;margin-top:6px">12/11 起进期末周，降到 30 分钟保底；灰行直接跳过。</div>
-      </div>
+
       <div class="p" id="k-mar">
         <h3>3 月冲刺</h3>
         <div class="tbl"><table><thead><tr><th>周次</th><th>做什么</th><th>验收</th></tr></thead><tbody id="marTbl"></tbody></table></div>
@@ -632,8 +617,7 @@ $('#weeks').innerHTML=PLAN.weeks.map(w=>`
     </div>
     <div class="dim acc">验收：${w.accept}</div>
   </div></div>`).join('');
-$('#decTbl').innerHTML='<thead><tr><th>日期</th><th>阶段</th><th>今天唯一重点</th><th>用时</th></tr></thead><tbody>'+
-  PLAN.dec.map(d=>`<tr class="${d.skip?'dim':''}"><td class="mono">${d.d.slice(5)}</td><td class="mono dim">${d.tag}</td><td>${d.focus}</td><td class="mono">${d.mins}</td></tr>`).join('')+'</tbody>';
+
 $('#marTbl').innerHTML=PLAN.march.map(m=>`<tr><td class="mono">${m.span}</td><td><b>${m.theme}</b><br><span class="dim">${m.detail}</span></td><td>${m.accept}</td></tr>`).join('');
 $('#chkTbl').innerHTML=PLAN.checklist.map(c=>`<tr><td class="mono">${c.when}</td><td>${c.what}</td></tr>`).join('');
 
@@ -654,6 +638,7 @@ function renderMocks(){
   $('#mTbl').innerHTML='<thead><tr><th>日期</th><th>来源</th><th>听</th><th>读</th><th>写</th><th>说</th><th>总分</th></tr></thead><tbody>'+
     (mocks.length?mocks.map(m=>`<tr><td class="mono">${m.d}</td><td>${m.src}</td><td>${m.l}</td><td>${m.r}</td><td>${m.w}</td><td>${m.s}</td><td class="k"><b>${m.t}</b></td></tr>`).join('')
       :'<tr><td colspan="7" class="dim">还没有记录</td></tr>')+'</tbody>';
+  cardifyTables();
   const pts=mocks.map(m=>m.t);
   let stat='还没有数据';
   if(pts.length){const avg=pts.reduce((a,b)=>a+b,0)/pts.length;
@@ -723,7 +708,7 @@ const CATS={
     {t:'口语',s:'#k-speak'},{t:'每天固定两件',s:'#k-daily'},
     {g:'时间安排'},
     {t:'阶段总表',s:'#sched'},{t:'寒假 8 周',s:'#k-weeks'},
-    {t:'12 月逐日',s:'#k-dec'},{t:'3 月冲刺',s:'#k-mar'}],
+    {t:'3 月冲刺',s:'#k-mar'}],
   lib:[{g:'本地 PDF 题库'},
     {t:'听力 16 份',s:'#lib-g0'},{t:'阅读 10 份',s:'#lib-g1'},
     {t:'写作与评分标准 4 份',s:'#lib-g2'},{t:'口语测评样例 5 份',s:'#lib-g3'},
@@ -753,7 +738,8 @@ dwList.addEventListener('click',e=>{
   if(!a) return;
   e.preventDefault(); closeDw();
   const el=document.querySelector(a.getAttribute('data-s'));
-  if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),160);
+  if(el){ const d=el.closest('details'); if(d) d.open=true;
+    setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),160); }
 });
 addEventListener('keydown',e=>{if(e.key==='Escape')closeDw();});
 
@@ -770,6 +756,22 @@ document.querySelectorAll('.kpi[data-go]').forEach(b=>{
     if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),140);
   };
 });
+
+/* ---------- 手机端表格卡片化：列名写入 data-label ---------- */
+function cardifyTables(){
+  document.querySelectorAll('table').forEach(t=>{
+    const ths=[...t.querySelectorAll('thead th')];
+    if(!ths.length) return;
+    t.classList.add('c-tbl');
+    t.querySelectorAll('tbody tr').forEach(tr=>{
+      [...tr.children].forEach((td,i)=>{
+        const lab=ths[i]?ths[i].textContent.trim():'';
+        if(lab) td.setAttribute('data-label',lab);
+      });
+    });
+  });
+}
+cardifyTables();
 </script>
 </body>
 </html>
