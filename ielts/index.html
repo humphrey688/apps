@@ -10,6 +10,7 @@
   --txt:#3c3629; --dim:#7b7260; --accent:#5f7a52; --accent2:#96602c; --ok:#4d7a48;
   --warn:#a1711f; --err:#a5483a; --violet:#73678c; --hl:#f7f1e2;
   --mono:"楷体","KaiTi","Microsoft YaHei",ui-monospace,monospace;
+  --topH:54px; --tabH:58px;
 }
 body.night{
   --bg:#221f19; --bg2:#2a261f; --panel:#282420; --panel2:#2f2a24; --line:#3d372e;
@@ -25,15 +26,15 @@ a:hover{border-bottom-style:solid}
 code,.mono{font-family:var(--mono)}
 .num{font-family:var(--mono);letter-spacing:.3px}
 
-/* 顶栏 */
+/* ---------- 顶栏 ---------- */
 .top{position:sticky;top:0;z-index:30;background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .in{max-width:1420px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;min-width:0}
-.brand{font-family:var(--mono);font-size:15px;display:flex;align-items:center;gap:9px;white-space:nowrap}
-.led{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent)}
-.kpis{display:flex;gap:8px;margin-left:auto;min-width:0;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.top .in{max-width:1420px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:12px;min-width:0}
+.brand{font-family:var(--mono);font-size:15px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.led{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent)}
+.kpis{display:flex;gap:8px;margin-left:auto;min-width:0;overflow-x:auto;scrollbar-width:none}
 .kpis::-webkit-scrollbar{display:none}
-.kpi{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:8px;padding:5px 11px;
+.kpi{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:8px;padding:4px 10px;
   background:var(--panel);white-space:nowrap}
 .kpi b{color:var(--accent2);font-weight:600}
 .kpi.g{border-color:color-mix(in srgb,var(--ok) 45%,var(--line))}
@@ -42,29 +43,32 @@ code,.mono{font-family:var(--mono)}
   border-radius:8px;padding:6px 12px;cursor:pointer}
 .btn:hover{color:var(--accent);border-color:var(--accent)}
 
-/* 布局 */
-.shell{max-width:1420px;margin:0 auto;padding:20px 18px 70px;display:grid;grid-template-columns:214px 1fr;gap:20px}
+/* ---------- 桌面布局 ---------- */
+.shell{max-width:1420px;margin:0 auto;padding:18px 18px 60px;display:grid;grid-template-columns:212px 1fr;gap:20px}
 .shell>*{min-width:0}
-main{min-width:0;overflow-x:hidden}
-nav{position:sticky;top:74px;align-self:start;max-width:100%;min-width:0;max-height:calc(100vh - 96px);overflow:auto}
-nav a{display:block;padding:8px 12px;border-radius:9px;color:var(--dim);font-size:15px;border:1px solid transparent}
-nav a:hover{background:var(--panel);color:var(--accent)}
-nav a.on{background:var(--panel);color:var(--accent);border-color:var(--line);font-family:var(--mono);font-size:14px}
-nav .box{border:1px solid var(--line);border-radius:11px;padding:12px;margin-top:14px;background:var(--panel)}
-nav .box h5{margin:0 0 6px;font-family:var(--mono);font-size:12px;color:var(--dim);font-weight:500}
+main{min-width:0}
+.sidenav{position:sticky;top:calc(var(--topH) + 14px);align-self:start;max-width:100%;min-width:0;
+  max-height:calc(100vh - var(--topH) - 28px);overflow:auto}
+.sidenav a{display:block;padding:8px 12px;border-radius:9px;color:var(--dim);font-size:15px;border:1px solid transparent}
+.sidenav a:hover{background:var(--panel);color:var(--accent)}
+.sidenav a.on{background:var(--panel);color:var(--accent);border-color:var(--line);font-family:var(--mono);font-size:14px}
+.sidenav .box{border:1px solid var(--line);border-radius:11px;padding:12px;margin-top:14px;background:var(--panel)}
+.sidenav .box h5{margin:0 0 6px;font-family:var(--mono);font-size:12px;color:var(--dim);font-weight:500}
 .big{font-family:var(--mono);font-size:28px;color:var(--accent2);line-height:1.15}
 .bar{height:7px;border-radius:99px;background:var(--bg2);overflow:hidden;margin-top:7px}
 .bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
 
-/* 区块 */
-section{margin-bottom:24px;scroll-margin-top:80px}
+/* ---------- 内容 ---------- */
+.pane{display:block}
+section{margin-bottom:22px}
 .sec-h{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;flex-wrap:wrap}
 .sec-h h2{margin:0;font-size:19px;font-family:var(--mono)}
 .sec-h .id{font-family:var(--mono);font-size:12px;color:var(--accent);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
 .sec-h .hint{font-size:14px;color:var(--dim);margin-left:auto}
-.p{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.p{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column}
+.p>.note:last-child{margin-top:auto}
 .grid{display:grid;gap:14px}
-.g2{grid-template-columns:repeat(2,minmax(0,1fr))}       /* 固定两列 → 2+2 */
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .p h3{margin:0 0 8px;font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .tag{font-family:var(--mono);font-size:12px;color:var(--accent2);border:1px solid var(--line);border-radius:5px;padding:0 6px}
@@ -73,14 +77,17 @@ th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;verti
 th{font-family:var(--mono);font-size:13px;color:var(--dim);font-weight:500;background:var(--hl)}
 tr:hover td{background:var(--panel2)}
 .tbl{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:2px 8px 8px}
-.grid>*{min-width:0}
 .dim{color:var(--dim)}.ok{color:var(--ok)}.warn{color:var(--warn)}.err{color:var(--err)}
 .k{color:var(--accent2);font-family:var(--mono)}
 ul{margin:6px 0;padding-left:20px}li{margin:4px 0}
 .note{border-left:3px solid var(--accent);background:var(--hl);padding:9px 13px;border-radius:0 8px 8px 0;margin:10px 0;font-size:15px}
 .note.w{border-color:var(--warn)}.note.g{border-color:var(--ok)}
+.rowcard{flex-direction:row;gap:18px;align-items:center;flex-wrap:wrap}
 
-/* 今天 */
+/* ---------- 今天 ---------- */
+.nowdo{background:var(--hl);border:1px solid var(--line);border-left:4px solid var(--accent2);border-radius:10px;
+  padding:13px 16px;font-size:17px}
+.nowdo b{color:var(--accent2)}
 .slot{border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:var(--panel2)}
 .slot h4{margin:0 0 6px;font-family:var(--mono);font-size:13px;color:var(--accent);display:flex;gap:8px;align-items:center}
 .slot h4 .min{margin-left:auto;color:var(--dim)}
@@ -92,31 +99,35 @@ ul{margin:6px 0;padding-left:20px}li{margin:4px 0}
 .cb.done+.tx{color:var(--dim);text-decoration:line-through}
 .tx{flex:1;font-size:16px}
 .tx .m{font-family:var(--mono);font-size:13px;color:var(--dim);display:block;margin-top:3px}
-.ring{width:124px;height:124px;flex:0 0 auto}
+.ring{width:118px;height:118px;flex:0 0 auto}
 .ring text{font-family:var(--mono)}
-.nowdo{background:var(--hl);border:1px solid var(--line);border-left:4px solid var(--accent2);border-radius:10px;
-  padding:13px 16px;font-size:17px}
-.nowdo b{color:var(--accent2)}
+.statline{font-family:var(--mono);font-size:14px;color:var(--dim)}
 .pill{display:inline-block;font-family:var(--mono);font-size:12.5px;padding:1px 8px;border-radius:99px;
   border:1px solid var(--line);color:var(--dim);margin-right:5px}
 .pill.a{border-color:var(--accent);color:var(--accent)}
 .pill.o{border-color:var(--warn);color:var(--warn)}
 .pill.g{border-color:var(--ok);color:var(--ok)}
 
-/* 时间轴 */
+/* ---------- 时间轴 ---------- */
 .tl{position:relative;height:62px;margin:12px 0 4px;border-radius:9px;overflow:hidden;border:1px solid var(--line);background:var(--panel2)}
-.tl .seg{position:absolute;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 10px;background:var(--panel2);
+.tl .seg{position:absolute;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 12px;background:var(--panel2);
   border-right:1px solid var(--line);font-family:var(--mono);font-size:12.5px;overflow:hidden;white-space:nowrap}
 .tl .seg b{font-size:13.5px}
 .tl .now{position:absolute;top:0;bottom:0;width:2px;background:var(--err)}
-.tl .now::after{content:"今天";position:absolute;bottom:2px;left:3px;font-family:var(--mono);font-size:11px;color:var(--err)}
-/* 周 */
+.tl .now::after{content:"";position:absolute;top:-1px;left:-4px;width:9px;height:9px;border-radius:50%;
+  background:var(--err);box-shadow:0 0 0 3px color-mix(in srgb,var(--err) 22%,transparent)}
+.tl::after{content:"今天";position:absolute;right:6px;top:2px;font-family:var(--mono);font-size:11px;color:var(--err)}
+
+/* ---------- 周 / 题库 ---------- */
 .wk{display:grid;grid-template-columns:76px 1fr;gap:12px;border-bottom:1px solid var(--line);padding:11px 0}
 .wk:last-child{border-bottom:none}
 .wk .no{font-family:var(--mono);font-size:14px;color:var(--accent2)}
 .wk .no small{display:block;color:var(--dim);font-size:12px}
-.wk .grid{grid-template-columns:1fr 1fr;gap:6px 14px;margin-top:6px;font-size:15px}
-/* PDF */
+.wk .wt{display:block;font-size:16.5px;color:var(--accent2);margin-bottom:4px}
+.wk .rows{display:grid;gap:5px;margin-top:6px}
+.wk .r{display:grid;grid-template-columns:66px minmax(0,1fr);gap:12px;align-items:start;font-size:15.5px;line-height:1.7}
+.wk .r .pill{margin:0;text-align:center;justify-content:center}
+.wk .acc{font-size:14.5px;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
 .libgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
 .file{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
 .file .ico{font-family:var(--mono);font-size:11px;color:var(--err);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-top:2px}
@@ -126,83 +137,75 @@ details>summary{cursor:pointer;font-family:var(--mono);font-size:14px;color:var(
 input,select,textarea{background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:8px 10px;font:15px var(--mono)}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
 textarea{font-family:inherit}
-.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;align-items:end}
-footer{color:var(--dim);font-size:13.5px;border-top:1px solid var(--line);padding-top:12px;margin-top:22px;font-family:var(--mono)}
+.form{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;align-items:end}
+.form label{display:block;font-size:13.5px;color:var(--dim)}
+.form input{width:100%;margin-top:4px}
+footer{color:var(--dim);font-size:13.5px;border-top:1px solid var(--line);padding-top:12px;margin-top:20px;font-family:var(--mono)}
 
-/* 口语题库 */
+/* ---------- 口语题库 ---------- */
 #speak .p{overflow-x:auto}
 #speak table{border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:15px;min-width:520px}
 #speak th{background:var(--hl);color:var(--accent2);font-family:var(--mono);font-size:13px;position:sticky;top:0}
 #speak td{border-bottom:1px solid var(--line)}
 #speak tbody tr:hover td{background:var(--panel2)}
-#speak h1{font-size:18px;margin:0 0 10px;color:var(--accent2);font-family:var(--mono)}
+#speak table td:first-child{width:170px;font-weight:600;color:var(--accent)}
+#speak table tr{height:44px}
+#speak table td{padding:8px 10px}
+#speak h1{display:none}
+#speak blockquote{font-size:14.5px;padding:2px 0 2px 12px;border-left-width:2px;background:none;color:var(--dim)}
+#speak p,#speak li{font-size:16px}
 #speak h2{font-size:17px;margin:22px 0 8px;color:var(--accent);border-left:3px solid var(--accent);padding-left:10px}
 #speak h3{font-size:16px;margin:16px 0 6px;color:var(--violet)}
-#speak p,#speak li{font-size:16px}
-#speak blockquote{border-left:3px solid var(--warn);background:var(--hl);margin:10px 0;padding:9px 13px;border-radius:0 8px 8px 0}
 #speak strong{color:var(--accent2)}
 #speak code{background:var(--bg2);padding:1px 5px;border-radius:4px;border:1px solid var(--line)}
 #speak hr{border:none;border-top:1px solid var(--line);margin:16px 0}
 
-/* 手机 */
+/* ---------- 底部 tab（手机） ---------- */
+.tabbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--panel);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.tabbar .row{display:flex}
+.tabbar button{flex:1;background:none;border:none;color:var(--dim);font-family:var(--mono);font-size:11.5px;
+  padding:7px 0 6px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.tabbar button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabbar button.on{color:var(--accent)}
+.tabbar button.on svg{stroke-width:2.2}
 
-/* 排版修正 */
-.p{display:flex;flex-direction:column}
-.rowcard{flex-direction:row;gap:18px;align-items:center;flex-wrap:wrap}
-.p>.note:last-child{margin-top:auto}
-td.nw{white-space:nowrap}
-.form{grid-template-columns:repeat(6,minmax(0,1fr))}
-.form label{display:block;font-size:13.5px;color:var(--dim)}
-.form input{width:100%;margin-top:4px}
-.wk .wt{display:block;font-size:16.5px;color:var(--accent2);margin-bottom:4px}
-.wk .rows{display:grid;gap:5px;margin-top:6px}
-.wk .r{display:grid;grid-template-columns:66px minmax(0,1fr);gap:12px;align-items:start;font-size:15.5px;line-height:1.7}
-.wk .r .pill{margin:0;text-align:center;justify-content:center}
-.wk .acc{font-size:14.5px;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
-.tl .seg{padding-left:12px}
-.tl .seg b,.tl .seg .dim{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tl .now{width:2px;background:var(--err)}
-.tl .now::after{content:"";position:absolute;top:-1px;left:-4px;width:9px;height:9px;border-radius:50%;
-  background:var(--err);box-shadow:0 0 0 3px color-mix(in srgb,var(--err) 22%,transparent)}
-.tl::after{content:"今天";position:absolute;right:6px;top:2px;font-family:var(--mono);font-size:11px;color:var(--err)}
-#speak h1{display:none}
-#speak blockquote{font-size:14.5px;padding:2px 0 2px 12px;border-left-width:2px;background:none;color:var(--dim)}
-#speak table td:first-child{width:170px;font-weight:600;color:var(--accent)}
-#speak table tr{height:44px}
-#speak table td{padding:8px 10px}
-@media (max-width:1180px){.form{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:620px){.form{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .wk .r{grid-template-columns:60px minmax(0,1fr);gap:8px;font-size:15px}}
-
+/* ================= 手机端 ================= */
 @media (max-width:880px){
-  body{font-size:16px}
-  .shell{grid-template-columns:1fr;padding:14px 12px 60px;gap:14px}
-  nav{position:sticky;top:0;z-index:20;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg);
-    border-bottom:1px solid var(--line);margin:0 -12px;padding-left:12px;padding-right:12px;scrollbar-width:none}
-  nav::-webkit-scrollbar{display:none}
-  nav a{white-space:nowrap;border:1px solid var(--line);background:var(--panel);font-size:14px;padding:6px 11px}
-  nav .box{display:none}
-  .top .in{padding:10px 12px;gap:10px}
-  .brand{font-size:14px}
-  .kpis{margin-left:0;width:100%}
-  .g2,.g3{grid-template-columns:1fr}
-  .wk{grid-template-columns:1fr;gap:4px}
-  .wk .grid{grid-template-columns:1fr}
-  .sec-h .hint{margin-left:0;width:100%}
+  body{font-size:16px;height:100dvh;overflow:hidden}
+  .top{position:fixed;top:0;left:0;right:0}
+  .top .in{padding:7px 12px;gap:10px}
+  .brand{font-size:13.5px}
+  .kpi{padding:3px 8px;font-size:12px}
+  .shell{display:block;height:100dvh;padding:calc(var(--topH) + 8px) 0 calc(var(--tabH) + env(safe-area-inset-bottom));
+    overflow:hidden}
+  .sidenav{display:none}
+  main{height:100%;overflow:hidden}
+  .panes{height:100%}
+  .pane{display:none;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    padding:0 12px 16px}
+  .pane.active{display:block}
+  .tabbar{display:block}
+  .grid,.g2,.g3{grid-template-columns:1fr;gap:10px}
+  section{margin-bottom:16px}
+  .sec-h .hint{display:none}
   .p{padding:13px 14px;border-radius:10px}
-  .rowcard{flex-direction:column;align-items:flex-start}
-  .tl{height:74px}
-  .tl .seg{padding:0 6px;font-size:11px}
+  .rowcard{flex-direction:row;align-items:center;gap:12px}
+  .ring{width:88px;height:88px}
+  .ring text{font-size:9px}
+  .wk{grid-template-columns:1fr;gap:4px}
+  .wk .r{grid-template-columns:60px minmax(0,1fr);gap:8px;font-size:15px}
+  .tl{height:70px}
+  .tl .seg{padding:0 8px;font-size:11px}
   .tl .seg b{font-size:12px}
-  .tl .seg .dim{display:none}
-  table{font-size:14.5px}
   .tbl table{min-width:520px}
-  body{overflow-x:hidden}
-  .p{overflow-x:hidden}
+  table{font-size:14.5px}
   .tx{font-size:15.5px}
   .libgrid{grid-template-columns:1fr}
-  #speak table{min-width:520px}
+  .form{grid-template-columns:repeat(3,minmax(0,1fr))}
+  footer{padding-bottom:10px}
 }
+@media (max-width:620px){.form{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -212,25 +215,18 @@ td.nw{white-space:nowrap}
   <div class="kpis">
     <div class="kpi">目标 <b>7.5+</b></div>
     <div class="kpi g">花费 <b>0 元</b></div>
-    <div class="kpi">考期 <b>2027-03-20</b></div>
     <div class="kpi">倒计时 <b id="cd">--</b></div>
     <div class="kpi">今天 <b id="td">--</b></div>
-    <div class="kpi">阶段 <b id="ph">--</b></div>
-    <button class="btn" id="theme">☀/☾</button>
+    <button class="btn" id="theme">☾ 夜间</button>
   </div>
 </div></div>
 
 <div class="shell">
-<nav>
-  <a href="#dash" class="on">01 总览</a>
-  <a href="#today">02 今天</a>
-  <a href="#method">03 四科怎么学</a>
-  <a href="#sched">04 时间表</a>
-  <a href="#lib">05 PDF题库</a>
-  <a href="#online">06 在线模考</a>
-  <a href="#mock">07 模考成绩</a>
-  <a href="#rules">08 规则</a>
-  <a href="#speak">09 口语题库</a>
+<nav class="sidenav">
+  <a href="#dash" class="on">01 今天</a>
+  <a href="#method">02 怎么学</a>
+  <a href="#lib">03 题库</a>
+  <a href="#mock">04 记录</a>
   <div class="box">
     <h5>全程进度</h5>
     <div class="big" id="ovp">0%</div>
@@ -241,254 +237,182 @@ td.nw{white-space:nowrap}
 </nav>
 
 <main>
+<div class="panes">
 
-<section id="dash">
-  <div class="sec-h"><span class="id">01</span><h2>总览</h2><span class="hint">方案已定，照着做</span></div>
-  <div class="grid g2">
-    <div class="p">
-      <h3>时间轴</h3>
-      <div id="tl" class="tl"></div>
-      <div class="dim" id="phaseLine" style="font-size:15px"></div>
-      <div class="note g">全程 <b>0 元</b>：材料见 05/06 区，报名费 1990 在 2027-02 那周交。有效学习约 194 小时。</div>
-    </div>
-    <div class="p">
-      <h3>四科目标</h3>
-      <div class="tbl"><table>
-        <thead><tr><th>科目</th><th>目标</th><th>现状</th><th>缺口</th><th>时间占比</th></tr></thead>
-        <tbody>
-          <tr><td>听力</td><td class="k">7.5</td><td>6.0</td><td>+1.5</td><td>20%</td></tr>
-          <tr><td>阅读</td><td class="k">7.5</td><td>6.0</td><td>+1.5</td><td>20%</td></tr>
-          <tr><td>写作</td><td class="k">7.0</td><td>5.5</td><td>+1.5</td><td class="warn">30%</td></tr>
-          <tr><td>口语</td><td class="k">7.0</td><td>5.0</td><td>+2.0</td><td class="warn">30%</td></tr>
-        </tbody></table></div>
-      <div class="note w">口语是最大短板（官方大陆均分仅 5.5），所以写作+口语占六成时间。</div>
-    </div>
-  </div>
-</section>
-
-<section id="today">
-  <div class="sec-h"><span class="id">02</span><h2>今天干什么</h2><span class="hint">勾选自动保存</span></div>
-  <div class="grid g2">
-    <div class="p rowcard">
-      <svg class="ring" viewBox="0 0 120 120" id="ring">
-        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="9"/>
-        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="9" stroke-linecap="round"
-                stroke-dasharray="326.7" stroke-dashoffset="326.7" transform="rotate(-90 60 60)" id="ringarc"/>
-        <text x="60" y="56" text-anchor="middle" font-size="24" fill="var(--accent2)" id="ringpct">0%</text>
-        <text x="60" y="74" text-anchor="middle" font-size="10" fill="var(--dim)">今天</text>
-      </svg>
-      <div style="flex:1;min-width:200px">
-        <div class="dim" id="todayDate" style="font-size:15px"></div>
-        <div style="font-size:19px;margin:4px 0" id="todayTitle"></div>
-        <div class="dim" id="todayMeta" style="font-size:14px"></div>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn" id="tickAll">全勾</button>
-          <button class="btn" id="resetDay">清空</button>
-          <button class="btn" id="addHour">+1 小时</button>
+<!-- ============ Tab 1 今天 ============ -->
+<div class="pane active" data-pane="today">
+  <section id="dash">
+    <div class="sec-h"><span class="id">01</span><h2>今天</h2></div>
+    <div class="p" style="margin-bottom:12px">
+      <div class="rowcard" style="gap:14px">
+        <svg class="ring" viewBox="0 0 120 120" id="ring">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="9"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="9" stroke-linecap="round"
+                  stroke-dasharray="326.7" stroke-dashoffset="326.7" transform="rotate(-90 60 60)" id="ringarc"/>
+          <text x="60" y="56" text-anchor="middle" font-size="24" fill="var(--accent2)" id="ringpct">0%</text>
+          <text x="60" y="74" text-anchor="middle" font-size="10" fill="var(--dim)">今天</text>
+        </svg>
+        <div style="flex:1;min-width:180px">
+          <div class="dim" id="todayDate" style="font-size:14.5px"></div>
+          <div style="font-size:18px;margin:3px 0" id="todayTitle"></div>
+          <div class="dim" id="todayMeta" style="font-size:13.5px"></div>
+          <div style="margin-top:9px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn" id="tickAll">全勾</button>
+            <button class="btn" id="resetDay">清空</button>
+            <button class="btn" id="addHour">+1 小时</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="p">
+    <div class="p" style="margin-bottom:12px">
       <h3>现在做这个</h3>
       <div class="nowdo" id="nowDo">—</div>
-      <div class="dim" style="font-size:14px;margin-top:8px" id="streak"></div>
-      <div class="dim" style="font-size:14px" id="doneStat"></div>
-      <div class="dim" style="font-size:14px" id="hourStat"></div>
     </div>
-  </div>
-  <div class="grid g2" id="slots" style="margin-top:14px"></div>
-  <div class="p" style="margin-top:14px">
-    <h3>复盘三问</h3>
-    <textarea id="reflect" rows="3" style="width:100%" placeholder="① 卡在哪一步？② 错因属于哪类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）？③ 明天第一件事改什么？（写一句能执行的动作）"></textarea>
-  </div>
-</section>
+    <div class="grid g2" id="slots"></div>
+    <div class="p" style="margin-top:12px">
+      <h3>复盘三问</h3>
+      <textarea id="reflect" rows="3" style="width:100%" placeholder="① 卡在哪一步？② 错因属于哪类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）？③ 明天第一件事改什么？"></textarea>
+    </div>
+    <div class="p" style="margin-top:12px">
+      <h3>进度</h3>
+      <div id="tl" class="tl"></div>
+      <div class="dim" id="phaseLine" style="font-size:14.5px"></div>
+      <div class="statline" style="margin-top:8px" id="streak"></div>
+      <div class="statline" style="font-size:14px" id="doneStat"></div>
+      <div class="statline" style="font-size:14px" id="hourStat"></div>
+      <div class="note g">全程 <b>0 元</b>：材料见「题库」区，报名费 1990 在 2027-02 那周交。有效学习约 194 小时。</div>
+    </div>
+  </section>
+</div>
 
-<section id="method">
-  <div class="sec-h"><span class="id">03</span><h2>四科怎么学</h2><span class="hint">每天照这几行做</span></div>
-  <div class="grid g2">
-    <div class="p">
-      <h3>听力 <span class="tag">20%</span></h3>
-      <ul>
-        <li><b>计时做</b>：音频一遍过，边听边打字（机考无誊写时间）</li>
-        <li><b>对答案</b>：只记每 Section 错几题，先不看原文</li>
-        <li><b>归因</b>：同义替换 / 连读 / 生词 / 拼写 / 定位 / 时间，六选一</li>
-        <li><b>精听</b>：逐句暂停重听，对照录音原文抄写听不清的句子</li>
-        <li><b>拼写</b>：每天 30 个答案词听写（听写不是默写）</li>
-      </ul>
-      <div class="dim" style="font-size:14px">材料：官方听力样题 PDF · 官方机考模拟体验 · ieltsonlinetests</div>
-      <div class="note w">机考：音频结束只有 2 分钟检查，答案前后多余空格判错 → 全程打字 + 不确定点 Review。</div>
+<!-- ============ Tab 2 怎么学 ============ -->
+<div class="pane" data-pane="study">
+  <section id="method">
+    <div class="sec-h"><span class="id">02</span><h2>怎么学</h2><span class="hint">每天照这几行做</span></div>
+    <div class="grid g2">
+      <div class="p">
+        <h3>听力 <span class="tag">20%</span></h3>
+        <ul>
+          <li><b>计时做</b>：音频一遍过，边听边打字（机考无誊写时间）</li>
+          <li><b>对答案</b>：只记每 Section 错几题，先不看原文</li>
+          <li><b>归因</b>：同义替换 / 连读 / 生词 / 拼写 / 定位 / 时间，六选一</li>
+          <li><b>精听</b>：逐句暂停重听，对照录音原文抄写听不清的句子</li>
+          <li><b>拼写</b>：每天 30 个答案词听写（听写不是默写）</li>
+        </ul>
+        <div class="dim" style="font-size:14px">材料：官方听力样题 PDF · 官方机考模拟体验 · ieltsonlinetests</div>
+        <div class="note w">机考：音频结束只有 2 分钟检查，答案前后多余空格判错 → 全程打字 + 不确定点 Review。</div>
+      </div>
+      <div class="p">
+        <h3>阅读 <span class="tag">20%</span></h3>
+        <ul>
+          <li><b>限时</b>：60 分钟 / 3 篇，不许拖</li>
+          <li><b>题型专项</b>：先 TFNG 和段落标题匹配，最后做费时间的题</li>
+          <li><b>长难句</b>：每篇挑 3 句，划主干 + 抄写 + 翻译</li>
+          <li><b>归因</b>：定位失败 / 读不懂 / 时间不够 / 审题错</li>
+          <li><b>复盘</b>：错题回原文定位句，抄同义替换对</li>
+        </ul>
+        <div class="dim" style="font-size:14px">材料：官方阅读样题 PDF · ieltsonlinetests · Breaking News English</div>
+        <div class="note w">7.0→7.5 关键不是读更多，而是 60 分钟稳定做完。每天 1 篇限时 20 分钟。</div>
+      </div>
+      <div class="p">
+        <h3>写作 <span class="tag">30%</span></h3>
+        <ul>
+          <li><b>审题</b>：Task2 先写提纲：两个主体段各一句观点 + 一个例子</li>
+          <li><b>成稿</b>：打字，Task2 40 分钟 250 词 / Task1 20 分钟 150 词</li>
+          <li><b>批改</b>：按 TR / CC / LR / GRA 四项，找出最扣分那一项</li>
+          <li><b>重写</b>：同题重写一遍，只改被判扣的点（提分唯一路径）</li>
+          <li><b>Task1</b>：概述段必写，漏写直接掉到 6.5</li>
+        </ul>
+        <div class="dim" style="font-size:14px">材料：官方写作范文 PDF（带考官评语）· WriteUp 0 元测分</div>
+        <div class="note g">假期 Task2 每周 2 篇 + Task1 每周 1 篇，每篇都重写。</div>
+      </div>
+      <div class="p">
+        <h3>口语 <span class="tag">30%</span></h3>
+        <ul>
+          <li><b>Part1</b>：2 个话题各说 45 秒，录音，每题 2–3 句</li>
+          <li><b>Part2</b>：1 分钟准备（只写 4 个关键词）→ 说满 2 分钟 → 回听</li>
+          <li><b>Part3</b>：每题 3–4 句：观点 → 原因 → 例子 → 对比</li>
+          <li><b>回听</b>：指出 3 个可改点（语法 / 用词 / 停顿 / 音）</li>
+          <li><b>归档</b>：卡壳点记进错题本，下周优先练</li>
+        </ul>
+        <div class="dim" style="font-size:14px">材料：题库区口语题库 · SpeakUp 0 元模考</div>
+        <div class="note w">背整段模板会被判不流利；背「观点+素材+句型」才是 7.5 的做法。</div>
+      </div>
     </div>
-    <div class="p">
-      <h3>阅读 <span class="tag">20%</span></h3>
-      <ul>
-        <li><b>限时</b>：60 分钟 / 3 篇，不许拖</li>
-        <li><b>题型专项</b>：先 TFNG 和段落标题匹配，最后做费时间的题</li>
-        <li><b>长难句</b>：每篇挑 3 句，划主干 + 抄写 + 翻译</li>
-        <li><b>归因</b>：定位失败 / 读不懂 / 时间不够 / 审题错</li>
-        <li><b>复盘</b>：错题回原文定位句，抄同义替换对</li>
-      </ul>
-      <div class="dim" style="font-size:14px">材料：官方阅读样题 PDF · ieltsonlinetests · Breaking News English</div>
-      <div class="note w">7.0→7.5 关键不是读更多，而是 60 分钟稳定做完。每天 1 篇限时 20 分钟。</div>
+    <div class="p" style="margin-top:12px">
+      <h3>每天固定两件</h3>
+      <div class="grid g2" style="font-size:16px">
+        <div><span class="pill g">百词斩</span>50 词（新 20 + 复习 30），固定早上做</div>
+        <div><span class="pill a">BBC 6 Minute English</span>1 期：盲听 → 看文本核对 → 跟读</div>
+      </div>
     </div>
-    <div class="p">
-      <h3>写作 <span class="tag">30%</span></h3>
-      <ul>
-        <li><b>审题</b>：Task2 先写提纲：两个主体段各一句观点 + 一个例子</li>
-        <li><b>成稿</b>：打字，Task2 40 分钟 250 词 / Task1 20 分钟 150 词</li>
-        <li><b>批改</b>：按 TR / CC / LR / GRA 四项，找出最扣分那一项</li>
-        <li><b>重写</b>：同题重写一遍，只改被判扣的点（提分唯一路径）</li>
-        <li><b>Task1</b>：概述段必写，漏写直接掉到 6.5</li>
-      </ul>
-      <div class="dim" style="font-size:14px">材料：官方写作范文 PDF（带考官评语）· WriteUp 0 元测分</div>
-      <div class="note g">假期 Task2 每周 2 篇 + Task1 每周 1 篇，每篇都重写。</div>
-    </div>
-    <div class="p">
-      <h3>口语 <span class="tag">30%</span></h3>
-      <ul>
-        <li><b>Part1</b>：2 个话题各说 45 秒，录音，每题 2–3 句</li>
-        <li><b>Part2</b>：1 分钟准备（只写 4 个关键词）→ 说满 2 分钟 → 回听</li>
-        <li><b>Part3</b>：每题 3–4 句：观点 → 原因 → 例子 → 对比</li>
-        <li><b>回听</b>：指出 3 个可改点（语法 / 用词 / 停顿 / 音）</li>
-        <li><b>归档</b>：卡壳点记进错题本，下周优先练</li>
-      </ul>
-      <div class="dim" style="font-size:14px">材料：09 区题库 · SpeakUp 0 元模考</div>
-      <div class="note w">背整段模板会被判不流利；背「观点+素材+句型」才是 7.5 的做法。</div>
-    </div>
-  </div>
-  <div class="p" style="margin-top:14px">
-    <h3>每天固定两件</h3>
-    <div class="grid g2" style="font-size:16px">
-      <div><span class="pill g">百词斩</span>50 词（新 20 + 复习 30），固定早上做</div>
-      <div><span class="pill a">BBC 6 Minute English</span>1 期：盲听 → 看文本核对 → 跟读</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="sched">
-  <div class="sec-h"><span class="id">04</span><h2>时间表</h2><span class="hint">阶段 → 周 → 日</span></div>
-  <div class="p">
-    <div class="tbl"><table>
-      <thead><tr><th>阶段</th><th>区间</th><th>每天</th><th>时长</th><th>要拿到什么</th></tr></thead>
+  <section id="sched">
+    <div class="sec-h"><span class="id">02</span><h2>时间表</h2><span class="hint">阶段 → 周 → 日</span></div>
+    <div class="p">
+      <div class="tbl"><table>
+        <thead><tr><th>阶段</th><th>区间</th><th>每天</th><th>时长</th><th>要拿到什么</th></tr></thead>
+        <tbody>
+          <tr><td class="nw"><span class="pill a">S0</span> 诊断建档</td><td class="mono">11-20 → 12-10</td><td>1 h</td><td class="mono">18 h</td><td>摸底四科；免费资料全部跑通；错题本建成</td></tr>
+          <tr><td class="nw"><span class="pill o">S1</span> 期末保底</td><td class="mono">12-11 → 01-05</td><td>0.5 h</td><td class="mono">11 h</td><td>不掉手感：词不断档、口语有录音、听力每周≥2 套</td></tr>
+          <tr><td class="nw"><span class="pill g">S2</span> 寒假主攻</td><td class="mono">01-06 → 02-28</td><td>3.5 h</td><td class="mono">162 h</td><td>两套模考 ≥6.5；写作 ≥8 篇、口语 ≥12 张卡</td></tr>
+          <tr><td class="nw"><span class="pill">S3</span> 开学冲刺</td><td class="mono">03-01 → 03-20</td><td>2.5 h</td><td class="mono">38 h</td><td>两次机考模拟 ≥7.0；流程零意外</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="p" style="margin-top:12px">
+      <h3>寒假 8 周</h3>
+      <div id="weeks"></div>
+    </div>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="p">
+        <h3>12 月逐日</h3>
+        <div class="tbl"><table id="decTbl"></table></div>
+        <div class="dim" style="font-size:13.5px;margin-top:6px">12/11 起进期末周，降到 30 分钟保底；灰行直接跳过。</div>
+      </div>
+      <div class="p">
+        <h3>3 月冲刺</h3>
+        <div class="tbl"><table><thead><tr><th>周次</th><th>做什么</th><th>验收</th></tr></thead><tbody id="marTbl"></tbody></table></div>
+        <details style="margin-top:10px"><summary>考前清单 / 报名时间</summary>
+          <div class="tbl"><table><thead><tr><th>时间</th><th>做什么</th></tr></thead><tbody id="chkTbl"></tbody></table></div>
+        </details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ Tab 3 题库 ============ -->
+<div class="pane" data-pane="lib">
+  <section id="lib">
+    <div class="sec-h"><span class="id">03</span><h2>题库</h2><span class="hint">本地 40 份官方 PDF，点开即用</span></div>
+    <div id="libRoot"></div>
+  </section>
+  <section id="online">
+    <div class="sec-h"><span class="id">03</span><h2>在线模考</h2><span class="hint">全部免费或 0 元</span></div>
+    <div class="p"><div class="tbl"><table>
+      <thead><tr><th>工具</th><th>免费度</th><th>怎么用</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="nw"><span class="pill a">S0</span> 诊断建档</td><td class="mono">11-20 → 12-10</td><td>1 h</td><td class="mono">18 h</td><td>摸底四科；免费资料全部跑通；错题本建成</td></tr>
-        <tr><td class="nw"><span class="pill o">S1</span> 期末保底</td><td class="mono">12-11 → 01-05</td><td>0.5 h</td><td class="mono">11 h</td><td>不掉手感：词不断档、口语有录音、听力每周≥2 套</td></tr>
-        <tr><td class="nw"><span class="pill g">S2</span> 寒假主攻</td><td class="mono">01-06 → 02-28</td><td>3.5 h</td><td class="mono">162 h</td><td>两套模考 ≥6.5；写作 ≥8 篇、口语 ≥12 张卡</td></tr>
-        <tr><td class="nw"><span class="pill">S3</span> 开学冲刺</td><td class="mono">03-01 → 03-20</td><td>2.5 h</td><td class="mono">38 h</td><td>两次机考模拟 ≥7.0；流程零意外</td></tr>
-      </tbody></table></div>
-  </div>
-  <div class="p" style="margin-top:14px">
-    <h3>寒假 8 周</h3>
-    <div id="weeks"></div>
-  </div>
-  <div class="grid g2" style="margin-top:14px">
+        <tr><td>官方机考模拟体验</td><td class="pill g">免费</td><td>听读写还原机考界面、网页自带音频 → 第一天必做</td><td><a href="https://www.chinaielts.org/prepare/ielts-practice-tests/mocks-academic" target="_blank">打开</a></td></tr>
+        <tr><td>ieltsonlinetests</td><td class="pill g">免费</td><td>整套模考，带音频带解析 → 每周一套</td><td><a href="https://ieltsonlinetests.com" target="_blank">打开</a></td></tr>
+        <tr><td>WriteUp 写作模考</td><td class="pill o">0 元</td><td>写作 16 项子维度诊断</td><td><a href="https://www.chinaielts.org/prepare/ups/writeup" target="_blank">打开</a></td></tr>
+        <tr><td>SpeakUp 口语模考</td><td class="pill o">0 元</td><td>口语模考与评分</td><td><a href="https://www.chinaielts.org/prepare/ups/speakup" target="_blank">打开</a></td></tr>
+        <tr><td>PrepUp 全科模考</td><td class="pill o">0 元</td><td>官方全科模考 + 报告</td><td><a href="https://www.chinaielts.org/prepare/ups/prepup" target="_blank">打开</a></td></tr>
+        <tr><td>IELTS Ready</td><td class="pill g">注册即用</td><td>25 分钟测试 + 2 套全科模拟 + 精讲课</td><td><a href="https://www.chinaielts.org/prepare/ielts-ready-premium" target="_blank">打开</a></td></tr>
+        <tr><td>官方评分标准</td><td class="pill g">免费</td><td>四科评分依据 + 官方讲解视频</td><td><a href="https://www.chinaielts.org/prepare/understand-ielts-score" target="_blank">打开</a></td></tr>
+        <tr><td>IDP 免费样题</td><td class="pill g">免费</td><td>中文页面官方样题</td><td><a href="https://ielts.idp.com/singapore/prepare/ielts-sample-test/zh-hans" target="_blank">打开</a></td></tr>
+        <tr><td>IELTS Liz</td><td class="pill g">免费</td><td>题型拆解、口语题库（本页已收录）</td><td><a href="https://ieltsliz.com" target="_blank">打开</a></td></tr>
+        <tr><td>BBC 6 Minute English</td><td class="pill g">免费</td><td>每日精听，附原文</td><td><a href="https://www.bbc.co.uk/learningenglish/english/features/6-minute-english" target="_blank">打开</a></td></tr>
+        <tr><td>新东方刷题站</td><td class="pill g">免费</td><td>逐题解析 + 范文 + 考官评语（不用买书）</td><td><a href="https://ielts.koolearn.com" target="_blank">打开</a></td></tr>
+        <tr><td>报名系统 NEEA</td><td class="pill g">唯一官方</td><td>2027-02 那周抢考位用</td><td><a href="https://ielts.neea.cn" target="_blank">打开</a></td></tr>
+      </tbody></table></div></div>
+  </section>
+  <section id="speak">
+    <div class="sec-h"><span class="id">03</span><h2>口语题库</h2><span class="hint">Part1 话题 · Part2 题卡 · Part3 主题</span></div>
     <div class="p">
-      <h3>12 月逐日</h3>
-      <div class="tbl"><table id="decTbl"></table></div>
-      <div class="dim" style="font-size:13.5px;margin-top:6px">12/11 起进期末周，降到 30 分钟保底；灰行直接跳过。</div>
+      <div class="note g">Part1 每题 2–3 句（直接回答 + 原因 + 细节）；Part2 只准备 4 个关键词、说满 2 分钟；Part3 每题 3–4 句（观点 → 原因 → 例子 → 对比）。考的是临场组织语言，不是答案对不对。</div>
     </div>
-    <div class="p">
-      <h3>3 月冲刺</h3>
-      <div class="tbl"><table><thead><tr><th>周次</th><th>做什么</th><th>验收</th></tr></thead><tbody id="marTbl"></tbody></table></div>
-      <details style="margin-top:10px"><summary>考前清单 / 报名时间</summary>
-        <div class="tbl"><table><thead><tr><th>时间</th><th>做什么</th></tr></thead><tbody id="chkTbl"></tbody></table></div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section id="lib">
-  <div class="sec-h"><span class="id">05</span><h2>PDF 题库</h2><span class="hint">本地 36 份官方 PDF，点开即用</span></div>
-  <div id="libRoot"></div>
-</section>
-
-<section id="online">
-  <div class="sec-h"><span class="id">06</span><h2>在线模考</h2><span class="hint">全部免费或 0 元</span></div>
-  <div class="p"><div class="tbl"><table>
-    <thead><tr><th>工具</th><th>免费度</th><th>怎么用</th><th></th></tr></thead>
-    <tbody>
-      <tr><td>官方机考模拟体验</td><td class="pill g">免费</td><td>听读写还原机考界面、网页自带音频 → 第一天必做</td><td><a href="https://www.chinaielts.org/prepare/ielts-practice-tests/mocks-academic" target="_blank">打开</a></td></tr>
-      <tr><td>ieltsonlinetests</td><td class="pill g">免费</td><td>整套模考，带音频带解析 → 每周一套</td><td><a href="https://ieltsonlinetests.com" target="_blank">打开</a></td></tr>
-      <tr><td>WriteUp 写作模考</td><td class="pill o">0 元</td><td>写作 16 项子维度诊断</td><td><a href="https://www.chinaielts.org/prepare/ups/writeup" target="_blank">打开</a></td></tr>
-      <tr><td>SpeakUp 口语模考</td><td class="pill o">0 元</td><td>口语模考与评分</td><td><a href="https://www.chinaielts.org/prepare/ups/speakup" target="_blank">打开</a></td></tr>
-      <tr><td>PrepUp 全科模考</td><td class="pill o">0 元</td><td>官方全科模考 + 报告</td><td><a href="https://www.chinaielts.org/prepare/ups/prepup" target="_blank">打开</a></td></tr>
-      <tr><td>IELTS Ready</td><td class="pill g">注册即用</td><td>25 分钟测试 + 2 套全科模拟 + 精讲课</td><td><a href="https://www.chinaielts.org/prepare/ielts-ready-premium" target="_blank">打开</a></td></tr>
-      <tr><td>官方评分标准</td><td class="pill g">免费</td><td>四科评分依据 + 官方讲解视频</td><td><a href="https://www.chinaielts.org/prepare/understand-ielts-score" target="_blank">打开</a></td></tr>
-      <tr><td>IDP 免费样题</td><td class="pill g">免费</td><td>中文页面官方样题</td><td><a href="https://ielts.idp.com/singapore/prepare/ielts-sample-test/zh-hans" target="_blank">打开</a></td></tr>
-      <tr><td>IELTS Liz</td><td class="pill g">免费</td><td>题型拆解、口语题库（09 区已收录）</td><td><a href="https://ieltsliz.com" target="_blank">打开</a></td></tr>
-      <tr><td>BBC 6 Minute English</td><td class="pill g">免费</td><td>每日精听，附原文</td><td><a href="https://www.bbc.co.uk/learningenglish/english/features/6-minute-english" target="_blank">打开</a></td></tr>
-      <tr><td>新东方刷题站</td><td class="pill g">免费</td><td>逐题解析 + 范文 + 考官评语（不用买书）</td><td><a href="https://ielts.koolearn.com" target="_blank">打开</a></td></tr>
-      <tr><td>报名系统 NEEA</td><td class="pill g">唯一官方</td><td>2027-02 那周抢考位用</td><td><a href="https://ielts.neea.cn" target="_blank">打开</a></td></tr>
-    </tbody></table></div></div>
-</section>
-
-<section id="mock">
-  <div class="sec-h"><span class="id">07</span><h2>模考成绩</h2><span class="hint">存本地，随时清</span></div>
-  <div class="grid g2">
-    <div class="p">
-      <h3>录入一次</h3>
-      <div class="form">
-        <label>日期<br><input type="date" id="mDate"></label>
-        <label>来源<br><input id="mSrc" placeholder="ielts-整套"></label>
-        <label>听力<br><input type="number" id="mL" min="0" max="9" step="0.5"></label>
-        <label>阅读<br><input type="number" id="mR" min="0" max="9" step="0.5"></label>
-        <label>写作<br><input type="number" id="mW" min="0" max="9" step="0.5"></label>
-        <label>口语<br><input type="number" id="mS" min="0" max="9" step="0.5"></label>
-      </div>
-      <div style="margin-top:10px;display:flex;gap:8px">
-        <button class="btn" id="mSave">保存</button>
-        <button class="btn" id="mClear">清空</button>
-      </div>
-      <div class="tbl" style="margin-top:12px"><table id="mTbl"></table></div>
-    </div>
-    <div class="p">
-      <h3>分数曲线 <span class="tag">目标 7.5</span></h3>
-      <div id="chart"></div>
-      <div class="dim" id="mStat" style="font-size:14.5px;margin-top:6px"></div>
-      <div class="note">节奏：12/6 摸底 1 次 → 2/7 与 2/21 各 1 次 → 3 月两次全真机考模拟。</div>
-    </div>
-  </div>
-</section>
-
-<section id="rules">
-  <div class="sec-h"><span class="id">08</span><h2>规则</h2><span class="hint">2026-09-01 起全面机考</span></div>
-  <div class="grid g3">
-    <div class="p">
-      <h3>机考三条</h3>
-      <ul>
-        <li>听力无誊写，只剩 <b>2 分钟</b>检查</li>
-        <li>写作要打字，<b>≥35 词/分</b></li>
-        <li>答案前后多余空格判错；存疑点 Review</li>
-      </ul>
-    </div>
-    <div class="p">
-      <h3>考位</h3>
-      <ul>
-        <li>放位：每日 <b>10:00 / 20:00</b></li>
-        <li>最晚考前 3 天报名</li>
-        <li>考后 1–5 天出分</li>
-        <li>报名费 1990（<b>2027-02 才交</b>）</li>
-        <li>入口只有 ielts.neea.cn</li>
-      </ul>
-    </div>
-    <div class="p">
-      <h3>避坑</h3>
-      <ul>
-        <li>换题季 1/5/9 月，每次换 30–40%</li>
-        <li>「原题重现率 90%」是话术，别买</li>
-        <li>六级 567 ≠ 雅思 6.5</li>
-        <li>网传全套 PDF 多为盗版，音画不对位</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="speak">
-  <div class="sec-h"><span class="id">09</span><h2>口语题库</h2><span class="hint">Part1 话题 · Part2 题卡 · Part3 主题</span></div>
-  <div class="p">
-    <div class="note g">Part1 每题 2–3 句（直接回答 + 原因 + 细节）；Part2 只准备 4 个关键词、说满 2 分钟；Part3 每题 3–4 句（观点 → 原因 → 例子 → 对比）。考的是临场组织语言，不是答案对不对。</div>
-  </div>
-  <div class="p" style="margin-top:12px">
-    <h1>雅思口语题库（Part 1 / 2 / 3 高频复现题）</h1>
+    <div class="p" style="margin-top:12px">
+      <h1>雅思口语题库（Part 1 / 2 / 3 高频复现题）</h1>
 <blockquote>
 <p>整理自 IELTS Liz（ieltsliz.com，2026-11-19 抓取）与官方换题规律。<strong>不是官方题库</strong>，是高频复现题清单。
 官方换题季在每年 <strong>1 月、5 月、9 月</strong>，每次替换约 30%–40% 旧题。你 3 月考，用的是 1 月换题季后的题库，范围基本已定。</p>
@@ -1042,13 +966,88 @@ td.nw{white-space:nowrap}
 2. 每题回答都含至少 1 个具体例子
 3. 卡壳点全部记进错题本，下周优先练这些题
 4. 回听录音时，能指出至少 3 个可改的地方（语法/用词/停顿）</p>
-  </div>
-</section>
+    </div>
+  </section>
+</div>
 
-<footer>雅思备考控制台 · 2026-11-20 · 数据存本地（localStorage），不上传 · 全部内容以本页为准</footer>
+<!-- ============ Tab 4 记录 ============ -->
+<div class="pane" data-pane="record">
+  <section id="mock">
+    <div class="sec-h"><span class="id">04</span><h2>模考成绩</h2><span class="hint">存本地，随时清</span></div>
+    <div class="grid g2">
+      <div class="p">
+        <h3>录入一次</h3>
+        <div class="form">
+          <label>日期<br><input type="date" id="mDate"></label>
+          <label>来源<br><input id="mSrc" placeholder="ielts-整套"></label>
+          <label>听力<br><input type="number" id="mL" min="0" max="9" step="0.5"></label>
+          <label>阅读<br><input type="number" id="mR" min="0" max="9" step="0.5"></label>
+          <label>写作<br><input type="number" id="mW" min="0" max="9" step="0.5"></label>
+          <label>口语<br><input type="number" id="mS" min="0" max="9" step="0.5"></label>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn" id="mSave">保存</button>
+          <button class="btn" id="mClear">清空</button>
+        </div>
+        <div class="tbl" style="margin-top:12px"><table id="mTbl"></table></div>
+      </div>
+      <div class="p">
+        <h3>分数曲线 <span class="tag">目标 7.5</span></h3>
+        <div id="chart"></div>
+        <div class="dim" id="mStat" style="font-size:14.5px;margin-top:6px"></div>
+        <div class="note">节奏：12/6 摸底 1 次 → 2/7 与 2/21 各 1 次 → 3 月两次全真机考模拟。</div>
+      </div>
+    </div>
+  </section>
+  <section id="rules">
+    <div class="sec-h"><span class="id">04</span><h2>规则</h2><span class="hint">2026-09-01 起全面机考</span></div>
+    <div class="grid g3">
+      <div class="p">
+        <h3>机考三条</h3>
+        <ul>
+          <li>听力无誊写，只剩 <b>2 分钟</b>检查</li>
+          <li>写作要打字，<b>≥35 词/分</b></li>
+          <li>答案前后多余空格判错；存疑点 Review</li>
+        </ul>
+      </div>
+      <div class="p">
+        <h3>考位</h3>
+        <ul>
+          <li>放位：每日 <b>10:00 / 20:00</b></li>
+          <li>最晚考前 3 天报名</li>
+          <li>考后 1–5 天出分</li>
+          <li>报名费 1990（<b>2027-02 才交</b>）</li>
+          <li>入口只有 ielts.neea.cn</li>
+        </ul>
+      </div>
+      <div class="p">
+        <h3>避坑</h3>
+        <ul>
+          <li>换题季 1/5/9 月，每次换 30–40%</li>
+          <li>「原题重现率 90%」是话术，别买</li>
+          <li>六级 567 ≠ 雅思 6.5</li>
+          <li>网传全套 PDF 多为盗版，音画不对位</li>
+        </ul>
+      </div>
+    </div>
+    <div class="p" style="margin-top:12px">
+      <h3>如果 3 月没到 7.5</h3>
+      <div class="note">成绩有效期 2 年，2027 年 3 月的成绩已覆盖 2028/29 冬季入学申请，<b>没有时间压力</b>。
+        重考窗口选 <b>6 月</b>或 <b>9 月</b>前。</div>
+    </div>
+  </section>
+</div>
 
+</div>
 </main>
 </div>
+
+<nav class="tabbar"><div class="row">
+  <button data-tab="today" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15" r="2.5" fill="currentColor" stroke="none"/></svg>今天</button>
+  <button data-tab="study"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M9 8h7M9 12h5"/></svg>怎么学</button>
+  <button data-tab="lib"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>题库</button>
+  <button data-tab="record"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>记录</button>
+</div></nav>
 
 <script id="plan-data" type="application/json">{"start": "2026-11-20", "end": "2027-03-20", "hours": 194, "phases": [{"tag": "S0", "name": "诊断建档", "start": "2026-11-20", "end": "2026-12-10", "daily": "1 小时", "color": "#7fe3ff", "goal": "摸底四科真实分数；把免费资料全部跑通一遍；错题本建成"}, {"tag": "S1", "name": "期末保底", "start": "2026-12-11", "end": "2027-01-05", "daily": "0.5 小时", "color": "#ffb454", "goal": "不掉手感：百词斩不断档、口语每天有录音、听力每周 ≥2 套"}, {"tag": "S2", "name": "寒假主攻", "start": "2027-01-06", "end": "2027-02-28", "daily": "3.5 小时", "color": "#5ce0a0", "goal": "主战场：两套全真模考总分 ≥6.5；写作 ≥8 篇、口语 ≥12 张题卡"}, {"tag": "S3", "name": "开学冲刺", "start": "2027-03-01", "end": "2027-03-20", "daily": "2.5 小时", "color": "#b39dff", "goal": "两次全真机考模拟总分 ≥7.0；机考流程零意外"}], "days": [{"d": "2026-11-20", "tag": "S0", "name": "诊断建档", "focus": "打开官方机考模拟体验，听+读+写各过一遍；摸清机考界面和打字手感；建错题本", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "打开官方机考模拟体验，听+读+写各过一遍；摸清机考界面和打字手感；建错题本", "mat": "chinaielts.org 模拟试题"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-21", "tag": "S0", "name": "诊断建档", "focus": "听力题型通关 1：做官方听力样题 01-04（单选/多选/表格/笔记），对答案后精读录音原文", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "听力题型通关 1：做官方听力样题 01-04（单选/多选/表格/笔记），对答案后精读录音原文", "mat": "官方听力题型样题 PDF（听力01-08，含录音原文）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-22", "tag": "S0", "name": "诊断建档", "focus": "阅读题型通关 1：做官方阅读样题 01-05（单选/多选/TFNG/笔记/表格），对答案", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "阅读题型通关 1：做官方阅读样题 01-05（单选/多选/TFNG/笔记/表格），对答案", "mat": "官方阅读题型样题 PDF（阅读01-10）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-23", "tag": "S0", "name": "诊断建档", "focus": "听力第 1 套模考：ieltsonlinetests 整套计时做，听力+阅读；只记错题不精析", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "听力第 1 套模考：ieltsonlinetests 整套计时做，听力+阅读；只记错题不精析", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-24", "tag": "S0", "name": "诊断建档", "focus": "写作诊断：Task2 写 1 篇（40 分钟打字）+ Task1 写 1 篇（20 分钟打字），用 WriteUp 0 元体验测分", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "写作诊断：Task2 写 1 篇（40 分钟打字）+ Task1 写 1 篇（20 分钟打字），用 WriteUp 0 元体验测分", "mat": "WriteUp · 官方范文 PDF"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-25", "tag": "S0", "name": "诊断建档", "focus": "口语诊断：SpeakUp 0 元体验 + Part1 录 10 题；先读官方口语评分标准 PDF", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "口语诊断：SpeakUp 0 元体验 + Part1 录 10 题；先读官方口语评分标准 PDF", "mat": "SpeakUp · 官方口语评分标准 PDF"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-26", "tag": "S0", "name": "诊断建档", "focus": "复盘四科诊断，算出总分与最低单项，写进控制台「模考成绩」", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "复盘四科诊断，算出总分与最低单项，写进控制台「模考成绩」", "mat": "控制台 07"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-27", "tag": "S0", "name": "诊断建档", "focus": "听力题型通关 2：官方听力样题 05-08（流程图/平面图/句子完成/简答）+ 录音原文精读", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "听力题型通关 2：官方听力样题 05-08（流程图/平面图/句子完成/简答）+ 录音原文精读", "mat": "官方听力题型样题 PDF（听力01-08，含录音原文）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-28", "tag": "S0", "name": "诊断建档", "focus": "阅读题型通关 2：官方阅读样题 06-10（特征匹配/句子结尾/选词库总结）+ 长难句抄 3 句", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "阅读题型通关 2：官方阅读样题 06-10（特征匹配/句子结尾/选词库总结）+ 长难句抄 3 句", "mat": "官方阅读题型样题 PDF（阅读01-10）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-29", "tag": "S0", "name": "诊断建档", "focus": "第 2 套模考：官方机考模拟体验听读写（网页带音频），按真实节奏做", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "第 2 套模考：官方机考模拟体验听读写（网页带音频），按真实节奏做", "mat": "官方机考模拟体验（网页带音频）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-11-30", "tag": "S0", "name": "诊断建档", "focus": "口语 Part2：练 3 张题卡，每张必须说满 2 分钟并录音", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "口语 Part2：练 3 张题卡，每张必须说满 2 分钟并录音", "mat": "控制台 09 口语题库"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-01", "tag": "S0", "name": "诊断建档", "focus": "百词斩：每天 50 词（新 20 + 复习 30），固定在早上做；今天加背听力场景词（住宿/选课/社团）", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "百词斩：每天 50 词（新 20 + 复习 30），固定在早上做；今天加背听力场景词（住宿/选课/社团）", "mat": "百词斩"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-02", "tag": "S0", "name": "诊断建档", "focus": "口语 Part1 第一组（Work/Study/Hometown/Home）各说 5 题，录音回听", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "口语 Part1 第一组（Work/Study/Hometown/Home）各说 5 题，录音回听", "mat": "控制台 09"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-03", "tag": "S0", "name": "诊断建档", "focus": "写作 Task1：动态图表 1 篇（20 分钟打字）+ 对照官方范文批改", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "写作 Task1：动态图表 1 篇（20 分钟打字）+ 对照官方范文批改", "mat": "官方写作范文 PDF（带考官评语）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-04", "tag": "S0", "name": "诊断建档", "focus": "听力精听：用官方录音原文做「听写基线」——先做题、再逐句跟读抄写，抄不出的词进百词斩", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "听力精听：用官方录音原文做「听写基线」——先做题、再逐句跟读抄写，抄不出的词进百词斩", "mat": "官方听力题型样题 PDF（听力01-08，含录音原文）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-05", "tag": "S0", "name": "诊断建档", "focus": "阅读限时：ieltsonlinetests 阅读整卷 60 分钟；错题归类（定位/读不懂/时间/审题）", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "阅读限时：ieltsonlinetests 阅读整卷 60 分钟；错题归类（定位/读不懂/时间/审题）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-06", "tag": "S0", "name": "诊断建档", "focus": "第一次全真模考：ieltsonlinetests 全科 + SpeakUp 口语，四科分数录入控制台", "mins": 90, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "70", "text": "第一次全真模考：ieltsonlinetests 全科 + SpeakUp 口语，四科分数录入控制台", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析） · SpeakUp"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-07", "tag": "S0", "name": "诊断建档", "focus": "模考复盘：逐题归因；把错因最高的 3 类写成下周专项任务", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "模考复盘：逐题归因；把错因最高的 3 类写成下周专项任务", "mat": "控制台 07"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-08", "tag": "S0", "name": "诊断建档", "focus": "写作 Task2 第 1 篇（同意/不同意类），40 分钟打字 + 重写", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "写作 Task2 第 1 篇（同意/不同意类），40 分钟打字 + 重写", "mat": "官方写作范文 PDF（带考官评语）"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-09", "tag": "S0", "name": "诊断建档", "focus": "口语 Part2 再练 3 张（地/活动/人），说满 2 分钟；卡壳点记进错题本", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "口语 Part2 再练 3 张（地/活动/人），说满 2 分钟；卡壳点记进错题本", "mat": "控制台 09"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-10", "tag": "S0", "name": "诊断建档", "focus": "BBC 6 Minute English 精听 2 期（盲听→看文本核对→跟读）+ 长难句 3 句", "mins": 60, "note": "", "tasks": [{"slot": "早上", "min": "10", "text": "百词斩 30 词（新 20 + 复习 10）", "mat": "百词斩"}, {"slot": "主攻", "min": "40", "text": "BBC 6 Minute English 精听 2 期（盲听→看文本核对→跟读）+ 长难句 3 句", "mat": "BBC 6 Minute English"}, {"slot": "保底", "min": "10", "text": "错题本：每道错题归到一类（定位/同义替换/拼写/连读/时间/审题/结构/停顿）", "mat": "控制台 07"}]}, {"d": "2026-12-11", "tag": "S1", "name": "期末保底", "focus": "保底：百词斩 30 词 + 口语 Part1 录音 10 题", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：百词斩 30 词 + 口语 Part1 录音 10 题", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-12", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-13", "tag": "S1", "name": "期末保底", "focus": "保底：听力 1 套（ieltsonlinetests 听力部分）", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：听力 1 套（ieltsonlinetests 听力部分）", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-14", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-15", "tag": "S1", "name": "期末保底", "focus": "保底：口语 Part2 一张卡，说满 2 分钟", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：口语 Part2 一张卡，说满 2 分钟", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-16", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-17", "tag": "S1", "name": "期末保底", "focus": "保底：百词斩 30 词 + 写作 Task1 提纲 1 个（不动手）", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：百词斩 30 词 + 写作 Task1 提纲 1 个（不动手）", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-18", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-19", "tag": "S1", "name": "期末保底", "focus": "保底：精读 1 篇官方录音原文 + 整理错题本", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：精读 1 篇官方录音原文 + 整理错题本", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-20", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-21", "tag": "S1", "name": "期末保底", "focus": "保底：口语 Part1 换 5 个新话题", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：口语 Part1 换 5 个新话题", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-22", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-23", "tag": "S1", "name": "期末保底", "focus": "保底：写作 Task2 提纲 2 个（观点+例子，不成文）", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：写作 Task2 提纲 2 个（观点+例子，不成文）", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-24", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-25", "tag": "S1", "name": "期末保底", "focus": "保底：百词斩 30 词 + 听力 1 套", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：百词斩 30 词 + 听力 1 套", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-26", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-27", "tag": "S1", "name": "期末保底", "focus": "保底：口语 Part3 主题 3 个，每题答 3-4 句", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：口语 Part3 主题 3 个，每题答 3-4 句", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-28", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-29", "tag": "S1", "name": "期末保底", "focus": "保底：BBC 6 Minute English 1 期 + 听写 30 词", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：BBC 6 Minute English 1 期 + 听写 30 词", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2026-12-30", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2026-12-31", "tag": "S1", "name": "期末保底", "focus": "保底：百词斩 30 词 + 写作 Task2 第 2 篇", "mins": 30, "note": "", "tasks": [{"slot": "保底", "min": "20", "text": "保底：百词斩 30 词 + 写作 Task2 第 2 篇", "mat": "ieltsonlinetests · 百词斩 · 口语题库"}, {"slot": "背词", "min": "10", "text": "百词斩 30 词 + 昨日卡复习", "mat": "百词斩"}]}, {"d": "2027-01-01", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2027-01-02", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2027-01-03", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2027-01-04", "tag": "S1", "name": "期末保底", "focus": "期末复习（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2027-01-05", "tag": "S1", "name": "期末保底", "focus": "期末考试（雅思跳过）", "mins": 0, "note": "", "tasks": [{"slot": "今日", "min": "0", "text": "期末复习优先，雅思今天不碰——把时间投在必须拿的分上", "mat": ""}]}, {"d": "2027-01-06", "tag": "S2", "name": "寒假主攻", "focus": "WW1：题型通关 + 摸底", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方听力样题 01 单选题（做+对答案）", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "范文精读 Task2 第 1 篇（拆结构/抄高级句型）", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-07", "tag": "S2", "name": "寒假主攻", "focus": "WW1：题型通关 + 摸底", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方听力样题 02 多选题", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part1 Work/Study 各 10 题", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-08", "tag": "S2", "name": "寒假主攻", "focus": "WW1：题型通关 + 摸底", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "官方阅读样题 03 判断题 TFNG", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 地图题：同样拆概述段", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-09", "tag": "S2", "name": "寒假主攻", "focus": "WW1：题型通关 + 摸底", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方听力样题 04 笔记完成题", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part1 服饰/购物/阅读", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-10", "tag": "S2", "name": "寒假主攻", "focus": "WW1：题型通关 + 摸底", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方机考模拟体验 听力整套（带音频）", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 第 1 篇成稿（打字 40′）+ 重写", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-11", "tag": "S2", "name": "寒假主攻", "focus": "WW1：题型通关 + 摸底", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "ieltsonlinetests 阅读整卷 60 分钟 + 错题归类", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part1 天气/交通/运动 + 卡壳点归档", "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-12", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（8 类听力题型 + 10 类阅读题型各过一遍；错题本建成；模考 1 次）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-01-13", "tag": "S2", "name": "寒假主攻", "focus": "WW2：听力提速 + 阅读题型", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方听力样题 05 流程图", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 同意类 第 1 篇（打字 40′）", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-14", "tag": "S2", "name": "寒假主攻", "focus": "WW2：听力提速 + 阅读题型", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方听力样题 06 平面图地图", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part1 宠物/噪声/耐心", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-15", "tag": "S2", "name": "寒假主攻", "focus": "WW2：听力提速 + 阅读题型", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "官方阅读样题 08 总结完成（选词库）", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 不同意类 第 1 篇", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-16", "tag": "S2", "name": "寒假主攻", "focus": "WW2：听力提速 + 阅读题型", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方听力样题 08 简答题", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part1 常识/习惯/规律", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-17", "tag": "S2", "name": "寒假主攻", "focus": "WW2：听力提速 + 阅读题型", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套 + 拼写听写 30 词", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 第 2 篇成稿", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-18", "tag": "S2", "name": "寒假主攻", "focus": "WW2：听力提速 + 阅读题型", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "ieltsonlinetests 阅读整卷 + TFNG 专项 20 题", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part2 3 张卡（地点/活动）", "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-19", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（听力错题全部归因；写作 2 篇已批改重写）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-01-20", "tag": "S2", "name": "寒假主攻", "focus": "WW3：阅读速度 + Task1", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套 1 套", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 动态图表 1 篇", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-21", "tag": "S2", "name": "寒假主攻", "focus": "WW3：阅读速度 + Task1", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "拼写听写 30 词", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "晚上·口语", "min": "90", "text": "Part2 人物类 3 张", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-22", "tag": "S2", "name": "寒假主攻", "focus": "WW3：阅读速度 + Task1", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "P3 限时 20′", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 柱状图 1 篇", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-23", "tag": "S2", "name": "寒假主攻", "focus": "WW3：阅读速度 + Task1", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套 1 套 + 精析", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "晚上·口语", "min": "90", "text": "Part2 事件类 3 张", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-24", "tag": "S2", "name": "寒假主攻", "focus": "WW3：阅读速度 + Task1", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方录音原文精读 1 篇（学术语料）", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 表格题 1 篇", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-25", "tag": "S2", "name": "寒假主攻", "focus": "WW3：阅读速度 + Task1", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "本周阅读错题重做", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "晚上·口语", "min": "90", "text": "Part2 全类型复测（1 分钟准备计时）", "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-26", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（Task1 每篇都有概述段；Part2 录音均满 2 分钟）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-01-27", "tag": "S2", "name": "寒假主攻", "focus": "WW4：写作 Task2 攻坚", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 讨论类 成稿 1 篇", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-28", "tag": "S2", "name": "寒假主攻", "focus": "WW4：写作 Task2 攻坚", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "拼写听写 30 词", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part3 主题：环境/健康", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-29", "tag": "S2", "name": "寒假主攻", "focus": "WW4：写作 Task2 攻坚", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "P3 限时", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 同意/不同意 成稿 1 篇", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-30", "tag": "S2", "name": "寒假主攻", "focus": "WW4：写作 Task2 攻坚", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力 + 精析", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part3 主题：媒体/名人", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-01-31", "tag": "S2", "name": "寒假主攻", "focus": "WW4：写作 Task2 攻坚", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "BBC 6 Minute English 1 期 + 跟读", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 观点类 成稿 1 篇", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-01", "tag": "S2", "name": "寒假主攻", "focus": "WW4：写作 Task2 攻坚", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "阅读错题重做", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "晚上·口语", "min": "90", "text": "Part1+2+3 连贯模拟 1 次", "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-02", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（写作 ≥5 篇（含重写）；口语 Part2 ≥16 张累计）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-02-03", "tag": "S2", "name": "寒假主攻", "focus": "WW5：口语 Part3 + 听力场景（春节轻量）", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 1 篇成稿", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-04", "tag": "S2", "name": "寒假主攻", "focus": "WW5：口语 Part3 + 听力场景（春节轻量）", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "拼写听写 30 词", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "晚上·口语", "min": "90", "text": "Part3 主题：艺术/书籍", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-05", "tag": "S2", "name": "寒假主攻", "focus": "WW5：口语 Part3 + 听力场景（春节轻量）", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "休息（只看长难句）", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "晚上·写作", "min": "90", "text": "休息", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-06", "tag": "S2", "name": "寒假主攻", "focus": "WW5：口语 Part3 + 听力场景（春节轻量）", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "百词斩 100 词", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "晚上·口语", "min": "90", "text": "休息（朗读 10′）", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-07", "tag": "S2", "name": "寒假主攻", "focus": "WW5：口语 Part3 + 听力场景（春节轻量）", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "百词斩 100 词", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "晚上·写作", "min": "90", "text": "休息", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-08", "tag": "S2", "name": "寒假主攻", "focus": "WW5：口语 Part3 + 听力场景（春节轻量）", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "错题本回看 15′", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "晚上·口语", "min": "90", "text": "休息", "mat": "ieltsonlinetests · 百词斩"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-09", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（春节只求不断档；其余任务完成 90%）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-02-10", "tag": "S2", "name": "寒假主攻", "focus": "WW6：全科模考 1 + 弱项修复", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "模考听力复盘", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "晚上·写作", "min": "90", "text": "模考 Task2 逐句批改", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-11", "tag": "S2", "name": "寒假主攻", "focus": "WW6：全科模考 1 + 弱项修复", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "错因专项 20 题（同义替换）", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "晚上·口语", "min": "90", "text": "口语模考 2（Part2 满 2 分钟）", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-12", "tag": "S2", "name": "寒假主攻", "focus": "WW6：全科模考 1 + 弱项修复", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "TFNG 专项 20 题", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 重写 1 篇", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-13", "tag": "S2", "name": "寒假主攻", "focus": "WW6：全科模考 1 + 弱项修复", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "错因专项 20 题（连读）", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "晚上·口语", "min": "90", "text": "卡壳点专项复测", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-14", "tag": "S2", "name": "寒假主攻", "focus": "WW6：全科模考 1 + 弱项修复", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "错因专项 20 题（定位）", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 新题 1 篇", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-15", "tag": "S2", "name": "寒假主攻", "focus": "WW6：全科模考 1 + 弱项修复", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "阅读错题重做", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "晚上·口语", "min": "90", "text": "录音回听 + 归档", "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-16", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（第一次全真模考，总分 ≥6.0；写作口语各再产出 3 篇）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-02-17", "tag": "S2", "name": "寒假主攻", "focus": "WW7：模考 2 + 弱项补齐", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 打字速度练习 1 篇", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-18", "tag": "S2", "name": "寒假主攻", "focus": "WW7：模考 2 + 弱项补齐", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方机考模拟体验听力", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "晚上·口语", "min": "90", "text": "Part3 主题：科技/媒体", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-19", "tag": "S2", "name": "寒假主攻", "focus": "WW7：模考 2 + 弱项补齐", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "最弱题型专项 30 题", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 新题 1 篇", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-20", "tag": "S2", "name": "寒假主攻", "focus": "WW7：模考 2 + 弱项补齐", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "拼写听写 50 词", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "晚上·口语", "min": "90", "text": "Part3 主题：社会/犯罪", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-21", "tag": "S2", "name": "寒假主攻", "focus": "WW7：模考 2 + 弱项补齐", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力 + 精析", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 重写 + 范文逐句对照", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-22", "tag": "S2", "name": "寒假主攻", "focus": "WW7：模考 2 + 弱项补齐", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "阅读状态保持", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "晚上·口语", "min": "90", "text": "口语全流程模拟 1 次", "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-23", "tag": "S2", "name": "寒假主攻", "focus": "全真模考 + 周末验收（第二次全真模考，总分 ≥6.5；听力/阅读单科记录）", "mins": 240, "note": "模考必须四科都有分；写作口语写清被扣的具体一项。", "tasks": [{"slot": "模考", "min": "180", "text": "全真模考 1 次（ieltsonlinetests 全科 + SpeakUp 口语；严格机考流程：听力边听边打字、写作计时）", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "复盘", "min": "45", "text": "逐题归因；写进控制台错因本；确定下周唯一重点", "mat": "控制台 07"}, {"slot": "背词", "min": "15", "text": "百词斩 50 词 + 本周错词重过", "mat": "百词斩"}]}, {"d": "2027-02-24", "tag": "S2", "name": "寒假主攻", "focus": "WW8：查漏 + 机考流程演练", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "ieltsonlinetests 听力整套 + 精析", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "晚上·写作", "min": "90", "text": "Task2 成稿 1 篇（严格 40′）", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-25", "tag": "S2", "name": "寒假主攻", "focus": "WW8：查漏 + 机考流程演练", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "听力错题全量重听", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "晚上·口语", "min": "90", "text": "口语全流程模拟 2", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-26", "tag": "S2", "name": "寒假主攻", "focus": "WW8：查漏 + 机考流程演练", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·阅读", "min": "90", "text": "题型专项 30 题", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "晚上·写作", "min": "90", "text": "Task1 成稿 1 篇（严格 20′）", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-27", "tag": "S2", "name": "寒假主攻", "focus": "WW8：查漏 + 机考流程演练", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "拼写总测 100 词", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "晚上·口语", "min": "90", "text": "Part3 复测", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-02-28", "tag": "S2", "name": "寒假主攻", "focus": "WW8：查漏 + 机考流程演练", "mins": 225, "note": "每天结构固定：早上 30′ / 白天 90′ / 晚上 90′ / 睡前 15′。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期（盲听 → 看文本核对 → 跟读）", "mat": "百词斩 · BBC"}, {"slot": "白天·听力", "min": "90", "text": "官方机考模拟体验听力", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "晚上·写作", "min": "90", "text": "两篇重写", "mat": "ieltsonlinetests · neea 报名"}, {"slot": "睡前", "min": "15", "text": "错题本回顾 + 明日材料准备（只写一句可执行动作）", "mat": "控制台 07"}]}, {"d": "2027-3/1", "tag": "S3", "name": "开学冲刺", "focus": "模考 3（严格机考流程）+ 四科分录入", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "ieltsonlinetests 全科模考 1 次；写作 2 篇重写", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/2", "tag": "S3", "name": "开学冲刺", "focus": "模考复盘：四科逐项归因", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "高频错因专项 20 题", "mat": "控制台 07"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/3", "tag": "S3", "name": "开学冲刺", "focus": "弱项专项：听力（错因最多的一类）", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "错因专项 20 题 + 录音原文精听", "mat": "官方听力题型样题 PDF（听力01-08，含录音原文）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/4", "tag": "S3", "name": "开学冲刺", "focus": "弱项专项：阅读（最弱题型）", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "题型专项 30 题", "mat": "官方阅读题型样题 PDF（阅读01-10）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/5", "tag": "S3", "name": "开学冲刺", "focus": "弱项专项：写作 TR/CC 修复", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "Task2 重写 1 篇 + Task1 1 篇", "mat": "官方写作范文 PDF（带考官评语）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/6", "tag": "S3", "name": "开学冲刺", "focus": "弱项专项：口语卡壳点", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "Part2 5 张 + Part3 3 主题", "mat": "控制台 09"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/7", "tag": "S3", "name": "开学冲刺", "focus": "周末验收 + 错题本过一遍", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "错题本全量重看", "mat": "控制台 07"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/8", "tag": "S3", "name": "开学冲刺", "focus": "打字速度专项：Task2 40′ 写满 250 词", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "写作打字速度 ≥35 词/分", "mat": "电脑"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/9", "tag": "S3", "name": "开学冲刺", "focus": "听力打字专项：全程边听边打字", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "官方机考模拟体验 听力整套", "mat": "官方机考模拟体验（网页带音频）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/10", "tag": "S3", "name": "开学冲刺", "focus": "全真模考（严格机考流程）", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "四科分录入 + 复盘", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/11", "tag": "S3", "name": "开学冲刺", "focus": "模考复盘 + 错因清零", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "高频错因专项", "mat": "控制台 07"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/12", "tag": "S3", "name": "开学冲刺", "focus": "写作最后冲刺：2 篇成稿 + 重写", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "严格计时", "mat": "官方写作范文 PDF（带考官评语）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/13", "tag": "S3", "name": "开学冲刺", "focus": "口语最后冲刺：全流程模拟 2 次", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "含 1 分钟准备计时", "mat": "控制台 09"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/14", "tag": "S3", "name": "开学冲刺", "focus": "第二次全真模考 + 周末验收", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "目标总分 ≥7.0", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/15", "tag": "S3", "name": "开学冲刺", "focus": "轻量：听力 1 套 + 口语 20′", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "保持手感", "mat": "ieltsonlinetests.com 免费整套模考（带音频+解析）"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/16", "tag": "S3", "name": "开学冲刺", "focus": "轻量：口语 Part2 3 张", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "保持手感", "mat": "控制台 09"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/17", "tag": "S3", "name": "开学冲刺", "focus": "轻量：错题本重点 30 分钟", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "不再刷新题", "mat": "控制台 07"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/18", "tag": "S3", "name": "开学冲刺", "focus": "轻量 + 考场位置/交通确认 + 证件准备", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "不碰写作成稿", "mat": "—"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/19", "tag": "S3", "name": "开学冲刺", "focus": "只过考点清单与错题本重点；早睡", "mins": 150, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "早上", "min": "30", "text": "百词斩 50 词 + BBC 6 Minute English 1 期", "mat": "百词斩 · BBC"}, {"slot": "主攻", "min": "90", "text": "证件放门口", "mat": "—"}, {"slot": "口语", "min": "20", "text": "口语录音 20 分钟（保持嘴和耳朵在线）", "mat": "控制台 09"}, {"slot": "睡前", "min": "10", "text": "错题本重点回顾", "mat": "控制台 07"}]}, {"d": "2027-3/20", "tag": "S3", "name": "开学冲刺", "focus": "考试日", "mins": 0, "note": "考前 2 天全休息；考前 1 天只过清单。", "tasks": [{"slot": "考试日", "min": "—", "text": "提前 30 分钟到场；带身份证+准考证+2B铅笔+黑色签字笔；听力全程打字+Review 标记；写作先写 Task2", "mat": "—"}]}], "weeks": [{"no": "W1", "span": "1/6 – 1/11", "theme": "题型通关 + 摸底", "listen": "官方听力样题 01-04 + 官方机考模拟体验听力 1 套", "read": "官方阅读样题 01-05（单选/多选/TFNG/笔记/表格）", "write": "精读官方写作范文 1 篇 Task2；Task1 流程图/地图结构拆解（不成文）", "speak": "先读官方口语评分标准 PDF；Part1 高概率四话题各 10 题", "accept": "8 类听力题型 + 10 类阅读题型各过一遍；错题本建成；模考 1 次", "l": ["官方听力样题 01 单选题（做+对答案）", "官方听力样题 02 多选题", "官方听力样题 03 表格完成题", "官方听力样题 04 笔记完成题", "官方机考模拟体验 听力整套（带音频）", "ieltsonlinetests 听力整套 1 套 + 录音原文精读"], "r": ["官方阅读样题 01 单选", "官方阅读样题 02 多选", "官方阅读样题 03 判断题 TFNG", "官方阅读样题 04 笔记完成", "官方阅读样题 05 表格完成", "ieltsonlinetests 阅读整卷 60 分钟 + 错题归类"], "w": ["范文精读 Task2 第 1 篇（拆结构/抄高级句型）", "Task1 流程图：看官方范文怎么写概述段", "Task1 地图题：同样拆概述段", "Task2 提纲 2 个（观点+例子）", "Task2 第 1 篇成稿（打字 40′）+ 重写", "本周成稿重写 + WriteUp 0 元测分"], "s": ["读官方口语评分标准 4 项", "Part1 Work/Study 各 10 题", "Part1 Hometown/Home 各 10 题", "Part1 服饰/购物/阅读", "Part1 音乐/邻居/报纸", "Part1 天气/交通/运动 + 卡壳点归档"], "mat": "官方题型样题 PDF · 官方机考模拟体验 · ieltsonlinetests"}, {"no": "W2", "span": "1/12 – 1/18", "theme": "听力提速 + 阅读题型", "listen": "官方听力样题 05-08 + ieltsonlinetests 听力 ×2；拼写听写 30 词", "read": "官方阅读样题 06-10 + TFNG/标题匹配专项", "write": "Task2 同意/不同意类 2 篇成稿 + 重写", "speak": "Part1 全话题铺开，每天 8 题", "accept": "听力错题全部归因；写作 2 篇已批改重写", "l": ["官方听力样题 05 流程图", "官方听力样题 06 平面图地图", "官方听力样题 07 句子完成", "官方听力样题 08 简答题", "ieltsonlinetests 听力整套 + 拼写听写 30 词", "录音原文精听：抄不出听清的句子进百词斩"], "r": ["官方阅读样题 06 特征匹配", "官方阅读样题 07 句子结尾匹配", "官方阅读样题 08 总结完成（选词库）", "官方阅读样题 09 总结完成（选自原文）", "官方阅读样题 10 句子完成", "ieltsonlinetests 阅读整卷 + TFNG 专项 20 题"], "w": ["Task2 同意类 第 1 篇（打字 40′）", "Task2 第 1 篇重写", "Task2 不同意类 第 1 篇", "Task1 柱状图 1 篇（打字 20′）", "Task2 第 2 篇成稿", "本周两篇重写 + 对照考官评语"], "s": ["Part1 饮食/饮料/购物", "Part1 宠物/噪声/耐心", "Part1 语言/梦想/字典", "Part1 常识/习惯/规律", "Part2 3 张卡（物/人物/事件）", "Part2 3 张卡（地点/活动）"], "mat": "官方题型样题 PDF · ieltsonlinetests"}, {"no": "W3", "span": "1/19 – 1/25", "theme": "阅读速度 + Task1", "listen": "ieltsonlinetests 听力 ×2；Section3/4 语感材料精读", "read": "ieltsonlinetests 限时整卷 + 每天 1 篇限时 20 分钟", "write": "Task1 动态图表/柱状图/流程图 3 篇，每篇对照官方范文改概述段", "speak": "Part2 按物/人/地/事/活动分类各练几张", "accept": "Task1 每篇都有概述段；Part2 录音均满 2 分钟", "l": ["ieltsonlinetests 听力整套 1 套", "拼写听写 30 词", "BBC 6 Minute English 精听 1 期 + 跟读", "ieltsonlinetests 听力整套 1 套 + 精析", "官方录音原文精读 1 篇（学术语料）", "听力错题重听 + 场景词入库"], "r": ["ieltsonlinetests 阅读 P1 限时 20′", "P2 限时 20′", "P3 限时 20′", "整卷限时 60′", "长难句 3 句（抄官方阅读原文）+ 翻译", "本周阅读错题重做"], "w": ["Task1 动态图表 1 篇", "Task1 概述段重写", "Task1 柱状图 1 篇", "Task1 流程图 1 篇", "Task1 表格题 1 篇", "Task1 五篇复盘 + 错因归类"], "s": ["Part2 物体类 3 张", "Part2 人物类 3 张", "Part2 地点类 3 张", "Part2 事件类 3 张", "Part2 活动类 3 张", "Part2 全类型复测（1 分钟准备计时）"], "mat": "ieltsonlinetests · 官方 Task1 范文 · BBC"}, {"no": "W4", "span": "1/26 – 2/1", "theme": "写作 Task2 攻坚", "listen": "ieltsonlinetests 听力 ×2 + 场景词/同义替换 50 组", "read": "ieltsonlinetests 限时整卷 ×2 + 长难句每天 3 句", "write": "Task2 3 篇成稿 + 全部重写（对照官方范文评语 + WriteUp 诊断）", "speak": "Part2 继续 + Part3 跟题", "accept": "写作 ≥5 篇（含重写）；口语 Part2 ≥16 张累计", "l": ["ieltsonlinetests 听力整套", "拼写听写 30 词", "同义替换 50 组（从录音原文摘）", "ieltsonlinetests 听力 + 精析", "BBC 6 Minute English 1 期 + 跟读", "听力错题本全量重听"], "r": ["ieltsonlinetests P1 限时", "P2 限时", "P3 限时", "选词库总结专项 20 题", "长难句 3 句 + 同义替换抄写", "阅读错题重做"], "w": ["Task2 讨论类 成稿 1 篇", "Task2 第 1 篇重写", "Task2 同意/不同意 成稿 1 篇", "Task2 第 2 篇重写", "Task2 观点类 成稿 1 篇", "三篇重写 + 官方范文逐句对照"], "s": ["Part3 主题：教育/科技", "Part3 主题：环境/健康", "Part3 主题：文化/传统", "Part3 主题：媒体/名人", "Part3 主题：工作/领导力", "Part1+2+3 连贯模拟 1 次"], "mat": "官方写作范文 PDF · WriteUp · ieltsonlinetests"}, {"no": "W5", "span": "2/2 – 2/8", "theme": "口语 Part3 + 听力场景（春节轻量）", "listen": "2/2 ieltsonlinetests 听力 1 套；2/6-2/8 只背词", "read": "2/2-2/3 限时阅读 1 套；2/6-2/8 只看长难句 3 句", "write": "2/2-2/3 Task2 1 篇；2/6-2/8 休息", "speak": "2/2-2/3 Part3 主题 6 个；2/6-2/8 休息", "accept": "春节只求不断档；其余任务完成 90%", "l": ["ieltsonlinetests 听力整套", "拼写听写 30 词", "百词斩 100 词", "百词斩 100 词", "百词斩 100 词", "百词斩 + 听力 1 段（15′）"], "r": ["限时阅读 1 套", "长难句 3 句", "休息（只看长难句）", "休息", "休息", "错题本回看 15′"], "w": ["Task2 1 篇成稿", "Task2 重写", "休息", "休息", "休息", "错题本 + 写作素材整理"], "s": ["Part3 主题：社会/交通", "Part3 主题：艺术/书籍", "Part3 主题：饮食/家庭", "休息（朗读 10′）", "休息", "休息"], "mat": "ieltsonlinetests · 百词斩"}, {"no": "W6", "span": "2/9 – 2/15", "theme": "全科模考 1 + 弱项修复", "listen": "模考听力复盘；错因最多的一类专项刷 20 题", "read": "模考阅读复盘；最弱题型专项 30 题", "write": "模考两篇写作逐句批改 + 重写", "speak": "口语模考录音（Part1+2+3 连贯）", "accept": "第一次全真模考，总分 ≥6.0；写作口语各再产出 3 篇", "l": ["模考听力复盘", "错因专项 20 题（同义替换）", "错因专项 20 题（拼写）", "错因专项 20 题（连读）", "错因专项 20 题（定位）", "听力错题本重听"], "r": ["模考阅读复盘", "最弱题型专项 30 题", "TFNG 专项 20 题", "匹配题专项 20 题", "限时 1 套 18′", "阅读错题重做"], "w": ["模考 Task2 逐句批改", "模考 Task1 逐句批改", "Task2 重写 1 篇", "Task2 新题 1 篇", "Task1 新题 1 篇", "两篇重写 + 范文对照"], "s": ["口语模考 1（Part1 全 12 题）", "口语模考 2（Part2 满 2 分钟）", "口语模考 3（Part3 深度题）", "卡壳点专项复测", "Part2 题卡 5 张", "录音回听 + 归档"], "mat": "ieltsonlinetests · 官方机考模拟体验 · SpeakUp/WriteUp"}, {"no": "W7", "span": "2/16 – 2/22", "theme": "模考 2 + 弱项补齐", "listen": "ieltsonlinetests 听力 ×2 + 官方机考模拟体验听力", "read": "ieltsonlinetests 限时整卷 ×2", "write": "Task1 1 篇 + Task2 2 篇（控 40 分钟打字速度）", "speak": "Part3 全面覆盖 10 个主题", "accept": "第二次全真模考，总分 ≥6.5；听力/阅读单科记录", "l": ["ieltsonlinetests 听力整套", "官方机考模拟体验听力", "错因专项 20 题（时间不够）", "拼写听写 50 词", "ieltsonlinetests 听力 + 精析", "听力错题重听"], "r": ["限时整卷 1 套", "限时整卷 1 套", "最弱题型专项 30 题", "长难句 3 句", "错题本全复盘", "阅读状态保持"], "w": ["Task2 打字速度练习 1 篇", "Task2 新题 1 篇 + 重写", "Task1 新题 1 篇", "Task2 新题 1 篇 + 重写", "Task2 重写 + 范文逐句对照", "写作素材库整理（20 个话题词块）"], "s": ["Part3 主题：教育/环境", "Part3 主题：科技/媒体", "Part3 主题：旅行/交通", "Part3 主题：社会/犯罪", "Part3 主题：领导力/决策", "口语全流程模拟 1 次"], "mat": "ieltsonlinetests · 官方机考模拟体验"}, {"no": "W8", "span": "2/23 – 2/28", "theme": "查漏 + 机考流程演练", "listen": "ieltsonlinetests 听力 ×2 + 错题全量重听", "read": "ieltsonlinetests 限时整卷 + 错题本全量重看", "write": "Task2 2 篇 + Task1 1 篇（考试节奏）", "speak": "口语全流程模拟 2 次（含 1 分钟准备计时）", "accept": "错题本过完；机考界面/打字速度/2 分钟检查策略全部熟练；★ 本周去 neea 抢 3 月考位", "l": ["ieltsonlinetests 听力整套 + 精析", "听力错题全量重听", "场景词总复盘", "拼写总测 100 词", "官方机考模拟体验听力", "听力状态保持"], "r": ["限时整卷 + 精析", "错题本全量重看", "题型专项 30 题", "限时 1 套", "错题重做", "阅读状态保持"], "w": ["Task2 成稿 1 篇（严格 40′）", "Task2 重写", "Task1 成稿 1 篇（严格 20′）", "Task2 成稿 1 篇", "两篇重写", "写作状态保持 + 素材整理"], "s": ["口语全流程模拟 1", "口语全流程模拟 2", "Part2 满 2 分钟复测", "Part3 复测", "卡壳点归档", "口语状态保持"], "mat": "ieltsonlinetests · neea 报名"}], "dec": [{"d": "2026-12-01", "tag": "S0", "focus": "百词斩：每天 50 词（新 20 + 复习 30），固定在早上做；今天加背听力场景词（住宿/选课/社团）", "mins": "60′", "skip": false}, {"d": "2026-12-02", "tag": "S0", "focus": "口语 Part1 第一组（Work/Study/Hometown/Home）各说 5 题，录音回听", "mins": "60′", "skip": false}, {"d": "2026-12-03", "tag": "S0", "focus": "写作 Task1：动态图表 1 篇（20 分钟打字）+ 对照官方范文批改", "mins": "60′", "skip": false}, {"d": "2026-12-04", "tag": "S0", "focus": "听力精听：用官方录音原文做「听写基线」——先做题、再逐句跟读抄写，抄不出的词进百词斩", "mins": "60′", "skip": false}, {"d": "2026-12-05", "tag": "S0", "focus": "阅读限时：ieltsonlinetests 阅读整卷 60 分钟；错题归类（定位/读不懂/时间/审题）", "mins": "60′", "skip": false}, {"d": "2026-12-06", "tag": "S0", "focus": "第一次全真模考：ieltsonlinetests 全科 + SpeakUp 口语，四科分数录入控制台", "mins": "90′", "skip": false}, {"d": "2026-12-07", "tag": "S0", "focus": "模考复盘：逐题归因；把错因最高的 3 类写成下周专项任务", "mins": "60′", "skip": false}, {"d": "2026-12-08", "tag": "S0", "focus": "写作 Task2 第 1 篇（同意/不同意类），40 分钟打字 + 重写", "mins": "60′", "skip": false}, {"d": "2026-12-09", "tag": "S0", "focus": "口语 Part2 再练 3 张（地/活动/人），说满 2 分钟；卡壳点记进错题本", "mins": "60′", "skip": false}, {"d": "2026-12-10", "tag": "S0", "focus": "BBC 6 Minute English 精听 2 期（盲听→看文本核对→跟读）+ 长难句 3 句", "mins": "60′", "skip": false}, {"d": "2026-12-11", "tag": "S1", "focus": "保底：百词斩 30 词 + 口语 Part1 录音 10 题", "mins": "30′", "skip": false}, {"d": "2026-12-12", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-13", "tag": "S1", "focus": "保底：听力 1 套（ieltsonlinetests 听力部分）", "mins": "30′", "skip": false}, {"d": "2026-12-14", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-15", "tag": "S1", "focus": "保底：口语 Part2 一张卡，说满 2 分钟", "mins": "30′", "skip": false}, {"d": "2026-12-16", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-17", "tag": "S1", "focus": "保底：百词斩 30 词 + 写作 Task1 提纲 1 个（不动手）", "mins": "30′", "skip": false}, {"d": "2026-12-18", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-19", "tag": "S1", "focus": "保底：精读 1 篇官方录音原文 + 整理错题本", "mins": "30′", "skip": false}, {"d": "2026-12-20", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-21", "tag": "S1", "focus": "保底：口语 Part1 换 5 个新话题", "mins": "30′", "skip": false}, {"d": "2026-12-22", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-23", "tag": "S1", "focus": "保底：写作 Task2 提纲 2 个（观点+例子，不成文）", "mins": "30′", "skip": false}, {"d": "2026-12-24", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-25", "tag": "S1", "focus": "保底：百词斩 30 词 + 听力 1 套", "mins": "30′", "skip": false}, {"d": "2026-12-26", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-27", "tag": "S1", "focus": "保底：口语 Part3 主题 3 个，每题答 3-4 句", "mins": "30′", "skip": false}, {"d": "2026-12-28", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-29", "tag": "S1", "focus": "保底：BBC 6 Minute English 1 期 + 听写 30 词", "mins": "30′", "skip": false}, {"d": "2026-12-30", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2026-12-31", "tag": "S1", "focus": "保底：百词斩 30 词 + 写作 Task2 第 2 篇", "mins": "30′", "skip": false}, {"d": "2027-01-01", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2027-01-02", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2027-01-03", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2027-01-04", "tag": "S1", "focus": "期末复习（雅思跳过）", "mins": "—", "skip": true}, {"d": "2027-01-05", "tag": "S1", "focus": "期末考试（雅思跳过）", "mins": "—", "skip": true}], "march": [{"span": "3/1 – 3/7", "theme": "模考 3 + 弱项清零", "detail": "ieltsonlinetests 全科模考 1 次（严格机考流程）；错因记录里出现 ≥3 次的错误类型专项刷 20 题；写作 2 篇重写", "accept": "四科分录入控制台；所有高频错因有对应专项练习"}, {"span": "3/8 – 3/14", "theme": "机考手感 + 速度", "detail": "听力全程边听边打字练到不犹豫；写作打字速度稳定 ≥35 词/分钟；官方机考模拟体验全科 1 次", "accept": "模考总分 ≥7.0；写作 40 分钟内完成 250 词"}, {"span": "3/15 – 考前", "theme": "状态与流程", "detail": "只做轻量：每天 1 套听力 + 口语 20 分钟 + 错题本；熟悉考场位置与交通；备齐证件与准考证", "accept": "考前 2 天全休息；考前 1 天只过一遍考点清单"}], "checklist": [["考前 7 天", "确认考点地址与交通；打印准考证；确认身份证有效期"], ["考前 3 天", "完成最后一次全真模考并复盘；停止刷新题库"], ["考前 2 天", "轻负荷：口语 20 分钟 + 听力 1 套；早睡，不碰新题"], ["考前 1 天", "只过考点清单与错题本重点；证件放门口，早点睡"], ["当天早上", "提前 30 分钟到场；带身份证 + 准考证 + 2B 铅笔 + 黑色签字笔"], ["考试中", "听力全程打字 + Review 标记存疑；写作先写完 Task2 再回 Task1"], ["考试后", "确认电子成绩单领取方式；成绩 1-5 天出"], ["★ 报名（2027-02 那周做）", "ielts.neea.cn 注册并充值 1990（这是考试报名费，不是资料费）；考位每日 10:00 与 20:00 放位，盯这两个点"]], "lib": [{"dir": "01_听力_题目答案与录音文本", "use": "8 种题型样题各一套（题目+答案+录音原文）。第 1 天全部过一遍：题目怎么做、答案长什么样、录音原文怎么读。", "files": [{"name": "听力01-单选题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力01-单选题-录音原文.pdf", "sz": "82KB"}, {"name": "听力01-单选题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力01-单选题-题目与答案.pdf", "sz": "24KB"}, {"name": "听力02-多选题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力02-多选题-录音原文.pdf", "sz": "76KB"}, {"name": "听力02-多选题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力02-多选题-题目与答案.pdf", "sz": "22KB"}, {"name": "听力03-表格完成题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力03-表格完成题-录音原文.pdf", "sz": "30KB"}, {"name": "听力03-表格完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力03-表格完成题-题目与答案.pdf", "sz": "26KB"}, {"name": "听力04-笔记完成题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力04-笔记完成题-录音原文.pdf", "sz": "90KB"}, {"name": "听力04-笔记完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力04-笔记完成题-题目与答案.pdf", "sz": "22KB"}, {"name": "听力05-流程图完成题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力05-流程图完成题-录音原文.pdf", "sz": "39KB"}, {"name": "听力05-流程图完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力05-流程图完成题-题目与答案.pdf", "sz": "90KB"}, {"name": "听力06-平面图地图标注题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力06-平面图地图标注题-录音原文.pdf", "sz": "73KB"}, {"name": "听力06-平面图地图标注题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力06-平面图地图标注题-题目与答案.pdf", "sz": "21KB"}, {"name": "听力07-句子完成题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力07-句子完成题-录音原文.pdf", "sz": "36KB"}, {"name": "听力07-句子完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力07-句子完成题-题目与答案.pdf", "sz": "30KB"}, {"name": "听力08-简答题-录音原文.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力08-简答题-录音原文.pdf", "sz": "76KB"}, {"name": "听力08-简答题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/01_听力_题目答案与录音文本/听力08-简答题-题目与答案.pdf", "sz": "22KB"}]}, {"dir": "02_阅读_题目答案", "use": "10 种题型样题（题目+答案）。按题型专项刷，先 TFNG 和段落标题匹配。", "files": [{"name": "阅读01-单选题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读01-单选题-题目与答案.pdf", "sz": "21KB"}, {"name": "阅读02-多选题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读02-多选题-题目与答案.pdf", "sz": "21KB"}, {"name": "阅读03-判断题TFNG-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读03-判断题TFNG-题目与答案.pdf", "sz": "17KB"}, {"name": "阅读04-笔记完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读04-笔记完成题-题目与答案.pdf", "sz": "20KB"}, {"name": "阅读05-表格完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读05-表格完成题-题目与答案.pdf", "sz": "16KB"}, {"name": "阅读06-特征匹配题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读06-特征匹配题-题目与答案.pdf", "sz": "104KB"}, {"name": "阅读07-句子结尾匹配题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读07-句子结尾匹配题-题目与答案.pdf", "sz": "17KB"}, {"name": "阅读08-总结完成题(选自词库)-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读08-总结完成题(选自词库)-题目与答案.pdf", "sz": "18KB"}, {"name": "阅读09-总结完成题(选自原文)-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读09-总结完成题(选自原文)-题目与答案.pdf", "sz": "17KB"}, {"name": "阅读10-句子完成题-题目与答案.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/02_阅读_题目答案/阅读10-句子完成题-题目与答案.pdf", "sz": "17KB"}]}, {"dir": "03_写作_范文与评分标准", "use": "官方范文带考官评语（Task1+Task2）+ 官方评分标准。批改和重写时对照着用。", "files": [{"name": "BC官方-多维评估指标(写作口语通用).pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/03_写作_范文与评分标准/BC官方-多维评估指标(写作口语通用).pdf", "sz": "213KB"}, {"name": "写作-官方范文与考官评语(Task1+Task2).pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/03_写作_范文与评分标准/写作-官方范文与考官评语(Task1+Task2).pdf", "sz": "481KB"}, {"name": "写作-官方评分标准(Key Assessment Criteria).pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/03_写作_范文与评分标准/写作-官方评分标准(Key%20Assessment%20Criteria).pdf", "sz": "139KB"}, {"name": "写作-官方评分标准与说明.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/03_写作_范文与评分标准/写作-官方评分标准与说明.pdf", "sz": "1.4MB"}]}, {"dir": "04_口语_评分标准与测评样例", "use": "口语四维度官方标准 + 官方测评报告样例（知道考官给你写什么）。", "files": [{"name": "PrepUp全科模考报告样例.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/04_口语_评分标准与测评样例/PrepUp全科模考报告样例.pdf", "sz": "917KB"}, {"name": "SpeakUp口语测评报告样例.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/04_口语_评分标准与测评样例/SpeakUp口语测评报告样例.pdf", "sz": "899KB"}, {"name": "WriteUp写作测评报告样例.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/04_口语_评分标准与测评样例/WriteUp写作测评报告样例.pdf", "sz": "1.1MB"}, {"name": "口语-官方评分标准(Key Assessment Criteria).pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/04_口语_评分标准与测评样例/口语-官方评分标准(Key%20Assessment%20Criteria).pdf", "sz": "109KB"}, {"name": "口语-官方评分标准与说明.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/04_口语_评分标准与测评样例/口语-官方评分标准与说明.pdf", "sz": "1.1MB"}]}, {"dir": "05_官方指南样章与成绩描述", "use": "《雅思考试官方指南》第 2 版样章 + 听/读成绩描述分档表。", "files": [{"name": "《雅思考试官方指南》第2版-样章.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/05_官方指南样章与成绩描述/《雅思考试官方指南》第2版-样章.pdf", "sz": "8.8MB"}, {"name": "听力-官方成绩描述(分档).pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/05_官方指南样章与成绩描述/听力-官方成绩描述(分档).pdf", "sz": "289KB"}, {"name": "阅读-官方成绩描述(分档).pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/05_官方指南样章与成绩描述/阅读-官方成绩描述(分档).pdf", "sz": "341KB"}]}, {"dir": "06_数据报告", "use": "官方成绩大数据报告，估分和找发力点用。", "files": [{"name": "2025-2026中国大陆雅思考生成绩大数据报告.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/06_数据报告/2025-2026中国大陆雅思考生成绩大数据报告.pdf", "sz": "22.4MB"}, {"name": "2026中国职场英语能力与人才竞争力报告.pdf", "path": "https://humphrey688.github.io/apps/ielts/PDF题库/06_数据报告/2026中国职场英语能力与人才竞争力报告.pdf", "sz": "6.4MB"}]}], "speak_html": "<h1>雅思口语题库（Part 1 / 2 / 3 高频复现题）<\/h1>\n<blockquote>\n<p>整理自 IELTS Liz（ieltsliz.com，2026-11-19 抓取）与官方换题规律。<strong>不是官方题库<\/strong>，是高频复现题清单。\n官方换题季在每年 <strong>1 月、5 月、9 月<\/strong>，每次替换约 30%–40% 旧题。你 3 月考，用的是 1 月换题季后的题库，范围基本已定。<\/p>\n<p><strong>用法<\/strong>：每题先自己说 45 秒 / 2 分钟（录音），再对照四条评分项自评。<strong>不要背整段答案<\/strong>——背的是「观点 + 素材 + 句型」，临场组织。\n标记列用 ✅（已练熟）/ 🔶（练过）/ ⬜（未开始）。<\/p>\n<\/blockquote>\n<hr />\n<h2>Part 1 · 个人问答（约 4–5 分钟，12 题 / 3 个话题）<\/h2>\n<p>高频出现的前三个话题：<strong>Work / Study / Hometown / Home<\/strong>（几乎必中其一）。不工作不学习就说 \"I don't work or study at the moment.\"，考官会转问家乡或住处。<\/p>\n<h3>高概率四话题（先背熟这四个）<\/h3>\n<table>\n<thead>\n<tr>\n<th>话题<\/th>\n<th>必答题<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td><strong>Work<\/strong><\/td>\n<td>What is your job? Where do you work? Why did you choose that job? Is it a popular job in your country? Do you like your job? Do you get on well with your colleagues? What was your first day like? What responsibilities do you have at work? If you had the chance, would you change your job? Do you plan to continue with your job in the future?<\/td>\n<\/tr>\n<tr>\n<td><strong>Study<\/strong><\/td>\n<td>What do you study? Where do you study? Why did you choose that subject? Is it a popular subject in your country? Do you like that subject? Do you get on well with classmates? What was your first day like? What are the main aspects of your subject? If you had the chance, would you change subject? Do you plan to get a job in the same field?<\/td>\n<\/tr>\n<tr>\n<td><strong>Hometown<\/strong><\/td>\n<td>Where is your hometown? Do you like it? Do you often visit? What is it like? What is the oldest place? What is there for a foreigner to see? How could it be improved? Has it changed much since you were a child? Is there good public transportation? Is it a good place to bring up children?<\/td>\n<\/tr>\n<tr>\n<td><strong>Home<\/strong><\/td>\n<td>Where is your home? House or flat? Who do you live with? Many rooms? Favourite room? How are the walls decorated? What would you change? Do you plan to live there in the future? What facilities are nearby? What is your neighbourhood like? Do most people in your country live in houses?<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<h3>其余 Part 1 话题清单<\/h3>\n<table>\n<thead>\n<tr>\n<th>话题<\/th>\n<th>高频问题<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>Art<\/td>\n<td>Are you good at art? Did you learn art at school? What kind of art do you like? Is art popular in your country? Have you been to an art gallery? Should children go to galleries?<\/td>\n<\/tr>\n<tr>\n<td>Bicycles<\/td>\n<td>Do you have a bike? How often do you use it? How old were you when you learned? Do many people in your country ride? Should cycling be encouraged?<\/td>\n<\/tr>\n<tr>\n<td>Birthdays<\/td>\n<td>Do you usually celebrate your birthdays? How did you celebrate your last one? Which birthdays matter most in your country? Should children have parties?<\/td>\n<\/tr>\n<tr>\n<td>Childhood<\/td>\n<td>Did you enjoy your childhood? First memory? Many friends as a child? What did you enjoy doing? Better to grow up in the city or countryside?<\/td>\n<\/tr>\n<tr>\n<td>Clothes<\/td>\n<td>Are clothes important to you? What do you usually wear? Do you wear traditional clothes? Where do you buy clothes? Have you worn a uniform? Do most people follow fashion?<\/td>\n<\/tr>\n<tr>\n<td>Computers<\/td>\n<td>Do you often use a computer? How do you get online? Desktop or laptop? What do you use it for? Is it important to learn how to use one?<\/td>\n<\/tr>\n<tr>\n<td>Daily routine<\/td>\n<td>When do you get up? Same routine every day? What is it? Ever change it? Same as in childhood? Is a daily routine important?<\/td>\n<\/tr>\n<tr>\n<td>Dictionaries<\/td>\n<td>Do you often use a dictionary? What for? Which kinds are most useful? Useful for language learning? What info do you find in one?<\/td>\n<\/tr>\n<tr>\n<td>Dreams<\/td>\n<td>Do you dream often? Do you remember them? Important to remember? Do you daydream? What do you daydream about?<\/td>\n<\/tr>\n<tr>\n<td>Drinks<\/td>\n<td>Favourite drink? Common in your country? Different as a child? Important to drink water? Traditional celebration drink?<\/td>\n<\/tr>\n<tr>\n<td>Evenings<\/td>\n<td>What do you do in the evenings? Same thing every evening? With family or friends? Study/work in the evenings? Popular activity for young people? Same as when you were a child?<\/td>\n<\/tr>\n<tr>\n<td>Family &amp; Friends<\/td>\n<td>Do you spend much time with family? Who are you closest to? Friends or family? Who is your best friend? Still in touch with childhood friends? Is family important in your country?<\/td>\n<\/tr>\n<tr>\n<td>Flowers<\/td>\n<td>Do you like flowers? Favourite? When did you last give someone flowers? Special meaning in your country?<\/td>\n<\/tr>\n<tr>\n<td>Food<\/td>\n<td>Favourite food? Always liked it? Any food you dislike? Common meal in your country? Healthy diet? Fast food?<\/td>\n<\/tr>\n<tr>\n<td>Going out<\/td>\n<td>Do you often go out in the evenings? What do you like doing? Alone or with friends? How often per week? Where do young people go?<\/td>\n<\/tr>\n<tr>\n<td>Happiness<\/td>\n<td>Are you a happy person? What makes you happy/unhappy? Does weather affect your mood? What makes you smile? Are people in your country generally happy?<\/td>\n<\/tr>\n<tr>\n<td>Hobbies<\/td>\n<td>Do you have a hobby? What equipment? Should hobbies be shared? Did you have one as a child? What hobbies are popular in your country? Why do people have them?<\/td>\n<\/tr>\n<tr>\n<td>Internet<\/td>\n<td>How often online? What for? Own computer? Favourite website? Should children use it unsupervised?<\/td>\n<\/tr>\n<tr>\n<td>Languages<\/td>\n<td>How many foreign languages? When did you start your first? How many do children learn at school? Important to learn a foreign language?<\/td>\n<\/tr>\n<tr>\n<td>Leisure time<\/td>\n<td>Favourite leisure activity? What did you do as a child? With others or alone? Common leisure activity? Do people get two days off? Important?<\/td>\n<\/tr>\n<tr>\n<td>Music<\/td>\n<td>Do you like music? Favourite type? Can you sing? Did you learn music at school? Would you learn an instrument? Is music important?<\/td>\n<\/tr>\n<tr>\n<td>Neighbours<\/td>\n<td>Do you like your neighbours? Are neighbours close in your country? What is your neighbourhood like? Good for children? How could it improve? Does a good relationship matter?<\/td>\n<\/tr>\n<tr>\n<td>Newspapers<\/td>\n<td>How do you get news? Do you read newspapers? What kind of news? How do most people get news? Is international news important?<\/td>\n<\/tr>\n<tr>\n<td>Noise<\/td>\n<td>Do you live in a noisy area? What sounds daily? Where do you go for peace and quiet? Any pleasant sounds? Noisy friends?<\/td>\n<\/tr>\n<tr>\n<td>Patience<\/td>\n<td>Are you a patient person? Ever impatient? When did you last lose your patience? Who is most patient in your family?<\/td>\n<\/tr>\n<tr>\n<td>Pets<\/td>\n<td>Do you have a pet? Do you like animals? Favourite animal? Popular pet in your country? Had one as a child? Why do people have pets?<\/td>\n<\/tr>\n<tr>\n<td>Reading<\/td>\n<td>Do you often read? Favourite kind of book? Read newspapers? E-books? Books you read as a child? Should children be encouraged to read?<\/td>\n<\/tr>\n<tr>\n<td>Shopping<\/td>\n<td>Do you like shopping? Favourite shop? Alone or with others? What kinds of shops near you? Bought anything online? Do men and women shop differently?<\/td>\n<\/tr>\n<tr>\n<td>Sport<\/td>\n<td>Do you like sport? Favourite? Watch it on TV? Played as a child? Most popular sport in your country? How do people keep fit?<\/td>\n<\/tr>\n<tr>\n<td>TV<\/td>\n<td>Do you watch TV? What sort of things? Favourite programme? Foreign programmes? What did you watch as a child? Should children watch it?<\/td>\n<\/tr>\n<tr>\n<td>Transport<\/td>\n<td>How did you get here today? Favourite mode? Do you use public transport? Do you like the system? Bus vs train?<\/td>\n<\/tr>\n<tr>\n<td>Weather<\/td>\n<td>What is the weather like today? Favourite weather? Like it in your country? Same in all parts? Does it affect your mood? Affects transport?<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<hr />\n<h2>Part 2 · 题目卡（The Talk，1 分钟准备 + 说 2 分钟）<\/h2>\n<p><strong>类型只有 5 种<\/strong>：object（物）、person（人）、place（地）、event/occasion（事）、activity（活动）。每张卡都是 4 个提示点。\n<strong>训练要求<\/strong>：1 分钟准备时只写关键词（4 个提示点各 1 个词），然后说满 2 分钟以上。说完回听，卡壳处记下来。<\/p>\n<table>\n<thead>\n<tr>\n<th>#<\/th>\n<th>题目<\/th>\n<th>You should say<\/th>\n<th>类型<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>1<\/td>\n<td>Describe a piece of art you like.<\/td>\n<td>what the work of art is / when you first saw it / what you know about it / why you like it<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>2<\/td>\n<td>Describe a book you have recently read.<\/td>\n<td>what kind of book it is / what it is about / what sort of people would enjoy it / why you liked it<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>3<\/td>\n<td>Describe a piece of advice you recently received.<\/td>\n<td>when this happened / who gave it / what the advice was / how you felt about it<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>4<\/td>\n<td>Describe a time of the day you like.<\/td>\n<td>what time of day it is / what you do then / who you are usually with / why you like it<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>5<\/td>\n<td>Describe a time you were embarrassed.<\/td>\n<td>when it was / who you were with / what happened / how you coped afterwards<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>6<\/td>\n<td>Describe an exercise you know.<\/td>\n<td>what it is / how it is done / when you first tried it / what kind of people it suits / why it is a good exercise<\/td>\n<td>activity<\/td>\n<\/tr>\n<tr>\n<td>7<\/td>\n<td>Describe a member of your family you get on well with.<\/td>\n<td>who it is / your relationship / what that person is like / what you do together / why you get on so well<\/td>\n<td>person<\/td>\n<\/tr>\n<tr>\n<td>8<\/td>\n<td>Describe a gift you recently gave to someone.<\/td>\n<td>who you gave it to / what kind of person they are / what the gift was / the occasion / why you chose it<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>9<\/td>\n<td>Describe an interesting hobby.<\/td>\n<td>what it is / what kind of people do it / how it is done / why you think it is interesting<\/td>\n<td>activity<\/td>\n<\/tr>\n<tr>\n<td>10<\/td>\n<td>Describe a useful website.<\/td>\n<td>what it is / how often you visit / what kind of site / what information it offers / why it is useful<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>11<\/td>\n<td>Describe a journey that didn't go as planned.<\/td>\n<td>where you were going / how you were travelling / who you were with / what went wrong / what you'd do differently<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>12<\/td>\n<td>Describe a person you know who is kind.<\/td>\n<td>who it is / how you know this person / what sort of person they are / why you think they are kind<\/td>\n<td>person<\/td>\n<\/tr>\n<tr>\n<td>13<\/td>\n<td>Describe a language you have learned.<\/td>\n<td>what it is / when you started / how you learned / what was difficult / why you decided to learn it<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>14<\/td>\n<td>Describe a good law.<\/td>\n<td>what it is / who is affected by it / why you think it is good<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>15<\/td>\n<td>Describe a song you like.<\/td>\n<td>what kind of song / what it is about / when you first heard it / why you like it<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>16<\/td>\n<td>Describe some good news you recently received.<\/td>\n<td>what the news was / how you received it / who gave it / why this was good news<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>17<\/td>\n<td>Describe an old person you know.<\/td>\n<td>who this person is / how old / what this person is like / why you like them<\/td>\n<td>person<\/td>\n<\/tr>\n<tr>\n<td>18<\/td>\n<td>Describe a place that you find peaceful.<\/td>\n<td>where it is / when you first went there / what you do there / why you like it<\/td>\n<td>place<\/td>\n<\/tr>\n<tr>\n<td>19<\/td>\n<td>Describe a photograph you like.<\/td>\n<td>what can be seen in the photo / when it was taken / who took it / why you like it<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>20<\/td>\n<td>Describe something you do to relax.<\/td>\n<td>what it is / where you do it / when you first did it / why you find it relaxing<\/td>\n<td>activity<\/td>\n<\/tr>\n<tr>\n<td>21<\/td>\n<td>Describe someone you respect.<\/td>\n<td>who the person is / how you know them / what they do / what they're like / why you respect them<\/td>\n<td>person<\/td>\n<\/tr>\n<tr>\n<td>22<\/td>\n<td>Describe a sport you would like to learn.<\/td>\n<td>what it is / what equipment is needed / how you would learn it / why you'd like to learn it<\/td>\n<td>activity<\/td>\n<\/tr>\n<tr>\n<td>23<\/td>\n<td>Describe your favourite time of day.<\/td>\n<td>when it is / what you like to do / why it is different to other parts of the day<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>24<\/td>\n<td>Describe a place you have recently visited.<\/td>\n<td>where you went / who you went with / how you got there / why you enjoyed it<\/td>\n<td>place<\/td>\n<\/tr>\n<tr>\n<td>25<\/td>\n<td>Describe an unexpected event.<\/td>\n<td>what it was / when it happened / who was there / why it was unexpected / why you enjoyed it<\/td>\n<td>event<\/td>\n<\/tr>\n<tr>\n<td>26<\/td>\n<td>Describe a vocation you think is useful to society.<\/td>\n<td>what it is / what it involves / what kind of people do this work / why it is useful to society<\/td>\n<td>object<\/td>\n<\/tr>\n<tr>\n<td>27<\/td>\n<td>Describe a place near water.<\/td>\n<td>where it is / how you get there / how often you go there / what you can do there / why you like it<\/td>\n<td>place<\/td>\n<\/tr>\n<tr>\n<td>28<\/td>\n<td>Describe your favourite shop.<\/td>\n<td>where it is / how often you go / what it sells / why you think it is a good shop<\/td>\n<td>place<\/td>\n<\/tr>\n<tr>\n<td>29<\/td>\n<td>Describe a place with animals.<\/td>\n<td>where it is / how you heard of it / what animals can be seen / why it might be interesting<\/td>\n<td>place<\/td>\n<\/tr>\n<tr>\n<td>30<\/td>\n<td>Describe an unexpected journey / a decision you made.<\/td>\n<td>（自拟：自选上面任一张卡改写措辞，考场上换题也能用）<\/td>\n<td>—<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<blockquote>\n<p>自救句式（忘词时用）：\"I've never really thought about it before, but I suppose…\" / \"It reminds me of…\" / \"I'm not sure I'd agree entirely, but…\" —— 关键是用<strong>填充句争取思考时间<\/strong>，而不是沉默。<\/p>\n<\/blockquote>\n<hr />\n<h2>Part 3 · 深度讨论（约 4–5 分钟）<\/h2>\n<p><strong>规则<\/strong>：Part 3 的话题一定顺着 Part 2 的题卡走。比如 Part 2 讲了 \"a journey that didn't go as planned\"，Part 3 就问 Punctuality / Travelling / Friends。\n<strong>答法<\/strong>：每题答 3–4 句 = 观点 → 原因/影响 → 举例 → （可选）对比。考官会追问，所以每句都要能撑住一个追问。<\/p>\n<table>\n<thead>\n<tr>\n<th>主题<\/th>\n<th>高频问题<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>Advertising<\/td>\n<td>Do adverts have a big impact on what people buy? Are adverts useful? Most common kinds in your country? TV vs social media, which is more effective? Is advertising aimed at children acceptable? Advertising for fast food? Should some adverts be banned?<\/td>\n<\/tr>\n<tr>\n<td>Art<\/td>\n<td>What kind of art do you enjoy? Traditional art forms in your country? What makes a good painting? Should children study art at school? How can children benefit? How has art changed in your country in recent decades?<\/td>\n<\/tr>\n<tr>\n<td>Books<\/td>\n<td>What books do children in your country like? Can children learn a lot from books? Are fairy tales useful for children? Why do adults read children's books? Will paper books disappear? Advantages of e-books? Are libraries still useful?<\/td>\n<\/tr>\n<tr>\n<td>Business<\/td>\n<td>Popular small businesses in your country? What products does your country produce? Is buying local important? Why do people run their own business? Are family businesses problematic? What makes a business successful? Has globalisation affected small businesses?<\/td>\n<\/tr>\n<tr>\n<td>Celebrities<\/td>\n<td>How does someone become a celebrity? Are all celebrities actors or singers? Does a person need talent? Are all celebrities good role models? What about celebrities who behave badly? Should children learn from them? Downsides of fame? Right to privacy?<\/td>\n<\/tr>\n<tr>\n<td>Clothes<\/td>\n<td>Can clothing tell you much about a person? Why do companies require uniforms? Advantages and disadvantages? When do people wear traditional clothing? How have fashions changed? Differences between young and old preferences?<\/td>\n<\/tr>\n<tr>\n<td>Culture<\/td>\n<td>Popular traditions in your country? Important to keep them alive? Are young people less interested? Is foreign culture influencing your country? How has culture changed? What can be done to keep it alive? Traditional foods? Festivals?<\/td>\n<\/tr>\n<tr>\n<td>Decision making<\/td>\n<td>Why do people find decisions difficult? What big decisions do people make? Should people get advice? Do young people face different decisions than before? Should children decide alone? What about people who change their minds?<\/td>\n<\/tr>\n<tr>\n<td>Education<\/td>\n<td>What makes a good student? Role of the teacher? Will computers replace teachers? How has teaching changed? Difference between how children and adults learn? How can teachers make lessons interesting?<\/td>\n<\/tr>\n<tr>\n<td>Environment<\/td>\n<td>Biggest environmental problems in your country? What should individuals do? Is pollution a problem? What can the government do? Are young people more aware? Is protecting trees important? More money for wild animals? Are zoos important?<\/td>\n<\/tr>\n<tr>\n<td>Family<\/td>\n<td>Is family important in your country? How has family size changed? How will the family change in future? Role of grandparents? Who should care for the elderly — family or government?<\/td>\n<\/tr>\n<tr>\n<td>Food<\/td>\n<td>Is diet important? What is a balanced diet? Typical diet in your country? Do many people eat out? Why do people enjoy eating out? Restaurant vs home-cooked?<\/td>\n<\/tr>\n<tr>\n<td>Health<\/td>\n<td>How can people improve their health? Do elderly people exercise much? Can all illness be prevented? Less illness in the future? Should healthcare be free? What makes a good doctor?<\/td>\n<\/tr>\n<tr>\n<td>Internet<\/td>\n<td>Do most people have a computer at home? Is all online information true? How to find reliable information? How has the internet changed how we live and work? Is it safe for children unsupervised?<\/td>\n<\/tr>\n<tr>\n<td>Language<\/td>\n<td>At what age should children start a foreign language? Why do some people struggle to learn one? Is it easier in the country itself? What kinds of dictionaries are used? Why learn a new language? Important when travelling?<\/td>\n<\/tr>\n<tr>\n<td>Leadership<\/td>\n<td>What traits does a good leader have? Should leaders be physically attractive? An admired leader in your country? Why do leaders lose popularity? Born or learnable? How could leadership be taught? Should leaders be good listeners? How do leaders motivate?<\/td>\n<\/tr>\n<tr>\n<td>Media &amp; News<\/td>\n<td>Do you believe everything in the newspapers? How do people get news in your country? How will they get it in the future? How has TV changed our lives? Does TV influence how we think? Should children watch a lot of TV? Responsibility of TV celebrities?<\/td>\n<\/tr>\n<tr>\n<td>Movies<\/td>\n<td>Is going to the cinema popular? What kinds of films are popular? Do people watch foreign films? Subtitles or dubbing? What makes a film successful — director or stars? Are drama series popular? Home or cinema? Films not suitable for children? Should films about real events be 100% true?<\/td>\n<\/tr>\n<tr>\n<td>Nature<\/td>\n<td>Main environmental problems? Why should people care? How can people protect the environment? Should money be spent on protecting animals? Protecting natural beauty spots?<\/td>\n<\/tr>\n<tr>\n<td>Photography<\/td>\n<td>Do many people like taking photos? Which device? What types of photos do people like? What do you think of selfies? OK to share photos online without permission? What makes a good photo? Photo vs painting? Can a photo tell no lies? What makes a good photographer?<\/td>\n<\/tr>\n<tr>\n<td>Punctuality<\/td>\n<td>Is punctuality important in your country? More important now than in the past? How do people stay on time? Do people wear watches? Why are some people often late? Is it easy to control your time? Balancing a daily schedule? Main reason people run out of time?<\/td>\n<\/tr>\n<tr>\n<td>Socialising<\/td>\n<td>How do people in your country meet new people? Safe to meet people online? Important for friends to spend time together? What do friends do together? Do families spend enough time together? How has socialising changed? Safe for children to socialise online?<\/td>\n<\/tr>\n<tr>\n<td>Society<\/td>\n<td>What social problems exist in your country? What can be done about poverty? Many charities? Difference between major and minor crime? Should all criminals go to prison? Why do people move to cities? What does overpopulation cause?<\/td>\n<\/tr>\n<tr>\n<td>Toys<\/td>\n<td>Popular toys? How have they changed? Do boys and girls like the same toys? OK for boys to play with girls' toys? What games do children like most? Educational? Too much time on devices? Benefits of playing with other children?<\/td>\n<\/tr>\n<tr>\n<td>Transportation<\/td>\n<td>How do most people travel in cities in your country? How do they travel around the country? Thoughts on public transport? How could it be improved? How has transport changed? Trains vs buses? Budget air travel? Will all transport run on green energy? Should people walk more?<\/td>\n<\/tr>\n<tr>\n<td>Travel<\/td>\n<td>Why do people prefer travelling abroad? Can travel change how people think? Good for children to experience life abroad? How have holidays changed? Safer to travel now than in the past?<\/td>\n<\/tr>\n<tr>\n<td>Weather<\/td>\n<td>How many seasons in your country? Extreme weather? Does weather disrupt things? Why do some enjoy hot climates? Activities in cold climates? Living with only one type of weather? Easy to predict? Does weather influence moods? Is the climate changing? What affects the world's climate? Should individuals take responsibility?<\/td>\n<\/tr>\n<tr>\n<td>Work<\/td>\n<td>Is job satisfaction more important than salary? What skills are needed now? Should women do all the same jobs as men? How has technology changed work? White collar vs blue collar? Which jobs are most valuable to society? At what age should people retire?<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<hr />\n<h2>口语四周训练表（打印后打勾）<\/h2>\n<table>\n<thead>\n<tr>\n<th>周<\/th>\n<th>Part 1 话题数<\/th>\n<th>Part 2 卡数<\/th>\n<th>Part 3 主题数<\/th>\n<th>录音分钟<\/th>\n<th>备注<\/th>\n<\/tr>\n<\/thead>\n<tbody>\n<tr>\n<td>第 1 周<\/td>\n<td>12<\/td>\n<td>5<\/td>\n<td>5<\/td>\n<td>60<\/td>\n<td>先过 Part 1 高概率四话题，语速别太快<\/td>\n<\/tr>\n<tr>\n<td>第 2 周<\/td>\n<td>14<\/td>\n<td>6<\/td>\n<td>6<\/td>\n<td>90<\/td>\n<td>加入 Part 2 五类题型各一张<\/td>\n<\/tr>\n<tr>\n<td>第 3 周<\/td>\n<td>12<\/td>\n<td>8<\/td>\n<td>8<\/td>\n<td>120<\/td>\n<td>Part 2 全部说满 2 分钟，重点补卡壳点<\/td>\n<\/tr>\n<tr>\n<td>第 4 周<\/td>\n<td>10<\/td>\n<td>10<\/td>\n<td>10<\/td>\n<td>150<\/td>\n<td>找同学/对着手机连考，Part 1+2+3 连贯模拟<\/td>\n<\/tr>\n<\/tbody>\n<\/table>\n<p><strong>每周验收标准<\/strong>\n1. Part 2 每次都能说满 2 分钟（用手机计时）\n2. 每题回答都含至少 1 个具体例子\n3. 卡壳点全部记进错题本，下周优先练这些题\n4. 回听录音时，能指出至少 3 个可改的地方（语法/用词/停顿）<\/p>"}</script>
 <script>
@@ -1058,23 +1057,30 @@ const EXAM=new Date('2027-03-20T09:00:00');
 const fmt=d=>d.toISOString().slice(0,10);
 const todayStr=fmt(new Date());
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const phaseOf=d=>PLAN.phases.find(p=>d>=p.start&&d<=p.end);
 
-/* 主题：默认护眼浅色，右上角切夜间 */
-function syncThemeBtn(){
-  $('#theme').textContent=document.body.classList.contains('night')?'☀ 日间':'☾ 夜间';
-}
+/* 主题 */
+function syncThemeBtn(){ $('#theme').textContent=document.body.classList.contains('night')?'☀ 日间':'☾ 夜间'; }
 if(localStorage.getItem('ielts.theme')==='night')document.body.classList.add('night');
 syncThemeBtn();
 $('#theme').onclick=()=>{document.body.classList.toggle('night');
   localStorage.setItem('ielts.theme',document.body.classList.contains('night')?'night':'day');syncThemeBtn();};
+
+/* 底部 tab（手机） */
+$$('.tabbar button').forEach(b=>b.onclick=()=>{
+  const t=b.dataset.tab;
+  $$('.tabbar button').forEach(x=>x.classList.toggle('on',x===b));
+  $$('.pane').forEach(p=>p.classList.toggle('active',p.dataset.pane===t));
+  const pane=document.querySelector('.pane.active'); if(pane) pane.scrollTop=0;
+  localStorage.setItem('ielts.tab',t);
+});
+(function(){ const t=LS.get('ielts.tab','today');
+  const btn=document.querySelector('.tabbar button[data-tab="'+t+'"]'); if(btn) btn.click(); })();
 
 /* 顶栏 */
 (function tick(){
   const cd=Math.ceil((EXAM-new Date())/86400000);
   $('#cd').textContent=cd>0?cd+' 天':(cd===0?'今天':'已过');
   $('#td').textContent=todayStr.slice(5);
-  const ph=phaseOf(todayStr); $('#ph').textContent=ph?ph.tag:'—';
 })();
 
 /* 时间轴 */
@@ -1084,13 +1090,13 @@ $('#theme').onclick=()=>{document.body.classList.toggle('night');
   let html='';
   PLAN.phases.forEach(p=>{
     const l=(new Date(p.start)-start)/86400000, w=(new Date(p.end)-new Date(p.start))/86400000+1;
-    html+=`<div class="seg" style="left:${l/span*100}%;width:${w/span*100}%;background:color-mix(in srgb,var(--accent) 12%,transparent)">
+    html+=`<div class="seg" style="left:${l/span*100}%;width:${w/span*100}%">
       <b style="color:var(--accent2)">${p.tag}</b><span class="dim">${p.name}</span></div>`;
   });
   const nl=(new Date(todayStr)-start)/86400000;
   html+=`<div class="now" style="left:${Math.max(0,Math.min(100,nl/span*100))}%"></div>`;
   $('#tl').innerHTML=html;
-  const ph=phaseOf(todayStr);
+  const ph=PLAN.phases.find(p=>todayStr>=p.start&&todayStr<=p.end);
   $('#phaseLine').textContent=ph?`${ph.tag} ${ph.name} · ${ph.start} → ${ph.end} · 每天 ${ph.daily}`:'不在计划区间内';
 })();
 
@@ -1099,12 +1105,11 @@ const day=PLAN.days.find(d=>d.d===todayStr);
 const chkKey='ielts.chk.'+todayStr;
 let checks=LS.get(chkKey,[]);
 function renderToday(){
-  if(!day){$('#todayDate').textContent=todayStr;$('#todayTitle').textContent='不在计划区间';
-    $('#slots').innerHTML='';$('#nowDo').textContent='—';return;}
+  if(!day){$('#todayTitle').textContent='不在计划区间';$('#slots').innerHTML='';$('#nowDo').textContent='—';return;}
   $('#todayDate').textContent=todayStr+'　'+'一二三四五六日'[new Date(todayStr+'T00:00:00').getDay()];
   $('#todayTitle').textContent=day.focus;
   $('#todayMeta').textContent=`${day.tag} ${day.name} · 计划 ${day.mins} 分钟 · ${day.tasks.length} 项`;
-  const first=day.tasks.find(t=>t.slot.startsWith('主攻')||t.slot.includes('听力')||t.slot.includes('阅读')||t.slot.includes('写作')||t.slot.includes('口语'))||day.tasks[0];
+  const first=day.tasks.find(t=>t.slot.includes('主攻')||t.slot.includes('听力')||t.slot.includes('阅读')||t.slot.includes('写作')||t.slot.includes('口语'))||day.tasks[0];
   $('#nowDo').innerHTML=`${first.text} <span class="dim" style="font-size:14px">（${first.min} 分钟 · ${first.mat||''}）</span>`;
   $('#slots').innerHTML=day.tasks.map((t,i)=>`
     <div class="slot">
@@ -1208,11 +1213,14 @@ $('#mSave').onclick=()=>{
 $('#mClear').onclick=()=>{if(confirm('清空所有模考记录？')){mocks=[];saveMocks();renderMocks();}};
 $('#mDate').value=todayStr;renderMocks();
 
-/* 导航高亮 */
+/* 侧栏高亮（桌面） */
 const secs=$$('section');
-addEventListener('scroll',()=>{let cur=secs[0];
+addEventListener('scroll',()=>{
+  if(innerWidth<=880) return;
+  let cur=secs[0];
   secs.forEach(s=>{if(s.getBoundingClientRect().top<170)cur=s;});
-  $$('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur.id));},{passive:true});
+  $$('.sidenav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur.id));
+},{passive:true});
 </script>
 </body>
 </html>
